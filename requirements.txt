@@ -5,3 +5,4 @@ graphene-django
 django-graphql-playground
 graphene-file-upload
 django-graphql-jwt
+django-debug-toolbar
