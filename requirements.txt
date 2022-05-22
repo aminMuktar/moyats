@@ -1,3 +1,7 @@
-Django
+django==3.2.11
 psycopg2
 Pillow
+graphene-django
+django-graphql-playground
+graphene-file-upload
+django-graphql-jwt
