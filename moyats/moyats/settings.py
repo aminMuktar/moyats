@@ -33,7 +33,9 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     "graphene_django",
     "graphql_playground",
-    "debug_toolbar"
+    "debug_toolbar",
+    "django_celery_beat",
+    "django_celery_results",
 ]
 # moyats apps
 INSTALLED_APPS += [
@@ -133,6 +135,12 @@ GRAPHQL_JWT = {
     "JWT_VERIFY_EXPIRATION": True,
     "JWT_EXPIRATION_DELTA": timedelta(hours=5),
 }
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+    }
+}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
@@ -148,3 +156,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Celery and redis settings
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_IMPORTS = ('accounts.tasks')
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Calcutta'

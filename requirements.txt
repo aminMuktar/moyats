@@ -1,8 +1,14 @@
 django==3.2.11
 psycopg2
 Pillow
+redis
+celery==5.0.0
+celery-progress
+django-celery-beat==2.1.0
+django-celery-results==2.0.0
 graphene-django
 django-graphql-playground
 graphene-file-upload
 django-graphql-jwt
 django-debug-toolbar
+django-redis
