@@ -28,6 +28,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+# 3rd party apps
+INSTALLED_APPS += [
+    "graphene_django",
+    "graphql_playground",
+]
 # moyats apps
 INSTALLED_APPS += [
     'accounts.apps.AccountsConfig',
@@ -106,7 +111,9 @@ USE_I18N = True
 USE_TZ = True
 AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 AUTH_USER_MODEL = "accounts.BaseUser"  # new
-
+GRAPHENE = {
+    "SCHEMA": "moyats.schema.schema"
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
