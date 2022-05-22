@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -111,13 +112,6 @@ USE_I18N = True
 USE_TZ = True
 AUTH_USER_MODEL = "accounts.BaseUser"  # new
 
-GRAPHENE = {
-    "SCHEMA": "mysite.myschema.schema",
-    "MIDDLEWARE": [
-        "graphql_jwt.middleware.JSONWebTokenMiddleware",
-    ],
-}
-
 AUTHENTICATION_BACKENDS = [
     "accounts.backends.EmailBackend",
     "graphql_jwt.backends.JSONWebTokenBackend",
@@ -132,7 +126,11 @@ GRAPHENE = {
     ],
 }
 
-
+# set expiration time
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,
+    "JWT_EXPIRATION_DELTA": timedelta(hours=5),
+}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
