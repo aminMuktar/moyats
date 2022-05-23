@@ -52,8 +52,8 @@ class PipelineSetup(models.Model):
         PipelineStatus, related_name="status", on_delete=models.CASCADE)
     mapping_status = models.ForeignKey(
         PipelineStatus, related_name="mapping_status", on_delete=models.CASCADE)
-    prerequisite_status = models.ForeignKey(
-        PipelineStatus, related_name="prerequisite_status", on_delete=models.CASCADE, null=True, blank=True)
+    prerequisite_status = models.ManyToManyField(
+        PipelineStatus, related_name="prerequisite_status", null=True, blank=True)
     triggers = models.ManyToManyField(Trigger, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)

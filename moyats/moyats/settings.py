@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -37,6 +36,7 @@ INSTALLED_APPS += [
     "django_celery_beat",
     "django_celery_results",
 ]
+
 # moyats apps
 INSTALLED_APPS += [
     'accounts.apps.AccountsConfig',
@@ -114,7 +114,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-AUTH_USER_MODEL = "accounts.BaseUser"  # new
+AUTH_USER_MODEL = "accounts.BaseUser" 
 
 AUTHENTICATION_BACKENDS = [
     "accounts.backends.EmailBackend",
@@ -141,15 +141,13 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379',
     }
 }
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# DjangoToolbar setting
 INTERNAL_IPS = [
-    # ...
     "127.0.0.1",
     "localhost"
-    # ...
 ]
+
 STATIC_URL = 'static/'
 
 # Default primary key field type
