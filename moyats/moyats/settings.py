@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -115,7 +114,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-AUTH_USER_MODEL = "accounts.BaseUser"  # new
+AUTH_USER_MODEL = "accounts.BaseUser" 
 
 AUTHENTICATION_BACKENDS = [
     "accounts.backends.EmailBackend",
