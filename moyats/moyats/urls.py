@@ -16,7 +16,6 @@ class GqlView(FileUploadGraphQLView, LoginRequiredMixin):
 
 urlpatterns = [
     path('graphql/',  csrf_exempt(jwt_cookie(GqlView.as_view(graphiql=True)))),
-    path("graphql/", GraphQLView.as_view(graphiql=True)),
     path('playground/', GraphQLPlaygroundView.as_view(endpoint="/graphql/")),
     path('__debug__/', include('debug_toolbar.urls')),
     path('admin/', admin.site.urls),

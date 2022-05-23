@@ -37,6 +37,7 @@ INSTALLED_APPS += [
     "django_celery_beat",
     "django_celery_results",
 ]
+
 # moyats apps
 INSTALLED_APPS += [
     'accounts.apps.AccountsConfig',
@@ -141,15 +142,13 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379',
     }
 }
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# DjangoToolbar setting
 INTERNAL_IPS = [
-    # ...
     "127.0.0.1",
     "localhost"
-    # ...
 ]
+
 STATIC_URL = 'static/'
 
 # Default primary key field type

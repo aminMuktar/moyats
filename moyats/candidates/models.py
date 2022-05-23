@@ -97,7 +97,7 @@ class Candidate(models.Model):
     desired_pay = models.CharField(max_length=200, null=True, blank=True)
     best_contact_time = models.DateTimeField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
-    work_history = models.ForeignKey(WorkHistory, on_delete=models.CASCADE)
+    work_history = models.ManyToManyField(WorkHistory)
     qualifications = models.ManyToManyField(CandidateQualification)
     attachments = models.ManyToManyField(Attachment)
     updated_At = models.DateTimeField(auto_now=True)
