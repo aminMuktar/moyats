@@ -14,9 +14,12 @@ class Mutation(graphene.ObjectType):
     check_email_verification = VerifyEmail.Field()
     register = AddNewUser.Field()
 
-
 class Query(graphene.ObjectType):
     account_user = graphene.Field(BaseUserType)
+    test = graphene.String()
+
+    def resolve_test(self, info, **kwargs):
+        return "hey there"
 
     @login_required
     def resolve_account_user(self, info, **kwargs):

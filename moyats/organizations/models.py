@@ -33,6 +33,7 @@ class OrganizationMember(models.Model):
         READ_ONLY = 'ro', _('Read Only')
 
     user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE, null=True)
+    title = models.CharField(null=True, blank=True, max_length=100)
     permission_level = models.CharField(
         max_length=2, choices=OrganizationMemberPermission.choices)
     updated_at = models.DateTimeField(auto_now=True)
