@@ -35,6 +35,7 @@ INSTALLED_APPS += [
     "debug_toolbar",
     "django_celery_beat",
     "django_celery_results",
+    "corsheaders"
 ]
 
 # moyats apps
@@ -56,7 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'moyats.urls'
@@ -115,7 +117,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-AUTH_USER_MODEL = "accounts.BaseUser" 
+AUTH_USER_MODEL = "accounts.BaseUser"
 
 AUTHENTICATION_BACKENDS = [
     "accounts.backends.EmailBackend",
@@ -149,6 +151,15 @@ INTERNAL_IPS = [
     "localhost"
 ]
 
+
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:3000',
+] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    'http://127.0.0.1:3000',
+]
 STATIC_URL = 'static/'
 
 # Default primary key field type

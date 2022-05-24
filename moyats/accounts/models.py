@@ -6,7 +6,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 class UserProfile(models.Model):
-    profile_pic = models.ImageField(upload_to='uploads/% Y/% m/% d/', null=True, blank=True)
+    profile_pic = models.ImageField(
+        upload_to='uploads/% Y/% m/% d/', null=True, blank=True)
     first_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -34,7 +35,8 @@ class NotificationSetting(models.Model):
         SEND_EMAIL = 'se', _('Send Email')
         SEND_PUSH = 'sp', _('Send Push')
 
-    setting = models.CharField(choices=NotificaionSettingType.choices, max_length=2)
+    setting = models.CharField(
+        choices=NotificaionSettingType.choices, max_length=2)
     value = models.BooleanField(default=True)
     updated_At = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -64,7 +66,8 @@ class BaseUser(AbstractUser):
         choices=AccountType.choices, max_length=2, default=AccountType.BASE_USER)
     source = models.CharField(
         choices=AccountSource.choices, max_length=2, default=AccountSource.EMAIL)
-    organizations = models.ManyToManyField("organizations.Organization", blank=True)
+    organizations = models.ManyToManyField(
+        "organizations.Organization", blank=True)
     blocked = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True)
@@ -79,8 +82,10 @@ class BaseUser(AbstractUser):
     def __str__(self) -> str:
         return str(self.email)
 
+
 class EmailVerificationCode(models.Model):
-    code_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    code_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
     expiry_date = models.DateTimeField()
     used = models.BooleanField(default=False)
@@ -89,3 +94,27 @@ class EmailVerificationCode(models.Model):
     def __str__(self) -> str:
         return str(self.code_id)
 
+
+class UserPayment(models.Model):
+    class PaymentMethod(models.TextChoices):
+        CBE_BIRR = 'cb', _('CBE Birr')
+        BANK_TRASNSFER = 'bt', _('Direct Bank Transfer')
+        AMOLE_PAY = 'am', _('Amole Pay')
+        CASH_PAYMENT = 'ca', _('Cash Payment')
+
+    class PaymentStatus(models.TextChoices):
+        PAYMENT_DECLINED = 'de', _('Payment Declined')
+        PAYMENT_PENDING = 'pe', _('Payment Pending')
+        PAYMENT_APPROVED = 'pa', _('Payment Approved')
+
+    user = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
+    amount = models.BigIntegerField(null=True)
+    payment_method = models.CharField(
+        max_length=2, choices=PaymentMethod.choices, null=True)
+    payment_status = models.CharField(
+        max_length=2, choices=PaymentStatus.choices, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        self.user.email

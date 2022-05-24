@@ -13,3 +13,4 @@ django-graphql-jwt
 django-debug-toolbar
 django-redis
 coverage
+django-cors-headers
