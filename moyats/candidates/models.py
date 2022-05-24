@@ -1,8 +1,9 @@
 from pyexpat import model
-from re import S
 from django.db import models
-from accounts.models import BaseContact, Address
+from accounts.models import Address
+from core.models import BaseContact
 from django.utils.translation import gettext_lazy as _
+
 
 class Attachment(models.Model):
     filename = models.CharField(max_length=200)
@@ -12,6 +13,7 @@ class Attachment(models.Model):
     def __str__(self) -> str:
         return self.filename
 
+
 class CandidateSource(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -20,6 +22,7 @@ class CandidateSource(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
 
 class SocialMedia(models.Model):
     class SocialMediaType(models.TextChoices):
@@ -50,13 +53,14 @@ class CandidateProfile(models.Model):
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
+
 class WorkHistory(models.Model):
     title = models.TextField()
     employeer = models.TextField()
     currently_working = models.BooleanField()
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    location = models.ForeignKey(Address, on_delete=models.CASCADE)
+    location = models.ForeignKey("accounts.Address", on_delete=models.CASCADE)
     verified = models.BooleanField()
     summary = models.TextField(null=True, blank=True)
     reason_for_leaving = models.TextField(null=True, blank=True)
@@ -66,6 +70,7 @@ class WorkHistory(models.Model):
     def __str__(self) -> str:
         return self.title
 
+
 class QualificationChecklist(models.Model):
     # Pre defined qualificatoins to pick from
     title = models.CharField(max_length=200, null=True)
@@ -74,12 +79,15 @@ class QualificationChecklist(models.Model):
     def __str__(self) -> str:
         return self.title
 
+
 class CandidateQualification(models.Model):
-    qualification = models.ForeignKey(QualificationChecklist, on_delete=models.CASCADE)
+    qualification = models.ForeignKey(
+        QualificationChecklist, on_delete=models.CASCADE)
     value = models.BooleanField()
 
     def __str__(self) -> str:
         return self.qualification.title
+
 
 class Candidate(models.Model):
     candidate_profile = models.ForeignKey(
@@ -87,9 +95,9 @@ class Candidate(models.Model):
     phones = models.ForeignKey(
         BaseContact, on_delete=models.CASCADE, null=True)
     social_medias = models.ManyToManyField(SocialMedia)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    active  = models.BooleanField(default=True)
-    source = models.ForeignKey(CandidateSource, on_delete=models.CASCADE)   
+    address = models.ForeignKey("accounts.Address", on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+    source = models.ForeignKey(CandidateSource, on_delete=models.CASCADE)
     key_skills = models.TextField(null=True, blank=True)
     current_employeer = models.TextField(null=True, blank=True)
     date_available = models.DateField(null=True, blank=True)

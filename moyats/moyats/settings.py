@@ -44,7 +44,8 @@ INSTALLED_APPS += [
     'joborders.apps.JobordersConfig',
     'pipelines.apps.PipelinesConfig',
     'emails.apps.EmailsConfig',
-    'candidates.apps.CandidatesConfig'
+    'candidates.apps.CandidatesConfig',
+    'core.apps.CoreConfig'
 ]
 
 MIDDLEWARE = [
