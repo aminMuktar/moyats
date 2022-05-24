@@ -21,7 +21,8 @@ class OrganizationStatus(models.Model):
 
 
 class OrganizationContact(models.Model):
-    phones = models.ForeignKey("accounts.BaseContact", on_delete=models.CASCADE)
+    phones = models.ForeignKey(
+        "accounts.BaseContact", on_delete=models.CASCADE)
     reachable = models.BooleanField(default=True)
     email = models.EmailField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -55,16 +56,20 @@ class Organization(models.Model):
         RECRUITMENT_FIRM = 'rf', _('Recuitment Firm')
 
     contacts = models.ManyToManyField(OrganizationContact, blank=True)
-    name = models.CharField(max_length=100)
-    cover_pic = models.ImageField(upload_to='uploads/% Y/% m/% d/')
+    name = models.CharField(max_length=100, unique=True)
+    cover_pic = models.ImageField(
+        upload_to='uploads/% Y/% m/% d/', blank=True, null=True)
     org_type = models.CharField(choices=OrgType.choices, max_length=2)
     org_status = models.ForeignKey(
-        OrganizationStatus, on_delete=models.CASCADE)
+        OrganizationStatus, on_delete=models.CASCADE, blank=True, null=True)
     pipeline_template = models.CharField(
-        choices=OrgType.choices, max_length=2, help_text="Default pipeline template to be created will be based on org type")
+        choices=OrgType.choices, max_length=2, blank=True, null=True,
+        help_text="Default pipeline template to be created will be based on org type")
     verified = models.BooleanField()
     description = models.TextField(blank=True, null=True)
     members = models.ManyToManyField(OrganizationMember, blank=True)
+    employees_count = models.IntegerField(null=True, blank=True)
+    subdomain = models.CharField(max_length=200, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
