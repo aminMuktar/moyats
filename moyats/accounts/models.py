@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
@@ -17,9 +18,8 @@ class BaseContact(models.Model):
     def __str__(self) -> str:
         return str(self.cell_number)
 
-
 class UserProfile(models.Model):
-    profile_pic = models.ImageField(upload_to='uploads/% Y/% m/% d/')
+    profile_pic = models.ImageField(upload_to='uploads/% Y/% m/% d/', null=True, blank=True)
     first_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -77,13 +77,13 @@ class BaseUser(AbstractUser):
         choices=AccountType.choices, max_length=2, default=AccountType.BASE_USER)
     source = models.CharField(
         choices=AccountSource.choices, max_length=2, default=AccountSource.EMAIL)
-    organizations = models.ManyToManyField("organizations.Organization")
+    organizations = models.ManyToManyField("organizations.Organization", blank=True)
     blocked = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True)
     signiture = models.TextField(null=True, blank=True)
     notification_setting = models.ForeignKey(
-        NotificationSetting, on_delete=models.CASCADE, null=True)
+        NotificationSetting, on_delete=models.CASCADE, null=True, blank=True)
     timezone = models.CharField(max_length=200, blank=True, null=True)
     date_format = models.CharField(max_length=100, blank=True, null=True)
     updated_At = models.DateTimeField(auto_now=True, null=True)
@@ -91,3 +91,13 @@ class BaseUser(AbstractUser):
 
     def __str__(self) -> str:
         return str(self.email)
+
+class EmailVerificationCode(models.Model):
+    code_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
+    expiry_date = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.code_id
+
