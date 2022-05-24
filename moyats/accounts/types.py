@@ -1,4 +1,5 @@
 from . import models
+from core.models import BaseContact
 from graphene_django import DjangoObjectType
 
 
@@ -16,7 +17,7 @@ class UserProfileType(DjangoObjectType):
 
 class BaseContactType(DjangoObjectType):
     class Meta:
-        model = models.BaseContact
+        model = BaseContact
         exclude = ("id",)
 
 

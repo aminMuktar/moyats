@@ -12,3 +12,4 @@ graphene-file-upload
 django-graphql-jwt
 django-debug-toolbar
 django-redis
+coverage

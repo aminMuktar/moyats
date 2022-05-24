@@ -1,10 +1,6 @@
 from django.db import models
-from emails.models import CoreEmail
-from candidates.models import Candidate
-from organizations.models import Organization
-from organizations.models import Color
 from django.utils.translation import gettext_lazy as _
-
+from core.models import Color
 
 class Trigger(models.Model):
     class TriggerAction(models.TextChoices):
@@ -24,7 +20,7 @@ class Trigger(models.Model):
     description = models.TextField(null=True, blank=True)
     required_type = models.CharField(
         max_length=2, choices=TriggerRequirements.choices, default=TriggerRequirements.DEFAULT_OFF_OPTIONAL)
-    email_composition_details = models.ForeignKey(CoreEmail, on_delete=models.CASCADE, null=True, blank=True)
+    email_composition_details = models.ForeignKey("emails.CoreEmail", on_delete=models.CASCADE, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -36,7 +32,7 @@ class PipelineStatus(models.Model):
     status_name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
     default = models.BooleanField()
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, null=True)
+    organization = models.ForeignKey("organizations.Organization", on_delete=models.CASCADE, null=True)
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -63,7 +59,7 @@ class PipelineSetup(models.Model):
 
 
 class PipelineWorkflow(models.Model):
-    candidates = models.ManyToManyField(Candidate, blank=True)
+    candidates = models.ManyToManyField("candidates.Candidate", blank=True)
     pipeline_setup = models.ForeignKey(PipelineSetup, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
