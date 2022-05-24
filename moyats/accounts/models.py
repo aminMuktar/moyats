@@ -1,22 +1,9 @@
 import uuid
 from django.db import models
-from django.core.validators import RegexValidator
+from core.models import BaseContact
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
-
-class BaseContact(models.Model):
-    phone_regex = RegexValidator(
-        regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    cell_number = models.CharField(validators=[phone_regex], max_length=17)
-    work_number = models.CharField(
-        validators=[phone_regex], max_length=17, blank=True, null=True)
-    home_number = models.CharField(
-        validators=[phone_regex], max_length=17, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self) -> str:
-        return str(self.cell_number)
 
 class UserProfile(models.Model):
     profile_pic = models.ImageField(upload_to='uploads/% Y/% m/% d/', null=True, blank=True)
@@ -96,8 +83,9 @@ class EmailVerificationCode(models.Model):
     code_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(BaseUser, on_delete=models.CASCADE)
     expiry_date = models.DateTimeField()
+    used = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.code_id
+        return str(self.code_id)
 

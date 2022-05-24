@@ -1,13 +1,7 @@
+import uuid
 from django.db import models
+from core.models import BaseContact, Color
 from django.utils.translation import gettext_lazy as _
-
-
-class Color(models.Model):
-    hex = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self) -> str:
-        return self.hex
 
 
 class OrganizationStatus(models.Model):
@@ -22,7 +16,7 @@ class OrganizationStatus(models.Model):
 
 class OrganizationContact(models.Model):
     phones = models.ForeignKey(
-        "accounts.BaseContact", on_delete=models.CASCADE)
+        BaseContact, on_delete=models.CASCADE, null=True)
     reachable = models.BooleanField(default=True)
     email = models.EmailField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -38,7 +32,7 @@ class OrganizationMember(models.Model):
         EDITOR = 'ed', _('Is Editor')
         READ_ONLY = 'ro', _('Read Only')
 
-    user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE)
+    user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE, null=True)
     permission_level = models.CharField(
         max_length=2, choices=OrganizationMemberPermission.choices)
     updated_at = models.DateTimeField(auto_now=True)
@@ -55,6 +49,7 @@ class Organization(models.Model):
         HR_FIRM = 'hr', _('Hr Firm')
         RECRUITMENT_FIRM = 'rf', _('Recuitment Firm')
 
+    org_id = models.UUIDField(default=uuid.uuid4, editable=False)
     contacts = models.ManyToManyField(OrganizationContact, blank=True)
     name = models.CharField(max_length=100, unique=True)
     cover_pic = models.ImageField(
