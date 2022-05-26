@@ -10,7 +10,10 @@
   "dependencies": {
     "@apollo/client": "^3.6.5",
     "@vue/apollo-option": "^4.0.0-alpha.17",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.15",
+    "vuex": "^4.0.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
