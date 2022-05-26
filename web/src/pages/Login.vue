@@ -1,15 +1,25 @@
 <template>
   <div
-    class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+    class="
+      min-h-full
+      items-center
+      justify-center
+      py-12
+      px-4
+      sm:px-6
+      lg:px-8
+    "
   >
-    <button @click="login">login</button><br />
-    <button @click="logout">logout</button><br />
+    <!-- <button @click="login">login</button><br />
+    <button @click="logout">logout</button><br /> -->
+    <p>State --- {{ $store.state.core.token }} ---</p>
+    <p class="pt-12">Non-persisted State: --- {{ $store.state.core.test }} --- </p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { loginMutation, logoutMutation } from "./scripts/gqlMutations";
+import { loginMutation, logoutMutation } from "../scripts/gqlMutations";
 
 export default defineComponent({
   data: () => {
@@ -20,6 +30,8 @@ export default defineComponent({
     };
   },
   created() {
+    // this.$store.commit("setToken", "testtoken")
+    // this.$store.commit("setTest", "testtest")
     // console.log(this.$store.state.token);
   },
   methods: {
