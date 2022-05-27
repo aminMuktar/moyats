@@ -1,19 +1,14 @@
 <template>
   <div
-    class="
-      min-h-full
-      items-center
-      justify-center
-      py-12
-      px-4
-      sm:px-6
-      lg:px-8
-    "
+    class="min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
   >
-    <!-- <button @click="login">login</button><br />
-    <button @click="logout">logout</button><br /> -->
-    <p>State --- {{ $store.state.core.token }} ---</p>
-    <p class="pt-12">Non-persisted State: --- {{ $store.state.core.test }} --- </p>
+    <!-- <p>State --- {{ $store.state.core.token }} ---</p>
+    <p class="pt-12">Non-persisted State: --- {{ $store.state.core.test }} --- </p> -->
+    <form action="" method="post" v-if="!$store.state.core.token">
+      email: <input type="text" v-model="username" /> <br /><br />
+      password:<input type="password" v-model="password" /><br /><br />
+      <button @click="login">login</button><br />
+    </form>
   </div>
 </template>
 
@@ -22,20 +17,16 @@ import { defineComponent } from "vue";
 import { loginMutation, logoutMutation } from "../scripts/gqlMutations";
 
 export default defineComponent({
-  data: () => {
+  data() {
     return {
       auth: false,
-      username: null,
-      password: null,
+      username: "",
+      password: "",
     };
   },
-  created() {
-    // this.$store.commit("setToken", "testtoken")
-    // this.$store.commit("setTest", "testtest")
-    // console.log(this.$store.state.token);
-  },
   methods: {
-    async login() {
+    async login(e: any) {
+      e.preventDefault();
       const { data, errors } = await this.$apollo.mutate({
         mutation: loginMutation,
         variables: {
@@ -46,13 +37,12 @@ export default defineComponent({
 
       if (!errors) {
         this.$store.commit("setToken", !!data.baseUserLogin.token);
-        console.log(!!this.$store.state.token);
+        console.log(this.$store.state.core.token);
+        console.log(window.location.host);
+        window.location.href = "http://" + window.location.host + "/dashboard";
+      } else {
+        console.log("errorrrr", errors);
       }
-    },
-    async logout() {
-      await this.$apollo.mutate({
-        mutation: logoutMutation,
-      });
     },
   },
 });
