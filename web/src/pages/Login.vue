@@ -1,13 +1,15 @@
 <template>
-  <!-- <p>State --- {{ $store.state.core.token }} ---</p>
-    <p class="pt-12">Non-persisted State: --- {{ $store.state.core.test }} --- </p> -->
-  <!-- <form action="" method="post">
-      email: <input type="text" v-model="username" /> <br /><br />
-      password:<input type="password" v-model="password" /><br /><br />
-      <button @click="login">login</button><br />
-    </form> -->
   <div
-    class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+    class="
+      min-h-full
+      flex
+      items-center
+      justify-center
+      py-12
+      px-4
+      sm:px-6
+      lg:px-8
+    "
   >
     <div class="max-w-md w-full space-y-8">
       <div>
@@ -31,7 +33,24 @@
               type="email"
               autocomplete="email"
               required="true"
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              class="
+                appearance-none
+                rounded-none
+                relative
+                block
+                w-full
+                px-3
+                py-2
+                border border-gray-300
+                placeholder-gray-500
+                text-gray-900
+                rounded-t-md
+                focus:outline-none
+                focus:ring-indigo-500
+                focus:border-indigo-500
+                focus:z-10
+                sm:text-sm
+              "
               placeholder="Email address"
               v-model="email"
             />
@@ -42,7 +61,24 @@
               name="password"
               type="password"
               required="true"
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              class="
+                appearance-none
+                rounded-none
+                relative
+                block
+                w-full
+                px-3
+                py-2
+                border border-gray-300
+                placeholder-gray-500
+                text-gray-900
+                rounded-b-md
+                focus:outline-none
+                focus:ring-indigo-500
+                focus:border-indigo-500
+                focus:z-10
+                sm:text-sm
+              "
               placeholder="Password"
               v-model="password"
             />
@@ -55,7 +91,14 @@
               id="remember-me"
               name="remember-me"
               type="checkbox"
-              class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              class="
+                h-4
+                w-4
+                text-indigo-600
+                focus:ring-indigo-500
+                border-gray-300
+                rounded
+              "
             />
             <label for="remember-me" class="ml-2 block text-sm text-gray-900">
               Remember me
@@ -74,9 +117,40 @@
 
         <div>
           <button
+            class="p-3 bg-red-500 text-white w-full"
+            @click="signInWithGoogle"
+          >
+            Google
+          </button>
+          <button
+            class="p-3 bg-black text-white w-full mb-5"
+            @click="signInWithGithub"
+          >
+            Github
+          </button>
+          <button
             type="submit"
             @click="login"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="
+              group
+              relative
+              w-full
+              flex
+              justify-center
+              py-2
+              px-4
+              border border-transparent
+              text-sm
+              font-medium
+              rounded-md
+              text-white
+              bg-indigo-600
+              hover:bg-indigo-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-indigo-500
+            "
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <LockClosedIcon
@@ -95,6 +169,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { loginMutation, logoutMutation } from "../scripts/gqlMutations";
+import {
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  getAuth,
+  signInWithPopup,
+} from "firebase/auth";
 
 export default defineComponent({
   data() {
@@ -105,6 +185,26 @@ export default defineComponent({
     };
   },
   methods: {
+    signInWithGithub() {
+      const auth = getAuth();
+      const provider = new GithubAuthProvider();
+      signInWithPopup(auth, provider).then(async (result) => {
+        // TODO: send request to server to check account status
+        console.warn("*************************");
+        console.warn(result);
+        console.warn("*************************");
+      });
+    },
+    signInWithGoogle() {
+      const auth = getAuth();
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider).then(async (result) => {
+        // TODO: send request to server to check account status
+        console.warn("*************************");
+        console.warn(result);
+        console.warn("*************************");
+      });
+    },
     async login(e: any) {
       e.preventDefault();
       const { data, errors } = await this.$apollo.mutate({
