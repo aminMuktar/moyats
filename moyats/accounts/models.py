@@ -73,7 +73,7 @@ class BaseUser(AbstractUser):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True)
     signiture = models.TextField(null=True, blank=True)
     access_token = models.TextField(
-        null=True, blank=True, help_text="Access token for social authed users.", editable=False)
+        null=True, blank=True, help_text="Access token for social authed users.", editable=True)
     notification_setting = models.ForeignKey(
         NotificationSetting, on_delete=models.CASCADE, null=True, blank=True)
     timezone = models.CharField(max_length=200, blank=True, null=True)

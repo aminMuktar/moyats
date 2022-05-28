@@ -1,5 +1,5 @@
 import graphene
-from graphql_jwt import JSONWebTokenMutation
+import graphql_jwt
 from .types import BaseUserType
 from core.models import BaseContact
 from core.helpers import(
@@ -8,7 +8,14 @@ from core.helpers import(
 from django.contrib.auth import login
 from accounts.inputs import NewUserInput, SocialRegistrationInput
 from accounts.models import BaseUser, UserProfile, EmailVerificationCode
+from graphql_jwt.decorators import setup_jwt_cookie
+from graphql_jwt import signals, mixins
+from .decorators import jwt_token_auth
+# import firebase_admin
+from firebase_admin import auth
 
+
+# firebase_admin.initialize_app()
 
 class VerifyEmail(graphene.Mutation):
     class Arguments:
@@ -41,14 +48,35 @@ class VerifyEmail(graphene.Mutation):
         return VerifyEmail(response=True)
 
 
-class SocialMediaLogin(graphene.Mutation):
+class JSONWebTokenMutation(mixins.ObtainJSONWebTokenMixin, graphene.Mutation):
+    class Meta:
+        abstract = True
+
+    @classmethod
+    def Field(cls, *args, **kwargs):
+        cls._meta.arguments.update(
+            {
+                "username": graphene.String(required=False),
+                "password": graphene.String(required=False),
+            },
+        )
+        return super().Field(*args, **kwargs)
+
+    @classmethod
+    @jwt_token_auth
+    def mutate(cls, root, info, **kwargs):
+        return cls.resolve(root, info, **kwargs)
+
+
+class BaseSocialLogin(JSONWebTokenMutation):
     user = graphene.Field(BaseUserType)
 
-    response = graphene.Boolean()
+    class Arguments:
+        access_token = graphene.String(required=False)
 
-    def mutate(root, info, input: SocialRegistrationInput):
-        print(info.context.__dict__, "#"*20)
-        return SocialMediaLogin(response=True)
+    @classmethod
+    def resolve(cls, root, info, **kwargs):
+        return cls(user=info.context.user)
 
 
 class SocialMediaRegistration(graphene.Mutation):
@@ -58,8 +86,18 @@ class SocialMediaRegistration(graphene.Mutation):
     response = graphene.Field(BaseUserType)
 
     def mutate(root, info, input: SocialRegistrationInput):
-        if user_exists(input.email):
-            raise Exception("E-mail is already registered")
+        # if user_exists(input.email):
+        #     raise Exception("E-mail is already registered")
+        uid = None
+        try:
+            decoded_token = auth.verify_id_token(input.access_token)
+            uid = decoded_token['uid']
+        except Exception:
+            raise Exception("Invalid token")
+
+        user_search = BaseUser.objects.filter(access_token=uid)
+        if user_search.exists():
+            raise Exception("User already exists")
 
         user_profile = UserProfile.objects.create(
             first_name=input.first_name,
@@ -70,7 +108,7 @@ class SocialMediaRegistration(graphene.Mutation):
         # )
         user = BaseUser.objects.create_user(
             email=input.email,
-            access_token=input.access_token,
+            access_token=uid,
             username=input.email,
             user_profile=user_profile,
             source=input.source

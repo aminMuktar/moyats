@@ -120,8 +120,8 @@ USE_TZ = True
 AUTH_USER_MODEL = "accounts.BaseUser"
 
 AUTHENTICATION_BACKENDS = [
-    "accounts.backends.EmailBackend",
     "graphql_jwt.backends.JSONWebTokenBackend",
+    "accounts.backends.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 
