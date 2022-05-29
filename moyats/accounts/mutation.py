@@ -1,5 +1,4 @@
 import graphene
-import graphql_jwt
 from .types import BaseUserType
 from core.models import BaseContact
 from core.helpers import(
@@ -10,8 +9,7 @@ from accounts.inputs import NewUserInput, SocialRegistrationInput
 from accounts.models import BaseUser, UserProfile, EmailVerificationCode
 from graphql_jwt.decorators import setup_jwt_cookie
 from graphql_jwt import signals, mixins
-from .decorators import jwt_token_auth
-# import firebase_admin
+from .decorators import jwt_token_auth, social_jwt_token_auth
 from firebase_admin import auth
 
 
@@ -85,36 +83,14 @@ class SocialMediaRegistration(graphene.Mutation):
 
     response = graphene.Field(BaseUserType)
 
-    def mutate(root, info, input: SocialRegistrationInput):
-        # if user_exists(input.email):
-        #     raise Exception("E-mail is already registered")
-        uid = None
-        try:
-            decoded_token = auth.verify_id_token(input.access_token)
-            uid = decoded_token['uid']
-        except Exception:
-            raise Exception("Invalid token")
+    @classmethod
+    def resolve(cls, root, info, **kwargs):
+        return cls(response=info.context.user)
 
-        user_search = BaseUser.objects.filter(access_token=uid)
-        if user_search.exists():
-            raise Exception("User already exists")
-
-        user_profile = UserProfile.objects.create(
-            first_name=input.first_name,
-            last_name=input.last_name,
-        )
-        # base_contact = BaseContact.objects.create(
-        #     cell_number=input.first_name,
-        # )
-        user = BaseUser.objects.create_user(
-            email=input.email,
-            access_token=uid,
-            username=input.email,
-            user_profile=user_profile,
-            source=input.source
-            # base_contact=base_contact,
-        )
-        return SocialMediaRegistration(response=user)
+    @classmethod
+    @social_jwt_token_auth
+    def mutate(cls, root, info, **kwargs):
+        return cls.resolve(root, info, **kwargs)
 
 
 class AddNewUser(graphene.Mutation):

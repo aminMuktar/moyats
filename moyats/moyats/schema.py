@@ -9,7 +9,6 @@ from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration, 
 
 class Mutation(graphene.ObjectType):
     base_user_login =graphql_jwt.ObtainJSONWebToken.Field()
-    base_social_login = BaseSocialLogin.Field()
     base_user_logout = graphql_jwt.DeleteJSONWebTokenCookie.Field()
     check_email_verification = VerifyEmail.Field()
     register = AddNewUser.Field()
