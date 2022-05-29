@@ -166,9 +166,7 @@
                 d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
               />
             </svg>
-            <p class="px-1 text-md">
-              Sign in
-            </p>
+            <p class="px-1 text-md">Sign in</p>
           </button>
         </div>
       </div>
@@ -178,13 +176,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { loginMutation, logoutMutation } from "../scripts/gqlMutations";
 import {
   GoogleAuthProvider,
   GithubAuthProvider,
   getAuth,
   signInWithPopup,
 } from "firebase/auth";
+import * as q from "../queries/auth";
 
 export default defineComponent({
   data() {
@@ -198,27 +196,44 @@ export default defineComponent({
     signInWithGithub() {
       const auth = getAuth();
       const provider = new GithubAuthProvider();
-      signInWithPopup(auth, provider).then(async (result) => {
-        // TODO: send request to server to check account status
-        console.warn("*************************");
-        console.warn(result);
-        console.warn("*************************");
-      });
+      signInWithPopup(auth, provider)
+        .then(async (result) => {
+          // TODO: send request to server to check account status
+          await this.socialLogin(result.user.accessToken, "gh");
+        })
+        .catch((error) => {
+          // TODO: handle social auth erros here
+          console.warn(error);
+        });
     },
     signInWithGoogle() {
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider).then(async (result) => {
-        // TODO: send request to server to check account status
-        console.warn("*************************");
-        console.warn(result);
-        console.warn("*************************");
+      signInWithPopup(auth, provider)
+        .then(async (result) => {
+          await this.socialLogin(result.user.accessToken, "go");
+        })
+        .catch((error) => {
+          // TODO: handle social auth erros here
+          console.warn(error);
+        });
+    },
+    async socialLogin(accessToken: string, source: string) {
+      const { data, errors } = await this.$apollo.mutate({
+        mutation: q.SOCIAL_AUTH,
+        variables: {
+          input: { accessToken, source },
+        },
       });
+      if (data) {
+        this.$store.commit("setToken", true);
+        window.location.assign("/dashboard");
+      }
     },
     async login(e: any) {
       e.preventDefault();
       const { data, errors } = await this.$apollo.mutate({
-        mutation: loginMutation,
+        mutation: q.LOGIN_USER,
         variables: {
           username: this.email,
           password: this.password,
@@ -226,7 +241,7 @@ export default defineComponent({
       });
 
       if (!errors) {
-        this.$store.commit("setToken", !!data.baseUserLogin.token);
+        this.$store.commit("setToken", true);
         window.location.href = "http://" + window.location.host + "/dashboard";
       } else {
         console.log("errorrrr", errors);

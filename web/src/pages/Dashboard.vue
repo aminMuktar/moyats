@@ -3,7 +3,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { accountData } from "./../scripts/gqlQueryies";
+import { ACCOUNT_DATA } from "../queries/auth";
 
 export default defineComponent({
   data: () => {
@@ -14,7 +14,7 @@ export default defineComponent({
   methods: {
     async userData() {
       const { data, errors } = await this.$apollo.query({
-        query: accountData,
+        query: ACCOUNT_DATA,
       });
       if (!errors) {
         this.email = data.accountUser.email;
