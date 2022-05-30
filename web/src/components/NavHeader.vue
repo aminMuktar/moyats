@@ -1,31 +1,7 @@
 <template>
-  <nav class="bg-white border-gray-200 sm:px-4 py-2.5 dark:bg-gray-800">
+  <nav class="border-gray-200 sm:px-4 py-2.5">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
-      <div class="flex items-center md:order-2">
-        <button
-          type="button"
-          class="
-            flex
-            mr-3
-            text-sm
-            bg-gray-800
-            rounded-full
-            md:mr-0
-            focus:ring-4 focus:ring-gray-300
-            dark:focus:ring-gray-600
-          "
-          id="user-menu-button"
-          aria-expanded="false"
-          data-dropdown-toggle="dropdown"
-        >
-          <span class="sr-only">Open user menu</span>
-          <img
-            class="w-8 h-8 rounded-full"
-            src="https://i.picsum.photos/id/866/536/354.jpg?hmac=tGofDTV7tl2rprappPzKFiZ9vDh5MKj39oa2D--gqhA"
-            alt="user photo"
-          />
-        </button>
-
+      <div class="flex items-center order-2">
         <div
           class="
             hidden
@@ -50,22 +26,6 @@
             transform: translate3d(1015px, 950.5px, 0px);
           "
         >
-          <div class="py-3 px-4">
-            <span class="block text-sm text-gray-900 dark:text-white"
-              >Bonnie Green</span
-            >
-            <span
-              class="
-                block
-                text-sm
-                font-medium
-                text-gray-500
-                truncate
-                dark:text-gray-400
-              "
-              >name@flowbite.com</span
-            >
-          </div>
           <ul class="py-1" aria-labelledby="dropdown">
             <li>
               <a
@@ -133,6 +93,61 @@
             </li>
           </ul>
         </div>
+        <div class="flex flex-row">
+          <menu-drop-down :active="active">
+            <button
+              @click="active = !active"
+              class="
+                mx-2
+                bg-black
+                text-white
+                border-2 border-gray-500
+                rounded-full
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </button>
+          </menu-drop-down>
+          <!-- <button
+            type="button"
+            class="
+              flex
+              mr-3
+              text-sm
+              bg-gray-800
+              rounded-full
+              md:mr-0
+              text-white
+              focus:ring-4 focus:ring-gray-300
+              dark:focus:ring-gray-600
+            "
+            @click="logout"
+            id="user-menu-button"
+            aria-expanded="false"
+            data-dropdown-toggle="dropdown"
+          >
+            <span>Logout</span>
+          </button> -->
+        </div>
+
         <button
           data-collapse-toggle="mobile-menu-2"
           type="button"
@@ -194,130 +209,35 @@
             mt-4
             md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium
           "
-        >
-          <li>
-            <a
-              href="#"
-              class="
-                block
-                py-2
-                pr-4
-                pl-3
-                text-white
-                bg-blue-700
-                rounded
-                md:bg-transparent md:text-blue-700 md:p-0
-                dark:text-white
-              "
-              aria-current="page"
-              >Home</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="
-                block
-                py-2
-                pr-4
-                pl-3
-                text-gray-700
-                border-b border-gray-100
-                hover:bg-gray-50
-                md:hover:bg-transparent
-                md:border-0
-                md:hover:text-blue-700
-                md:p-0
-                dark:text-gray-400
-                md:dark:hover:text-white
-                dark:hover:bg-gray-700 dark:hover:text-white
-                md:dark:hover:bg-transparent
-                dark:border-gray-700
-              "
-              >About</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="
-                block
-                py-2
-                pr-4
-                pl-3
-                text-gray-700
-                border-b border-gray-100
-                hover:bg-gray-50
-                md:hover:bg-transparent
-                md:border-0
-                md:hover:text-blue-700
-                md:p-0
-                dark:text-gray-400
-                md:dark:hover:text-white
-                dark:hover:bg-gray-700 dark:hover:text-white
-                md:dark:hover:bg-transparent
-                dark:border-gray-700
-              "
-              >Services</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="
-                block
-                py-2
-                pr-4
-                pl-3
-                text-gray-700
-                border-b border-gray-100
-                hover:bg-gray-50
-                md:hover:bg-transparent
-                md:border-0
-                md:hover:text-blue-700
-                md:p-0
-                dark:text-gray-400
-                md:dark:hover:text-white
-                dark:hover:bg-gray-700 dark:hover:text-white
-                md:dark:hover:bg-transparent
-                dark:border-gray-700
-              "
-              >Pricing</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="
-                block
-                py-2
-                pr-4
-                pl-3
-                text-gray-700
-                border-b border-gray-100
-                hover:bg-gray-50
-                md:hover:bg-transparent
-                md:border-0
-                md:hover:text-blue-700
-                md:p-0
-                dark:text-gray-400
-                md:dark:hover:text-white
-                dark:hover:bg-gray-700 dark:hover:text-white
-                md:dark:hover:bg-transparent
-                dark:border-gray-700
-              "
-              >Contact</a
-            >
-          </li>
-        </ul>
+        ></ul>
       </div>
     </div>
   </nav>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { LOGOUT } from "../queries/auth";
+import MenuDropDown from "./MenuDropDown.vue";
 
 export default defineComponent({
+  components: { MenuDropDown },
   setup() {},
+  data: () => ({
+    active: false,
+  }),
+  methods: {
+    logout() {
+      this.$apollo
+        .mutate({
+          mutation: LOGOUT,
+        })
+        .then(({ data }) => {
+          if (data) {
+            this.$store.commit("clearToken");
+            location.assign("/login");
+          }
+        });
+    },
+  },
 });
 </script>

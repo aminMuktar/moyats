@@ -13,6 +13,9 @@ export const CoreModule = {
     test: ""
   },
   mutations: {
+    clearToken(state: any) {
+      state.token = false
+    },
     setTest(state: any, token: any) {
       state.test = token
     },

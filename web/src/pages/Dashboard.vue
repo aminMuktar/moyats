@@ -1,16 +1,12 @@
 <template>
-  <div class="flex flex-row">
-    <Sidebar />
-    <Content />
-  </div>
+  <DashboardLayout />
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import Sidebar from "../components/Sidebar.vue";
-import Content from "../components/Content.vue";
+import DashboardLayout from "../layouts/DashboardLayout.vue";
 
 export default defineComponent({
-  setup() {},
-  components: { Sidebar, Content },
+    setup() { },
+    components: { DashboardLayout }
 });
 </script>
