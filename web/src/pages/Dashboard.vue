@@ -1,25 +1,16 @@
 <template>
-  <div>Dashboard</div>
+  <div class="flex flex-row">
+    <Sidebar />
+    <Content />
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { ACCOUNT_DATA } from "../queries/auth";
+import Sidebar from "../components/Sidebar.vue";
+import Content from "../components/Content.vue";
 
 export default defineComponent({
-  data: () => {
-    return {
-      email: null,
-    };
-  },
-  methods: {
-    async userData() {
-      const { data, errors } = await this.$apollo.query({
-        query: ACCOUNT_DATA,
-      });
-      if (!errors) {
-        this.email = data.accountUser.email;
-      }
-    },
-  },
+  setup() {},
+  components: { Sidebar, Content },
 });
 </script>

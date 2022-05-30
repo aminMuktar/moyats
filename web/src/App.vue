@@ -1,8 +1,5 @@
 <template>
-  <div class="m-5">
-    <button v-if="$store.state.core.token" @click="logout">logout</button><br />
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script lang="ts">
