@@ -193,7 +193,7 @@ export default defineComponent({
       const auth = getAuth();
       const provider = new GithubAuthProvider();
       signInWithPopup(auth, provider)
-        .then(async (result) => {
+        .then(async (result: any) => {
           // TODO: send request to server to check account status
           await this.socialLogin(result.user.accessToken, "gh");
         })
@@ -206,7 +206,7 @@ export default defineComponent({
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
-        .then(async (result) => {
+        .then(async (result: any) => {
           await this.socialLogin(result.user.accessToken, "go");
         })
         .catch((error) => {

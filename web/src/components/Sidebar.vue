@@ -33,8 +33,8 @@
       "
     >
       <div class="flex items-start justify-start mt-3">
-        <div class="flex items-start">
-          <img src="../assets/icon.png" class="w-10 mx-3" alt="">
+        <div class="flex items-start mx-7 gap-1">
+          <img src="../assets/icon.png" class="w-10" alt="">
           <span class="mx-2 text-2xl font-semibold text-white pt-2 font-sans">Moyats</span>
         </div>
       </div>
