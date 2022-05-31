@@ -1,10 +1,12 @@
 <template>
-  <dashboard-card-widget :height="40">
+  <dashboard-card-widget>
     <template v-slot:header>
       <p class="p-3 font-semibold text-lg">My Interviews</p>
     </template>
     <template v-slot:body>
-      <p class="pt-10 text-center">you don't have any interviews</p>
+      <div>
+        <p class="pt-10 text-center">you don't have any interviews</p>
+      </div>
     </template>
   </dashboard-card-widget>
 </template>
