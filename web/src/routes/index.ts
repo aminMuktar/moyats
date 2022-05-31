@@ -9,6 +9,7 @@ import Candidates from '../pages/dashboard/Candidates.vue'
 import Companies from '../pages/dashboard/Companies.vue'
 import Contacts from '../pages/dashboard/Contacts.vue'
 import Reports from '../pages/dashboard/Reports.vue'
+import CompanySetup from '../pages/CompanySetup.vue'
 
 import { authguard, loginPageGuard } from "../utils/authGuard";
 
@@ -72,6 +73,14 @@ export default createRouter({
           component: Reports
         },
       ]
+    },
+    {
+      path: "/company-setup",
+      name: "CompanySetup",
+      component: CompanySetup,
+      // beforeEnter: (to, from, next) => {
+      //   loginPageGuard(to, from, next);
+      // },
     },
   ],
 });

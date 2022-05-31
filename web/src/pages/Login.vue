@@ -111,15 +111,15 @@
           </div>
         </div>
 
-        <div>
+        <div class="gap-y-3 flex flex-col">
           <button
-            class="p-3 bg-red-500 text-white w-full"
+            class="p-3 bg-red-500 text-white w-full rounded-xl"
             @click="signInWithGoogle"
           >
             Google
           </button>
           <button
-            class="p-3 bg-black text-white w-full mb-5"
+            class="p-3 bg-black text-white w-full mb-5 rounded-xl"
             @click="signInWithGithub"
           >
             Github

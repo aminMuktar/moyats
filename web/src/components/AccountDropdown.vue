@@ -22,6 +22,7 @@
     <template v-slot:list>
       <div class="py-1">
         <a
+          v-if="!empty"
           href="#"
           :class="[
             'hover:bg-gray-100 cursor-pointer',
@@ -31,6 +32,7 @@
           >Account settings</a
         >
         <a
+          v-if="!empty"
           href="#"
           :class="[
             'hover:bg-gray-100 cursor-pointer',
@@ -60,6 +62,9 @@ import MenuDropDown from "./MenuDropDown.vue";
 export default defineComponent({
   components: { MenuDropDown },
   setup() {},
+  props: {
+    empty: Boolean,
+  },
   data: () => ({
     active: false,
     selected: false,
