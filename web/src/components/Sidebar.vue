@@ -57,7 +57,7 @@
           <span class="mx-2 text-2xl font-semibold text-white pt-2 font-sans">Moyats</span>
         </div>
       </div>
-      <ul class="space-y-2 mt-2">
+      <ul class="space-y-2 mt-5">
         <li v-for="(side, idx) in sideItems" :key="idx">
           <router-link
             :to="side.path"

@@ -240,7 +240,7 @@ export default defineComponent({
         },
       });
 
-      if (!errors) {
+      if (data) {
         this.$store.commit("setToken", true);
         window.location.href = "http://" + window.location.host + "/dashboard";
       } else {
