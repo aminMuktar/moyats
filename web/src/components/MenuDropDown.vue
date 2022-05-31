@@ -1,7 +1,7 @@
 <template>
   <Menu as="div" class="relative inline-block text-left">
     <div>
-      <slot></slot>
+      <slot name="button"></slot>
     </div>
 
     <transition
@@ -14,47 +14,20 @@
       leave-to-class="transform opacity-0 scale-95"
     >
       <div
+        :class="[width]"
         class="
           origin-top-right
           absolute
           right-0
-          w-56
           rounded-md
           shadow-lg
+          z-10
           bg-white
           ring-1 ring-black ring-opacity-5
           focus:outline-none
         "
       >
-        <div class="py-1">
-          <a
-            href="#"
-            :class="[
-              'hover:bg-gray-100 cursor-pointer',
-              selected ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-              'block px-4 py-2 text-sm',
-            ]"
-            >Account settings</a
-          >
-          <a
-            href="#"
-            :class="[
-              'hover:bg-gray-100 cursor-pointer',
-              selected ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-              'block px-4 py-2 text-sm',
-            ]"
-            >Support</a
-          >
-          <a
-            @click="logout"
-            :class="[
-              'hover:bg-gray-100 cursor-pointer',
-              selected ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-              'block px-4 py-2 text-sm',
-            ]"
-            >Logout</a
-          >
-        </div>
+        <slot name="list"></slot>
       </div>
     </transition>
   </Menu>
@@ -65,11 +38,9 @@ import { LOGOUT } from "../queries/auth";
 
 export default defineComponent({
   props: {
+    width: String,
     active: Boolean,
   },
-  data: () => ({
-    selected: false,
-  }),
   methods: {
     async logout() {
       const { data } = await this.$apollo.mutate({

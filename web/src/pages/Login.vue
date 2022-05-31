@@ -12,16 +12,12 @@
     "
   >
     <div class="max-w-md w-full space-y-8">
-      <div>
-        <img
-          class="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-          alt="Workflow"
-        />
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
-        </h2>
+      <div class="justify-center flex-row flex">
+        <img src="../assets/icon.png" class="justify-center w-16 h-16" alt="" />
       </div>
+      <h2 class="mt-6 text-center text-3xl font-semibold text-gray-900">
+        Sign in to your account
+      </h2>
       <div class="mt-8 space-y-6">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
@@ -197,7 +193,7 @@ export default defineComponent({
       const auth = getAuth();
       const provider = new GithubAuthProvider();
       signInWithPopup(auth, provider)
-        .then(async (result) => {
+        .then(async (result: any) => {
           // TODO: send request to server to check account status
           await this.socialLogin(result.user.accessToken, "gh");
         })
@@ -210,7 +206,7 @@ export default defineComponent({
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
-        .then(async (result) => {
+        .then(async (result: any) => {
           await this.socialLogin(result.user.accessToken, "go");
         })
         .catch((error) => {
@@ -240,7 +236,7 @@ export default defineComponent({
         },
       });
 
-      if (!errors) {
+      if (data) {
         this.$store.commit("setToken", true);
         window.location.href = "http://" + window.location.host + "/dashboard";
       } else {
