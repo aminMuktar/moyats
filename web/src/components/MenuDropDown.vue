@@ -21,6 +21,7 @@
           right-0
           rounded-md
           shadow-lg
+          z-10
           bg-white
           ring-1 ring-black ring-opacity-5
           focus:outline-none

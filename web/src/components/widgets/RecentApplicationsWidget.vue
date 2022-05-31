@@ -1,5 +1,5 @@
 <template>
-  <dashboard-card-widget>
+  <dashboard-card-widget :height="40">
     <template v-slot:header>
       <p class="p-3 font-semibold text-lg">Recent applications</p>
     </template>
