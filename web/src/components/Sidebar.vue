@@ -32,8 +32,8 @@
         lg:translate-x-0 lg:static lg:inset-0
       "
     >
-      <div class="flex items-start justify-start mt-3">
-        <div class="flex items-start mx-7 gap-1">
+      <div class="flex items-start justify-start mt-3 border-b-2 border-gray-700">
+        <div class="flex items-start mx-7 gap-1 mb-3">
           <img src="../assets/icon.png" class="w-10" alt="">
           <span class="mx-2 text-2xl font-semibold text-white pt-2 font-sans">Moyats</span>
         </div>
