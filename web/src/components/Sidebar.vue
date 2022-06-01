@@ -4,60 +4,33 @@
     <div
       :class="isOpen ? 'block' : 'hidden'"
       @click="isOpen = false"
-      class="
-        fixed
-        inset-0
-        z-20
-        transition-opacity
-        bg-black
-        opacity-50
-        lg:hidden
-      "
+      class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"
     ></div>
     <!-- End Backdrop -->
 
     <div
       :class="isOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-      class="
-        fixed
-        inset-y-0
-        left-0
-        z-30
-        w-48
-        overflow-y-auto
-        transition
-        duration-300
-        transform
-        bg-gray-900
-        lg:translate-x-0 lg:static lg:inset-0
-      "
+      class="fixed inset-y-0 left-0 z-30 w-48 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0"
     >
-      <div class="flex items-start justify-start mt-3 border-b-2 border-gray-700">
+      <div
+        class="flex items-start justify-start mt-3 border-b-2 border-gray-700"
+        style="height: 52px"
+      >
         <div class="flex items-start mx-7 gap-1 mb-3">
-          <img src="../assets/icon.png" class="w-10" alt="">
-          <span class="mx-2 text-2xl font-semibold text-white pt-2 font-sans">Moyats</span>
+          <img src="../assets/icon.png" class="w-8 mt-1" alt="" />
+          <span class="mx-2 text-2xl font-semibold text-white pt-1 font-sans"
+            >Moyats</span
+          >
         </div>
       </div>
       <ul class="space-y-2 mt-5">
         <li v-for="(side, idx) in sideItems" :key="idx">
           <router-link
-            :to="side.path"
-            class="
-              flex
-              items-center
-              p-2
-              mx-2
-              text-base
-              font-normal
-              text-gray-900
-              rounded-lg
-              dark:text-white
-              hover:bg-gray-100
-              dark:hover:bg-gray-700
-            "
+            class="flex items-center p-2 mx-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
             :class="{
               'bg-gray-700': $route.path === side.path,
             }"
+            :to="side.path"
           >
             <div v-html="side.icon"></div>
             <span class="ml-3" v-text="side.title"></span>
@@ -155,4 +128,3 @@ export default defineComponent({
   }),
 });
 </script>
-
