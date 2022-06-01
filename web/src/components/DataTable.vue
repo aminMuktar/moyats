@@ -101,7 +101,12 @@ interface Activities {
   Company: any;
 }
 
+// const keyofprops = keys<Activities>();
+
 export default defineComponent({
+  created() {
+    // this.Titler();
+  },
   data() {
     return {
       tableTitles: () => {
@@ -118,10 +123,27 @@ export default defineComponent({
         ];
         return arr;
       },
-      activities: <Activities[]>[],
+      activities: <Activities[]>[
+        {
+          Date: "2022-1-1:10:00 am",
+          Name: "Amar",
+          Regarding: "Something",
+          Notes: "Some Notes",
+          EnteredBy: "Someone",
+          Source: "From Somewhere",
+          JobOrder: "Just Something",
+          Company: "Something",
+        },
+      ],
     };
   },
 
-  methods: {},
+  methods: {
+    // Titler() {
+    //   this.tableTitles().map((e) => {
+    //     console.log(e);
+    //   });
+    // },
+  },
 });
 </script>
