@@ -13,8 +13,6 @@
         relative
       "
     >
-      <!-- <div>
-    <table class="w-full text-sm text-left text-gray-500"> -->
       <thead class="text-xs uppercase bg-gray-50">
         <tr>
           <th scope="col" class="p-4">
@@ -58,6 +56,7 @@
           <td class="w-4 p-4">
             <div class="flex items-center">
               <input
+                @change="singleItemSelected"
                 v-model="item.checked"
                 id="checkbox-table-search-1"
                 type="checkbox"
@@ -83,7 +82,7 @@
             v-for="(k, ix) in getkeys(item)"
             :key="ix"
             scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+            class="px-2 py-4 font-normal text-gray-900 whitespace-nowrap"
           >
             <slot :name="k" v-bind="{ item }"> </slot>
           </th>
@@ -102,7 +101,14 @@ export default defineComponent({
     getkeys(item: any) {
       return Object.keys(item).filter((x: any) => x !== "checked");
     },
+    singleItemSelected() {
+      this.$emit(
+        "selected",
+        this.items.filter((e: any) => e.checked === true)
+      );
+    },
     tableSelected(e: any) {
+      this.$emit("checkedAll", this.selectAll);
       this.items.forEach((e: any) => (e.checked = this.selectAll));
       this.selectedTable = true;
     },

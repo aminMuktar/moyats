@@ -1,6 +1,16 @@
 <template>
   <header
-    class="flex items-center border-t-4 border-gray-600 justify-between px-6 py-4 h-16 bg-white border-b-1"
+    class="
+      flex
+      items-center
+      border-t-4 border-gray-600
+      justify-between
+      px-6
+      py-4
+      h-16
+      bg-white
+      border-b-1
+    "
   >
     <div class="flex items-center">
       <button
@@ -43,28 +53,7 @@
     </div>
 
     <div class="flex items-center">
-      <button
-        v-if="jobOrderButton"
-        class="flex m-10 justify-between bg-slate-400 p-3 w-36 rounded-full"
-      >
-        <div class="bg-gray-700 rounded-full ml-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-        </div>
-        <div>Job Order</div>
-      </button>
+      <quick-action-button />
       <notificaiton-dropdown />
       <account-dropdown />
     </div>
@@ -75,9 +64,10 @@
 import { defineComponent } from "vue";
 import AccountDropdown from "../components/AccountDropdown.vue";
 import NotificaitonDropdown from "../components/NotificationDropdown.vue";
+import QuickActionButton from "./QuickActionButton.vue";
 
 export default defineComponent({
-  components: { NotificaitonDropdown, AccountDropdown },
+  components: { NotificaitonDropdown, AccountDropdown, QuickActionButton },
   data: () => ({
     isOpen: false,
     dropdownOpen: false,
