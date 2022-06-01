@@ -2,6 +2,7 @@
   <div
     class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative"
   >
+    <table-filter-section></table-filter-section>
     <table
       class="
         border-collapse
@@ -89,13 +90,20 @@
         </tr>
       </tbody>
     </table>
+    <pagination-row></pagination-row>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import PaginationRow from "./widgets/PaginationRow.vue";
+import TableFilterSection from "./widgets/TableFilterSection.vue";
 
 export default defineComponent({
+  components: {
+    PaginationRow,
+    TableFilterSection,
+  },
   props: ["items", "headers"],
   methods: {
     getkeys(item: any) {

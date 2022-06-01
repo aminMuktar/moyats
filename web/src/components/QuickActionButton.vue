@@ -1,7 +1,15 @@
 <template>
   <div>
     <button
-      class="flex m-10 justify-between bg-white hover:bg-gray-100 hover:shadow-sm hover:scale-105 border-2 p-2 rounded-full"
+      class="
+        flex
+        justify-between
+        bg-white
+        hover:bg-gray-100 hover:shadow-sm hover:scale-105
+        border-2
+        p-1
+        rounded-full
+      "
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
