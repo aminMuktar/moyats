@@ -6,27 +6,14 @@
         <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
           <center>
             <div
-              class="
-                p-8
-                bg-white
-                rounded-lg
-                border-2 border-gray-100
-                lg:p-12 lg:col-span-3
-                w-3/4
-              "
+              class="p-8 mt-10 bg-white rounded-lg border-2 border-gray-100 lg:p-12 lg:col-span-3 w-3/4"
             >
               <p class="text-3xl py-10">Reigster your organization</p>
               <form action="" class="space-y-4">
                 <div>
                   <label class="sr-only" for="name">Name</label>
                   <input
-                    class="
-                      w-full
-                      p-3
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-3 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Name"
                     type="text"
                     id="name"
@@ -37,14 +24,7 @@
                   <div>
                     <label class="sr-only" for="email">Email</label>
                     <input
-                      class="
-                        w-full
-                        p-3
-                        text-sm
-                        border-gray-200
-                        rounded-lg
-                        border-2
-                      "
+                      class="w-full p-3 text-sm border-gray-200 rounded-lg border-2"
                       placeholder="Email address"
                       type="email"
                       id="email"
@@ -54,17 +34,21 @@
                   <div>
                     <label class="sr-only" for="phone">Phone</label>
                     <input
-                      class="
-                        w-full
-                        p-3
-                        text-sm
-                        border-gray-200
-                        rounded-lg
-                        border-2
-                      "
+                      class="w-full p-3 text-sm border-gray-200 rounded-lg border-2"
                       placeholder="Phone Number"
                       type="tel"
                       id="phone"
+                    />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div>
+                    <label class="sr-only" for="subdomain">Subdomain</label>
+                    <input
+                      class="w-full p-3 text-sm border-gray-200 rounded-lg border-2"
+                      placeholder="Subdomain"
+                      type="text"
                     />
                   </div>
                 </div>
@@ -122,14 +106,7 @@
                 <div>
                   <label class="sr-only" for="message">Message</label>
                   <textarea
-                    class="
-                      w-full
-                      p-3
-                      text-sm
-                      border-gray-200
-                      rounded-lg
-                      border-2
-                    "
+                    class="w-full p-3 text-sm border-gray-200 rounded-lg border-2"
                     placeholder="Message"
                     rows="8"
                     id="message"
@@ -139,18 +116,7 @@
                 <div class="mt-4">
                   <button
                     type="submit"
-                    class="
-                      inline-flex
-                      items-center
-                      justify-center
-                      w-full
-                      px-5
-                      py-3
-                      text-white
-                      bg-black
-                      rounded-lg
-                      sm:w-auto
-                    "
+                    class="inline-flex items-center justify-center w-full px-5 py-3 text-white bg-black rounded-lg sm:w-auto"
                   >
                     <span class="font-medium"> Register Now </span>
 
