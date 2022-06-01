@@ -51,7 +51,6 @@ export default defineComponent({
         Source: "Email",
         JobOrder: "Mechanic",
         Company: "Moyats Corp",
-        checked: false,
       },
       {
         Date: "Mon 12, 2021",
@@ -63,7 +62,6 @@ export default defineComponent({
         Source: "Email",
         JobOrder: "Mechanic",
         Company: "Moyats ORg",
-        checked: false,
       },
       {
         Date: "Mon 12, 2021",
@@ -75,7 +73,6 @@ export default defineComponent({
         Source: "Email",
         JobOrder: "Mechanic",
         Company: "Moyats Nation",
-        checked: false,
       },
     ],
   }),

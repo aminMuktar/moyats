@@ -1,6 +1,20 @@
 <template>
-  <div>
-    <table class="w-full text-sm text-left text-gray-500">
+  <div
+    class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative"
+  >
+    <table
+      class="
+        border-collapse
+        table-auto
+        w-full
+        whitespace-no-wrap
+        bg-white
+        table-striped
+        relative
+      "
+    >
+      <!-- <div>
+    <table class="w-full text-sm text-left text-gray-500"> -->
       <thead class="text-xs uppercase bg-gray-50">
         <tr>
           <th scope="col" class="p-4">
@@ -86,12 +100,15 @@ export default defineComponent({
   props: ["items", "headers"],
   methods: {
     getkeys(item: any) {
-      return Object.keys(item);
+      return Object.keys(item).filter((x: any) => x !== "checked");
     },
     tableSelected(e: any) {
       this.items.forEach((e: any) => (e.checked = this.selectAll));
       this.selectedTable = true;
     },
+  },
+  created() {
+    this.items.forEach((e: any) => (e.checked = false));
   },
   data: () => ({
     selectAll: false,
