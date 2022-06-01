@@ -22,7 +22,6 @@
           />
         </svg>
       </button>
-
       <div class="relative mx-4 lg:mx-0">
         <button class="text-gray-800 rounded-full hover:bg-gray-300 p-2 mx-2">
           <svg
@@ -44,6 +43,28 @@
     </div>
 
     <div class="flex items-center">
+      <button
+        v-if="jobOrderButton"
+        class="flex m-10 justify-between bg-slate-400 p-3 w-36 rounded-full"
+      >
+        <div class="bg-gray-700 rounded-full ml-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+        </div>
+        <div>Job Order</div>
+      </button>
       <notificaiton-dropdown />
       <account-dropdown />
     </div>
@@ -60,6 +81,10 @@ export default defineComponent({
   data: () => ({
     isOpen: false,
     dropdownOpen: false,
+    jobOrderButton: window.location.pathname === "/joborders" ? true : false,
   }),
+  created() {
+    console.log(window.location.pathname);
+  },
 });
 </script>
