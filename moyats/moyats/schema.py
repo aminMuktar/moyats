@@ -25,7 +25,7 @@ class Query(graphene.ObjectType):
 
     @login_required
     def resolve_activities(self, info, page_size, page, **kwargs):
-        all_activities = Activity.objects.all()
+        all_activities = Activity.objects.filter(user=info.context.user)
         return core_paginator(all_activities, page_size, page, ActivityPaginatedType)
 
     @login_required

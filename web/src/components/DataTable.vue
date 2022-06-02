@@ -3,7 +3,13 @@
     class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative"
   >
     <table-filter-section></table-filter-section>
+    <p
+      class="text-center py-5 text-gray-500"
+      v-if="items.length === 0"
+      v-text="emptyMessage"
+    ></p>
     <table
+      v-else
       class="
         border-collapse
         table-auto
@@ -90,6 +96,7 @@
         </tr>
       </tbody>
     </table>
+
     <pagination-row></pagination-row>
   </div>
 </template>
@@ -104,7 +111,7 @@ export default defineComponent({
     PaginationRow,
     TableFilterSection,
   },
-  props: ["items", "headers"],
+  props: ["items", "headers", "emptyMessage"],
   methods: {
     getkeys(item: any) {
       return Object.keys(item).filter((x: any) => x !== "checked");
@@ -120,9 +127,6 @@ export default defineComponent({
       this.items.forEach((e: any) => (e.checked = this.selectAll));
       this.selectedTable = true;
     },
-  },
-  created() {
-    this.items.forEach((e: any) => (e.checked = false));
   },
   data: () => ({
     selectAll: false,

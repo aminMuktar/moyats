@@ -1,6 +1,7 @@
 <template>
   <div>
     <data-table
+      empty-message="You don't have any activities yet."
       :items="activities"
       :headers="headers"
       @checkedAll="allChecked"
@@ -51,10 +52,10 @@ export default defineComponent({
     await this.fetchActivities();
   },
   methods: {
+    parseDate,
     singleSelected(e: any) {
       console.log(e);
     },
-    parseDate,
     allChecked(e: any) {
       console.log(`All Checked, ${e}`);
     },
@@ -69,7 +70,7 @@ export default defineComponent({
       });
       if (data) {
         const objects = data.activities.objects;
-        this.activities = objects;
+        this.activities = JSON.parse(JSON.stringify(objects));
       }
     },
   },
