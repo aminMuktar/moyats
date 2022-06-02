@@ -19,6 +19,11 @@ class ActivityType (DjangoObjectType):
         serialized_obj = serializers.serialize(
             'json', [parent.content_object, ])
         serialized = json.loads(serialized_obj)[0]["fields"]
+        all_keys = serialized.keys()
+        excluded = ["password", "email",]
+        for ky in excluded:
+            if ky in all_keys:
+                del serialized[ky]
         return serialized
 
     class Meta:
