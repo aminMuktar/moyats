@@ -1,7 +1,9 @@
+from hashlib import blake2b
 import uuid
 from django.db import models
 from core.models import BaseContact, Color
 from django.utils.translation import gettext_lazy as _
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class OrganizationStatus(models.Model):
@@ -66,6 +68,7 @@ class Organization(models.Model):
     members = models.ManyToManyField(OrganizationMember, blank=True)
     employees_count = models.IntegerField(null=True, blank=True)
     subdomain = models.CharField(max_length=200, null=True, blank=True)
+    activity = GenericRelation("core.Activity")
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

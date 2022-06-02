@@ -25,3 +25,4 @@ class NotificationSettingType(DjangoObjectType):
     class Meta:
         model = models.NotificationSetting
         exclude = ("id",)
+
