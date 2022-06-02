@@ -34,16 +34,21 @@ class Activity(models.Model):
         CALL = 'ca', _('Call')
         OTHER = 'ot', _('Other')
 
-    organization = models.ForeignKey("organizations.Organization", on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        "organizations.Organization", on_delete=models.CASCADE)
     user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE)
     activity_type = models.CharField(
         max_length=2, choices=ActivityType.choices)
     # These are need for generic relations
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey()
+    content_object = GenericForeignKey("content_type", "object_id")
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_related_object(self):
+        Klass = self.content_type.model_class()
+        return Klass.objects.get(id=self.object_id)
 
     def __str__(self) -> str:
         return f"{self.user.__str__()} | {self.content_type} | {self.activity_type}"
