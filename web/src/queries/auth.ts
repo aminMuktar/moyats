@@ -31,12 +31,8 @@ export const ACCOUNT_DATA = gql`
         homeNumber
       }
       isActive
-      userProfile {
-        profilePic
-        firstName
-        middleName
-        lastName
-      }
+      firstName
+      lastName
       accountType
       blocked
       emailVerified
@@ -46,6 +42,7 @@ export const ACCOUNT_DATA = gql`
         city
         zipCode
       }
+      setupComplete
       signiture
       notificationSetting {
         setting
@@ -64,6 +61,15 @@ export const SOCIAL_AUTH = gql`mutation socialAuth($input:SocialRegistrationInpu
     response{
       firstName
       lastName
+      createdAt
+    }
+  }
+}`
+
+export const ACCOUNT_SETUP = gql`mutation setupAccount($input: OrgSetupInput!) {
+  setupAccount(input: $input) {
+    response {
+      name
       createdAt
     }
   }

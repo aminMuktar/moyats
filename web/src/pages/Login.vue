@@ -221,10 +221,23 @@ export default defineComponent({
           input: { accessToken, source },
         },
       });
+      if (errors) {
+        console.error(errors);
+        return;
+      }
       if (data) {
         this.$store.commit("setToken", true);
+        await this.saveUserData();
         window.location.assign("/dashboard");
       }
+    },
+    async saveUserData() {
+      const {
+        data: { accountUser },
+      } = await this.$apollo.query({
+        query: q.ACCOUNT_DATA,
+      });
+      await this.$store.commit("saveUdata", accountUser);
     },
     async login(e: any) {
       e.preventDefault();
@@ -235,12 +248,15 @@ export default defineComponent({
           password: this.password,
         },
       });
-
+      if (errors) {
+        const [{message}] = errors
+        console.error(message);
+        return;
+      }
       if (data) {
         this.$store.commit("setToken", true);
-        window.location.href = "http://" + window.location.host + "/dashboard";
-      } else {
-        console.log("errorrrr", errors);
+        await this.saveUserData();
+        window.location.assign("/dashboard");
       }
     },
   },

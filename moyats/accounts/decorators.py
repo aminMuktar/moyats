@@ -1,6 +1,6 @@
 import os
 import firebase_admin
-from .models import BaseUser, UserProfile
+from .models import BaseUser
 from graphql_jwt import signals
 from graphql_jwt import exceptions
 from firebase_admin import auth, credentials
@@ -52,14 +52,12 @@ def social_jwt_token_auth(f):
         first, last = None, None
         if decoded["name"]:
             first, last = decoded["name"].split(" ")
-        user_profile = UserProfile.objects.create(
-            first_name=first if first is not None else "",
-            last_name=last if last is not None else "",
-        )
 
         user = BaseUser.objects.create_user(
             email=decoded["email"],
             access_token=uid,
+            first_name=first if first is not None else "",
+            last_name=last if last is not None else "",
             username=decoded["email"],
             user_profile=user_profile,
             source=input.source

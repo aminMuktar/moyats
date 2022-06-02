@@ -78,6 +78,7 @@ export default defineComponent({
         .then(({ data }) => {
           if (data) {
             this.$store.commit("clearToken");
+            localStorage.clear()
             location.assign("/login");
           }
         });

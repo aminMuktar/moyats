@@ -11,7 +11,7 @@ import Contacts from '../pages/dashboard/Contacts.vue'
 import Reports from '../pages/dashboard/Reports.vue'
 import CompanySetup from '../pages/CompanySetup.vue'
 
-import { authguard, loginPageGuard } from "../utils/authGuard";
+import { authguard, loginPageGuard, profileStatusGuard } from "../utils/authGuard";
 
 export default createRouter({
   history: createWebHistory(),
@@ -78,9 +78,9 @@ export default createRouter({
       path: "/company-setup",
       name: "CompanySetup",
       component: CompanySetup,
-      // beforeEnter: (to, from, next) => {
-      //   loginPageGuard(to, from, next);
-      // },
+      beforeEnter: (to, from, next) => {
+        profileStatusGuard(to, from, next)
+      },
     },
   ],
 });

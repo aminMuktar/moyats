@@ -5,7 +5,7 @@ from graphql_jwt.decorators import login_required
 from accounts.models import EmailVerificationCode
 from core.helpers import is_valid_uuid, link_expired
 from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration, BaseSocialLogin
-
+from organizations.mutations import CreateOrganization
 
 class Mutation(graphene.ObjectType):
     base_user_login =graphql_jwt.ObtainJSONWebToken.Field()
@@ -13,7 +13,7 @@ class Mutation(graphene.ObjectType):
     check_email_verification = VerifyEmail.Field()
     register = AddNewUser.Field()
     social_auth = SocialMediaRegistration.Field()
-
+    setup_account = CreateOrganization.Field()
 
 class Query(graphene.ObjectType):
     account_user = graphene.Field(BaseUserType)
