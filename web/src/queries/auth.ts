@@ -74,3 +74,24 @@ export const ACCOUNT_SETUP = gql`mutation setupAccount($input: OrgSetupInput!) {
     }
   }
 }`
+
+export const ACTIVITIES = gql`query  activities($page:Int!,$pageSize:Int!){
+  activities(page: $page, pageSize: $pageSize) {
+    objects {
+      id
+      contentObject
+      activityType
+      createdAt
+      contentType {
+        id
+        appLabel
+        model
+      } 
+      user{
+        firstName
+        lastName
+      }
+    }
+  }
+}
+`

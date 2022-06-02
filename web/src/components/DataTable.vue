@@ -14,10 +14,10 @@
         relative
       "
     >
-      <thead class="text-xs uppercase bg-gray-50">
+      <thead class="text-xs text-left uppercase bg-gray-50">
         <tr>
           <th scope="col" class="p-4">
-            <div class="flex items-center">
+            <div class="flex items-start">
               <input
                 @change="tableSelected"
                 v-model="selectAll"
@@ -41,14 +41,14 @@
           </th>
           <th
             scope="col"
-            class="px-6 py-3"
+            class="px-2 py-3"
             v-for="(head, idx) in headers"
             :key="idx"
-            v-text="head"
+            v-text="head.label"
           ></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="text-left">
         <tr
           class="bg-white border-b hover:bg-gray-50"
           v-for="(item, idx) in items"
@@ -80,12 +80,12 @@
             </div>
           </td>
           <th
-            v-for="(k, ix) in getkeys(item)"
+            v-for="(k, ix) in headers"
             :key="ix"
             scope="row"
             class="px-2 py-4 font-normal text-gray-900 whitespace-nowrap"
           >
-            <slot :name="k" v-bind="{ item }"> </slot>
+            <slot :name="k.value" v-bind="{ item }"> </slot>
           </th>
         </tr>
       </tbody>

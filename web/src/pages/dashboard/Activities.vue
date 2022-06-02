@@ -3,7 +3,7 @@
     <div>
       <p class="text-3xl pb-5 font-semibold">Activities</p>
     </div>
-    <job-orders-layout></job-orders-layout>
+    <activities-layout></activities-layout>
   </div>
 </template>
 <script lang="ts">

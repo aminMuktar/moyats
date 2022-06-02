@@ -6,9 +6,34 @@
       @checkedAll="allChecked"
       @selected="singleSelected"
     >
-      <template v-slot:[`${h}`]="{ item }" v-for="(h, ix) in headers" :role="h">
-        <div :key="ix">
-          <p class="text-sm text-gray-500">{{ item[h] }}</p>
+      <template v-slot:[`date`]="{ item }">
+        <div>
+          <p v-text="parseDate(item.createdAt)"></p>
+        </div>
+      </template>
+      <template v-slot:[`name`]="{ item }">
+        <div>
+          <p>
+            {{ item.user.firstName }}
+            {{ item.user.firstName }}
+          </p>
+        </div>
+      </template>
+      <template v-slot:[`regarding`]="{ item }">
+        <div>
+          <p
+            v-if="item.activityType == 'OR'"
+            v-text="item.contentObject.name"
+          ></p>
+          <p v-else-if="item.activityType == 'AC'">
+            {{ item.contentObject.first_name }}
+            {{ item.contentObject.last_name }}
+          </p>
+        </div>
+      </template>
+      <template v-slot:[`type`]="{ item }">
+        <div>
+          <p v-text="item.activityType"></p>
         </div>
       </template>
     </data-table>
@@ -17,108 +42,48 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
-interface Activities {
-  Date: any;
-  Name: any;
-  Regarding: any;
-  ActivityType: any;
-  Notes: any;
-  EnteredBy: any;
-  Source: any;
-  JobOrder: any;
-  Company: any;
-  checked: boolean;
-}
+import { ACTIVITIES } from "../queries/auth";
+import { parseDate } from "../utils/helpers";
+
 export default defineComponent({
   components: { DataTable },
+  async created() {
+    await this.fetchActivities();
+  },
   methods: {
     singleSelected(e: any) {
       console.log(e);
     },
+    parseDate,
     allChecked(e: any) {
       console.log(`All Checked, ${e}`);
     },
+    async fetchActivities() {
+      const { data } = await this.$apollo.query({
+        query: ACTIVITIES,
+        fetchPolicy: "network-only",
+        variables: {
+          page: this.page,
+          pageSize: this.pageSize,
+        },
+      });
+      if (data) {
+        const objects = data.activities.objects;
+        this.activities = objects;
+      }
+    },
   },
   data: () => ({
+    page: 1,
+    pageSize: 2,
     headers: [
-      "Date",
-      "Name",
-      "Regarding",
-      "ActivityType",
-      "Notes",
-      "Source",
-      "JobOrder",
-      "EnteredBy",
-      "Company",
+      { value: "date", label: "Date" },
+      { value: "name", label: "Name" },
+      { value: "regarding", label: "Regarding" },
+      { value: "type", label: "Type" },
+      { value: "by", lablel: "By" },
     ],
-    activities: <Activities[]>[
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Corp",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats ORg",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-    ],
+    activities: [] as any,
   }),
 });
 </script>

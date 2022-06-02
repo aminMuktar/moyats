@@ -20,7 +20,10 @@ class ActivityType(DjangoObjectType):
             'json', [parent.content_object, ])
         serialized = json.loads(serialized_obj)[0]["fields"]
         all_keys = serialized.keys()
-        excluded = ["password", "email", ]
+        excluded = ["password", "email", "notification_setting", "setup_complete", "timezone",
+                    "date_format", "updated_At", "groups", "user_permissions", "organizations",
+                    "blocked", "email_verified", "is_superuser", "is_staff", "is_active", "date_joined",
+                    "updated_at"]
         for ky in excluded:
             if ky in all_keys:
                 del serialized[ky]

@@ -29,10 +29,11 @@ class Color(models.Model):
 
 class Activity(models.Model):
     class ActivityType(models.TextChoices):
-        MEETING = 'mt', _('Meeting')
+        CANDIDATE = 'ca', _('Candidate')
         EMAIL = 'em', _('Email')
-        CALL = 'ca', _('Call')
-        OTHER = 'ot', _('Other')
+        JOB_ORDER = 'jo', _('Job Order')
+        ORGANIZATION = 'or', _('Organization')
+        ACCOUNT = 'ac', _('Account')
 
     organization = models.ForeignKey(
         "organizations.Organization", on_delete=models.CASCADE)
