@@ -2,16 +2,20 @@ import { createRouter, createWebHistory } from "vue-router";
 import Index from "../pages/Index.vue";
 import Login from "../pages/Login.vue";
 import Dashboard from "../pages/dashboard/Dashboard.vue";
-import DashHome from '../pages/dashboard/DashHome.vue'
-import Activities from '../pages/dashboard/Activities.vue'
-import JobOrders from '../pages/dashboard/JobOrders.vue'
-import Candidates from '../pages/dashboard/Candidates.vue'
-import Companies from '../pages/dashboard/Companies.vue'
-import Contacts from '../pages/dashboard/Contacts.vue'
-import Reports from '../pages/dashboard/Reports.vue'
-import CompanySetup from '../pages/CompanySetup.vue'
+import DashHome from "../pages/dashboard/DashHome.vue";
+import Activities from "../pages/dashboard/Activities.vue";
+import JobOrders from "../pages/dashboard/JobOrders.vue";
+import Candidates from "../pages/dashboard/Candidates.vue";
+import Companies from "../pages/dashboard/Companies.vue";
+import Contacts from "../pages/dashboard/Contacts.vue";
+import Reports from "../pages/dashboard/Reports.vue";
+import CompanySetup from "../pages/CompanySetup.vue";
 
-import { authguard, loginPageGuard, profileStatusGuard } from "../utils/authGuard";
+import {
+  authguard,
+  loginPageGuard,
+  profileStatusGuard,
+} from "../utils/authGuard";
 
 export default createRouter({
   history: createWebHistory(),
@@ -25,9 +29,9 @@ export default createRouter({
       path: "/login",
       name: "login",
       component: Login,
-      beforeEnter: (to, from, next) => {
-        loginPageGuard(to, from, next);
-      },
+      // beforeEnter: (to, from, next) => {
+      //   loginPageGuard(to, from, next);
+      // },
     },
     {
       path: "/asdfasdfqwerqwer",
@@ -40,46 +44,46 @@ export default createRouter({
         {
           path: "/dashboard",
           name: "DashHome",
-          component: DashHome
+          component: DashHome,
         },
         {
           path: "/activities",
           name: "Activities",
-          component: Activities
+          component: Activities,
         },
         {
           path: "/joborders",
           name: "JobOrders",
-          component: JobOrders
+          component: JobOrders,
         },
         {
           path: "/candidates",
           name: "Candidates",
-          component: Candidates
+          component: Candidates,
         },
         {
           path: "/companies",
           name: "Companies",
-          component: Companies
+          component: Companies,
         },
         {
           path: "/contacts",
           name: "Contacts",
-          component: Contacts
+          component: Contacts,
         },
         {
           path: "/reports",
           name: "Reports",
-          component: Reports
+          component: Reports,
         },
-      ]
+      ],
     },
     {
       path: "/company-setup",
       name: "CompanySetup",
       component: CompanySetup,
       beforeEnter: (to, from, next) => {
-        profileStatusGuard(to, from, next)
+        profileStatusGuard(to, from, next);
       },
     },
   ],

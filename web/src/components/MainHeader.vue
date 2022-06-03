@@ -1,16 +1,6 @@
 <template>
   <header
-    class="
-      flex
-      items-center
-      border-t-4 border-gray-600
-      justify-between
-      px-6
-      py-4
-      h-16
-      bg-gray-100
-      border-b-1
-    "
+    class="flex items-center border-t-4 border-gray-600 justify-between px-6 py-4 h-16 bg-gray-100 border-b-1"
   >
     <div class="flex items-center">
       <div class="relative mx-4 lg:mx-0">
