@@ -1,4 +1,3 @@
-from hashlib import blake2b
 import uuid
 from django.db import models
 from core.models import BaseContact, Color

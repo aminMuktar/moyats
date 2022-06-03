@@ -36,12 +36,14 @@
         class="flex items-start justify-start mt-3 border-b-2 border-gray-700"
         style="height: 52px"
       >
-        <div class="flex items-start mx-7 gap-1 mb-3">
-          <img src="../assets/icon.png" class="w-8 mt-1" alt="" />
-          <span class="mx-2 text-2xl font-semibold text-white pt-1 font-sans"
-            >Moyats</span
-          >
-        </div>
+        <router-link to="/dashboard">
+          <div class="flex items-start mx-7 gap-1 mb-3">
+            <img src="../assets/icon.png" class="w-8 mt-1" alt="" />
+            <span class="mx-2 text-2xl font-semibold text-white pt-1 font-sans"
+              >Moyats</span
+            >
+          </div>
+        </router-link>
       </div>
       <ul class="space-y-2 mt-5">
         <li v-for="(side, idx) in sideItems" :key="idx">
@@ -153,7 +155,8 @@
                 class="
                   flex
                   items-center
-                  p-2 mx-2
+                  p-2
+                  mx-2
                   pl-11
                   text-base
                   font-normal
@@ -174,7 +177,8 @@
                 class="
                   flex
                   items-center
-                  p-2 mx-2
+                  p-2
+                  mx-2
                   pl-11
                   text-base
                   font-normal
@@ -193,7 +197,8 @@
               <a
                 href="#"
                 class="
-                  flex mx-2
+                  flex
+                  mx-2
                   items-center
                   p-2
                   pl-11

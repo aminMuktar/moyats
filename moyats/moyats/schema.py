@@ -5,10 +5,12 @@ from accounts.query import AccountsQuery
 from organizations.mutations import CreateOrganization
 from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration
 from organizations.query import OrganizationQuery
+from pipelines.query import PipelineQuery
+from companies.query import CompanyQuery
 from joborders.query import JobOrderQuery
 
 
-class Query(AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, graphene.ObjectType):
+class Query(AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, graphene.ObjectType):
     pass
 
 

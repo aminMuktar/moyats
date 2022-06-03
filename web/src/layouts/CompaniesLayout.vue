@@ -1,14 +1,49 @@
 <template>
   <div>
     <data-table
-      :items="activities"
+      empty-message="You don't have any registered companies"
+      :items="companies"
       :headers="headers"
       @checkedAll="allChecked"
       @selected="singleSelected"
     >
-      <template v-slot:[`${h}`]="{ item }" v-for="(h, ix) in headers" :role="h">
-        <div :key="ix">
-          <p class="text-sm text-gray-500">{{ item[h] }}</p>
+      <template v-slot:[`name`]="{ item }">
+        <div>
+          <p class="text-sm text-gray-500" v-text="item.name"></p>
+        </div>
+      </template>
+      <template v-slot:[`address`]="{ item }">
+        <div>
+          <p
+            class="text-sm text-gray-500"
+            v-text="formAddress(item.address)"
+          ></p>
+        </div>
+      </template>
+      <template v-slot:[`c`]="{ item }">
+        <div>
+          <p class="text-sm text-gray-500" v-text="0"></p>
+        </div>
+      </template>
+      <template v-slot:[`o`]="{ item }">
+        <div>
+          <p class="text-sm text-gray-500" v-text="0"></p>
+        </div>
+      </template>
+      <template v-slot:[`updated`]="{ item }">
+        <div>
+          <p
+            class="text-sm text-gray-500"
+            v-text="parseDate(item.updatedAt)"
+          ></p>
+        </div>
+      </template>
+      <template v-slot:[`status`]="{ item }">
+        <div>
+          <chip
+            :text="item.companyStatus.name"
+            :color="item.companyStatus.color.hex"
+          ></chip>
         </div>
       </template>
     </data-table>
@@ -17,21 +52,30 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
-interface Activities {
-  Date: any;
-  Name: any;
-  Regarding: any;
-  ActivityType: any;
-  Notes: any;
-  EnteredBy: any;
-  Source: any;
-  JobOrder: any;
-  Company: any;
-  checked: boolean;
-}
+import Chip from "../components/widgets/Chip.vue";
+import { COMPANIES } from "../queries/company";
+import { formAddress, parseDate } from "../utils/helpers";
+
 export default defineComponent({
-  components: { DataTable },
+  components: { DataTable, Chip },
+  async created() {
+    await this.getCompanies();
+  },
   methods: {
+    parseDate,
+    formAddress,
+    async getCompanies() {
+      const { data } = await this.$apollo.query({
+        query: COMPANIES,
+        variables: {
+          page: this.page,
+          pageSize: this.pageSize,
+        },
+      });
+      if (data) {
+        this.companies = JSON.parse(JSON.stringify(data.companies.objects));
+      }
+    },
     singleSelected(e: any) {
       console.log(e);
     },
@@ -40,85 +84,17 @@ export default defineComponent({
     },
   },
   data: () => ({
+    page: 1,
+    pageSize: 1,
     headers: [
-      "Date",
-      "Name",
-      "Regarding",
-      "ActivityType",
-      "Notes",
-      "Source",
-      "JobOrder",
-      "EnteredBy",
-      "Company",
+      { value: "name", label: "Name" },
+      { value: "address", label: "Address" },
+      { value: "c", label: "C" },
+      { value: "o", label: "O" },
+      { value: "updated", label: "Updated" },
+      { value: "status", label: "Status" },
     ],
-    activities: <Activities[]>[
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Corp",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats ORg",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-    ],
+    companies: [],
   }),
 });
 </script>

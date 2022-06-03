@@ -6,6 +6,9 @@ from graphene_django import DjangoObjectType
 from graphene.types.generic import GenericScalar
 from django.contrib.contenttypes.models import ContentType
 
+class ColorType(DjangoObjectType):
+    class Meta:
+        model = models.Color
 
 class ContentObjectType(DjangoObjectType):
     class Meta:

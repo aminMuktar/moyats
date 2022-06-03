@@ -56,7 +56,8 @@
       </thead>
       <tbody class="text-left">
         <tr
-          class="bg-white border-b hover:bg-gray-50"
+          :class="{ 'bg-gray-200': item.checked }"
+          class="border-b hover:bg-gray-200"
           v-for="(item, idx) in items"
           :key="idx"
         >

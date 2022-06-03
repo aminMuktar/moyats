@@ -3,7 +3,7 @@ from accounts.models import Address
 from django.utils.translation import gettext_lazy as _
 from organizations.models import Organization, OrganizationMember
 
-class JobOrderType(models.Model):
+class JobOrderTypes(models.Model):
     type_name = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -33,7 +33,7 @@ class JobDetail(models.Model):
     salary = models.CharField(max_length=100)
     duration = models.CharField(max_length=100)
     max_rate = models.CharField(max_length=100)
-    order_type = models.ForeignKey(JobOrderType, on_delete=models.CASCADE)
+    order_type = models.ForeignKey(JobOrderTypes, on_delete=models.CASCADE)
     category = models.ForeignKey(JobOrderCategory, on_delete=models.CASCADE)
     openings = models.BigIntegerField()
     remaining_openings = models.BigIntegerField()

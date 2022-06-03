@@ -3,16 +3,18 @@
     <div>
       <p class="text-3xl pb-5 font-semibold">Candidates</p>
     </div>
-    <activities-layout></activities-layout>
+    <candidates-layout></candidates-layout>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
 import ActivitiesLayout from "../../layouts/ActivitiesLayout.vue";
+import CandidatesLayout from "../../layouts/CandidatesLayout.vue";
 
 export default defineComponent({
   components: {
-    ActivitiesLayout
-},
+    ActivitiesLayout,
+    CandidatesLayout,
+  },
 });
 </script>

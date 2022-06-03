@@ -11,5 +11,6 @@ class JobOrderQuery(graphene.ObjectType):
 
     @login_required
     def resolve_job_orders(self, info, page_size, page, **kwargs):
-        job_orders = models.JobOrder.objects.all()
+        org = info.context.user.organizations.first()
+        job_orders = models.JobOrder.objects.filter(organization=org)
         return core_paginator(job_orders, page_size, page, types.JobOrderPaginatedType)

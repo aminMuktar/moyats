@@ -95,3 +95,4 @@ export const ACTIVITIES = gql`query  activities($page:Int!,$pageSize:Int!){
   }
 }
 `
+
