@@ -11,6 +11,7 @@ import Contacts from "../pages/dashboard/Contacts.vue";
 import Reports from "../pages/dashboard/Reports.vue";
 import CompanySetup from "../pages/CompanySetup.vue";
 import AccountSettings from "../pages/dashboard/AccountSettings.vue";
+import UserManagement from "../pages/dashboard/UserManagement.vue";
 
 import {
   authguard,
@@ -81,6 +82,11 @@ export default createRouter({
           path: "/account-settings",
           name: "AccountSttings",
           component: AccountSettings,
+        },
+        {
+          path: "/user-management",
+          name: "UserManagement",
+          component: UserManagement,
         },
       ],
     },

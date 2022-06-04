@@ -21,15 +21,15 @@
     </template>
     <template v-slot:list>
       <div class="py-1">
-        <a
+        <router-link
           v-if="!empty"
-          href="#"
+          to="/account-settings"
           :class="[
             'hover:bg-gray-100 cursor-pointer',
             selected ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
             'block px-4 py-2 text-sm',
           ]"
-          >Account settings</a
+          >Account settings</router-link
         >
         <a
           v-if="!empty"
@@ -78,7 +78,7 @@ export default defineComponent({
         .then(({ data }) => {
           if (data) {
             this.$store.commit("clearToken");
-            localStorage.clear()
+            localStorage.clear();
             location.assign("/login");
           }
         });
@@ -86,4 +86,3 @@ export default defineComponent({
   },
 });
 </script>
-
