@@ -3,7 +3,7 @@
     <div class="border-b-2 border-gray-200">
       <slot name="header"></slot>
     </div>
-    <div class="mb-10">
+    <div class="mb-5">
       <slot name="body"></slot>
     </div>
   </div>

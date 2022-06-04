@@ -10,6 +10,7 @@ import Companies from "../pages/dashboard/Companies.vue";
 import Contacts from "../pages/dashboard/Contacts.vue";
 import Reports from "../pages/dashboard/Reports.vue";
 import CompanySetup from "../pages/CompanySetup.vue";
+import AccountSettings from "../pages/dashboard/AccountSettings.vue";
 
 import {
   authguard,
@@ -75,6 +76,11 @@ export default createRouter({
           path: "/reports",
           name: "Reports",
           component: Reports,
+        },
+        {
+          path: "/account-settings",
+          name: "AccountSttings",
+          component: AccountSettings,
         },
       ],
     },
