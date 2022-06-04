@@ -2,20 +2,43 @@ import gql from "graphql-tag"
 
 
 export const CANDIDATES = gql`query candidtes($page: Int!, $pageSize: Int!) {
-    candidtes(page: $page, pageSize: $pageSize) {
-      objects {
+  candidtes(page: $page, pageSize: $pageSize) {
+    objects {
+      id
+      latestJoborder{
         id
-        candidateProfile{
+        jobDetail{
+          title
+        }
+        company{
           id
-          firstName
-          lastName
+          name
         }
-        address{
-          country
-          city
+        jobOrderStatus{
+          statusName
+          color{
+            hex
+          }
         }
-        updatedAt
+        createdAt
       }
+      pipeline{
+        id
+      }
+      organization{
+        name
+      }
+      candidateProfile{
+        id
+        firstName
+        lastName
+      }
+      address{
+        country
+        city
+      }
+      updatedAt
     }
   }
-  `
+}
+`

@@ -1,6 +1,10 @@
 import graphene
 from . import models
 from graphene_django import DjangoObjectType
+from pipelines.models import PipelineWorkflow
+from pipelines.types import PipelineWorkflowType
+from joborders.types import JobOrderType
+from joborders.models import JobOrder
 
 
 class AttachmentType(DjangoObjectType):
@@ -22,9 +26,11 @@ class CandidateProfileType(DjangoObjectType):
     class Meta:
         model = models.CandidateProfile
 
+
 class WorkHistoryType(DjangoObjectType):
     class Meta:
         model = models.WorkHistory
+
 
 class QualificationChecklistType(DjangoObjectType):
     class Meta:
@@ -35,9 +41,28 @@ class CandidateQualificationType(DjangoObjectType):
     class Meta:
         model = models.CandidateQualification
 
+
 class CandidateType(DjangoObjectType):
+    pipeline = graphene.Field(PipelineWorkflowType)
+    latest_joborder = graphene.Field(JobOrderType)
+
     class Meta:
         model = models.Candidate
+
+    def resolve_pipeline(parent, info):
+        pipeline = PipelineWorkflow.objects.filter(
+            candidates__id=parent.id
+        )
+        return pipeline.first()
+
+    def resolve_latest_joborder(parent, info):
+        pipeline = PipelineWorkflow.objects.filter(
+            candidates__id=parent.id
+        )
+        joborder = JobOrder.objects.filter(
+            pipeline_workflow=pipeline.first()
+        ).latest('created_at')
+        return joborder
 
 
 class CandidatesPaginatedType(graphene.ObjectType):

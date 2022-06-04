@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import Address
 from django.utils.translation import gettext_lazy as _
+from companies.models import Company
 from organizations.models import Organization, OrganizationMember
 
 class JobOrderTypes(models.Model):
@@ -52,6 +53,7 @@ class JobOrder(models.Model):
     # application
     job_order_status = models.ForeignKey("pipelines.PipelineStatus", on_delete=models.CASCADE, null=True)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     pipeline_workflow = models.ForeignKey("pipelines.PipelineWorkflow", on_delete=models.CASCADE)
     updated_At = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -25,10 +25,17 @@
       </template>
       <template v-slot:[`updated`]="{ item }">
         <div>
-          <p
-            class="text-sm text-gray-500"
-            v-text="parseDate(item.updated)"
-          ></p>
+          <p class="text-sm text-gray-500" v-text="parseDate(item.updated)"></p>
+        </div>
+      </template>
+      <template v-slot:[`recentStatus`]="{ item }">
+        <div class="flex flex-row">
+          <chip
+            :text="item.latestJoborder.jobOrderStatus.statusName"
+            :color="item.latestJoborder.jobOrderStatus.color.hex"
+          ></chip>
+          <span class="px-3">-</span>
+          <a href="#" v-text="item.latestJoborder.company.name"></a>
         </div>
       </template>
     </data-table>
@@ -37,11 +44,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
+import Chip from "../components/widgets/Chip.vue";
 import { CANDIDATES } from "../queries/candidates";
 import { formAddress, parseDate } from "../utils/helpers";
 
 export default defineComponent({
-  components: { DataTable },
+  components: { DataTable, Chip },
   methods: {
     parseDate,
     formAddress,
@@ -74,6 +82,7 @@ export default defineComponent({
       { value: "name", label: "name" },
       { value: "location", label: "Location" },
       { value: "updated", label: "Updated" },
+      { value: "recentStatus", label: "Recent Status" },
     ],
     candidates: [],
   }),
