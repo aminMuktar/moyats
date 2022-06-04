@@ -92,6 +92,10 @@ class CandidateQualification(models.Model):
 class Candidate(models.Model):
     candidate_profile = models.ForeignKey(
         CandidateProfile, on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        "organizations.Organization", on_delete=models.CASCADE,
+        null=True
+    )
     phones = models.ForeignKey(
         BaseContact, on_delete=models.CASCADE, null=True)
     social_medias = models.ManyToManyField(SocialMedia)
