@@ -2,6 +2,9 @@ import graphene
 from . import models
 from graphene_django import DjangoObjectType
 
+class CompanyContactStatusType(DjangoObjectType):
+    class Meta:
+        model = models.CompanyContactStatus
 
 class CompanyContactType(DjangoObjectType):
     class Meta:

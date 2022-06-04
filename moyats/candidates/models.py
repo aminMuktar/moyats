@@ -25,7 +25,7 @@ class CandidateSource(models.Model):
 
 
 class SocialMedia(models.Model):
-    class SocialMediaType(models.TextChoices):
+    class SocialMedias(models.TextChoices):
         LINKEDIN = 'ln', _('LinkedIn')
         FACEBOOK = 'fb', _('Facebook')
         INSTAGRAM = 'is', _('Instragram')
@@ -33,7 +33,7 @@ class SocialMedia(models.Model):
         GITHUB = 'gi', _('Github')
         TIKTOK = 'tk', _('TikTok')
 
-    type = models.CharField(max_length=2, choices=SocialMediaType.choices)
+    type = models.CharField(max_length=2, choices=SocialMedias.choices)
     link = models.URLField()
     updated_At = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,14 +1,34 @@
 <template>
   <div>
     <data-table
-      :items="activities"
+      empty-message="you don't have any candidates yet"
+      :items="candidates"
       :headers="headers"
       @checkedAll="allChecked"
       @selected="singleSelected"
     >
-      <template v-slot:[`${h}`]="{ item }" v-for="(h, ix) in headers" :role="h">
-        <div :key="ix">
-          <p class="text-sm text-gray-500">{{ item[h] }}</p>
+      <template v-slot:[`name`]="{ item }">
+        <div>
+          <p class="text-sm text-gray-500">
+            {{ item.candidateProfile.firstName }}
+            {{ item.candidateProfile.lastName }}
+          </p>
+        </div>
+      </template>
+      <template v-slot:[`location`]="{ item }">
+        <div>
+          <p
+            class="text-sm text-gray-500"
+            v-text="formAddress(item.address)"
+          ></p>
+        </div>
+      </template>
+      <template v-slot:[`updated`]="{ item }">
+        <div>
+          <p
+            class="text-sm text-gray-500"
+            v-text="parseDate(item.updated)"
+          ></p>
         </div>
       </template>
     </data-table>
@@ -17,108 +37,45 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
-interface Activities {
-  Date: any;
-  Name: any;
-  Regarding: any;
-  ActivityType: any;
-  Notes: any;
-  EnteredBy: any;
-  Source: any;
-  JobOrder: any;
-  Company: any;
-  checked: boolean;
-}
+import { CANDIDATES } from "../queries/candidates";
+import { formAddress, parseDate } from "../utils/helpers";
+
 export default defineComponent({
   components: { DataTable },
   methods: {
+    parseDate,
+    formAddress,
     singleSelected(e: any) {
       console.log(e);
     },
     allChecked(e: any) {
       console.log(`All Checked, ${e}`);
     },
+    async getCandidates() {
+      const { data } = await this.$apollo.query({
+        query: CANDIDATES,
+        variables: {
+          page: this.page,
+          pageSize: this.pageSize,
+        },
+      });
+      if (data) {
+        this.candidates = JSON.parse(JSON.stringify(data.candidtes.objects));
+      }
+    },
+  },
+  async created() {
+    await this.getCandidates();
   },
   data: () => ({
+    page: 1,
+    pageSize: 1,
     headers: [
-      "Date",
-      "Name",
-      "Regarding",
-      "ActivityType",
-      "Notes",
-      "Source",
-      "JobOrder",
-      "EnteredBy",
-      "Company",
+      { value: "name", label: "name" },
+      { value: "location", label: "Location" },
+      { value: "updated", label: "Updated" },
     ],
-    activities: <Activities[]>[
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Corp",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats ORg",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-      {
-        Date: "Mon 12, 2021",
-        Name: "Activity Name",
-        Regarding: "Regarding something",
-        ActivityType: "Some Type",
-        Notes: "Here goes some notes",
-        EnteredBy: "Amen Abe",
-        Source: "Email",
-        JobOrder: "Mechanic",
-        Company: "Moyats Nation",
-      },
-    ],
+    candidates: [],
   }),
 });
 </script>

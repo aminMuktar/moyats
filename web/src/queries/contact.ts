@@ -10,9 +10,21 @@ export const CONTACTS = gql`query contacts($pageSize: Int!, $page: Int!) {
         phones{
           cellNumber
         }
+        status{
+          name
+          color{
+            hex
+          }
+        }  
         company{
           id
           name
+          companyStatus{
+            name
+            color{
+              hex
+            }
+          }
         }
         email
         updatedAt

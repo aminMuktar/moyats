@@ -15,7 +15,6 @@ class CompanyStatus(models.Model):
         return self.name
 
 
-
 class Company(models.Model):
     class OrgType(models.TextChoices):
         STARTUP = 'st', _('Startup')
@@ -39,6 +38,16 @@ class Company(models.Model):
         return self.name
 
 
+class CompanyContactStatus(models.Model):
+    name = models.CharField(max_length=100)
+    color = models.ForeignKey("core.Color", on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class CompanyContact(models.Model):
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
@@ -47,6 +56,8 @@ class CompanyContact(models.Model):
     reachable = models.BooleanField(default=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     email = models.EmailField()
+    status = models.ForeignKey(
+        CompanyContactStatus, on_delete=models.CASCADE, null=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

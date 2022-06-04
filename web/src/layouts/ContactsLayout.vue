@@ -21,9 +21,26 @@
           </p>
         </div>
       </template>
+      <template v-slot:[`status`]="{ item }">
+        <div>
+          <chip :color="item.status.color.hex" :text="item.status.name"></chip>
+        </div>
+      </template>
+      <template v-slot:[`companyStatus`]="{ item }">
+        <div>
+          <chip
+            :color="item.company.companyStatus.color.hex"
+            :text="item.company.companyStatus.name"
+          ></chip>
+        </div>
+      </template>
+
       <template v-slot:[`updated`]="{ item }">
         <div>
-          <p class="text-sm text-gray-500" v-text="parseDate(item.updatedAt)"></p>
+          <p
+            class="text-sm text-gray-500"
+            v-text="parseDate(item.updatedAt)"
+          ></p>
         </div>
       </template>
     </data-table>
@@ -34,9 +51,10 @@ import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import { CONTACTS } from "../queries/contact";
 import { parseDate } from "../utils/helpers";
+import Chip from "../components/widgets/Chip.vue";
 
 export default defineComponent({
-  components: { DataTable },
+  components: { DataTable, Chip },
   async created() {
     await this.fetchContacts();
   },
@@ -68,6 +86,8 @@ export default defineComponent({
       { value: "name", label: "Name" },
       { value: "company", label: "Company" },
       { value: "updated", label: "Updated" },
+      { value: "status", label: "Status" },
+      { value: "companyStatus", label: "Company Status" },
     ],
     contacts: [],
   }),
