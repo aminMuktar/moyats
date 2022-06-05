@@ -33,6 +33,8 @@ class OrganizationMember(models.Model):
         EDITOR = 'ed', _('Is Editor')
         READ_ONLY = 'ro', _('Read Only')
 
+    org_member_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE, null=True)
     title = models.CharField(null=True, blank=True, max_length=100)
     permission_level = models.CharField(

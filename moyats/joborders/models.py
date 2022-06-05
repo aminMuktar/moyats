@@ -1,8 +1,8 @@
+import uuid
 from django.db import models
 from accounts.models import Address
 from django.utils.translation import gettext_lazy as _
 from companies.models import Company
-from organizations.models import Organization, OrganizationMember
 
 class JobOrderTypes(models.Model):
     type_name = models.CharField(max_length=200)
@@ -29,7 +29,7 @@ class JobDetail(models.Model):
     title = models.CharField(max_length=200)
     location = models.ForeignKey(Address, on_delete=models.CASCADE)
     position_type = models.CharField(choices=PositionTypes.choices, max_length=2)
-    recruiter = models.ForeignKey(OrganizationMember, on_delete=models.CASCADE)
+    recruiter = models.ForeignKey("organizations.OrganizationMember", on_delete=models.CASCADE)
     start_date = models.DateField()
     salary = models.CharField(max_length=100)
     duration = models.CharField(max_length=100)
@@ -47,12 +47,14 @@ class JobDetail(models.Model):
         return self.title
 
 class JobOrder(models.Model):
+    joborder_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     notes = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     job_detail = models.ForeignKey(JobDetail, on_delete=models.CASCADE)
     # application
     job_order_status = models.ForeignKey("pipelines.PipelineStatus", on_delete=models.CASCADE, null=True)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    organization = models.ForeignKey("organizations.Organization", on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     pipeline_workflow = models.ForeignKey("pipelines.PipelineWorkflow", on_delete=models.CASCADE)
     updated_At = models.DateTimeField(auto_now=True)

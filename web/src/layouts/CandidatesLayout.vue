@@ -9,10 +9,13 @@
     >
       <template v-slot:[`name`]="{ item }">
         <div>
-          <p class="text-sm text-gray-500">
+          <router-link
+            class="text-sm text-blue-500 font-semibold"
+            :to="`/candidates/${item.candidateId}`"
+          >
             {{ item.candidateProfile.firstName }}
             {{ item.candidateProfile.lastName }}
-          </p>
+          </router-link>
         </div>
       </template>
       <template v-slot:[`location`]="{ item }">
@@ -25,17 +28,23 @@
       </template>
       <template v-slot:[`updated`]="{ item }">
         <div>
-          <p class="text-sm text-gray-500" v-text="parseDate(item.updated)"></p>
+          <p
+            class="text-sm text-gray-500"
+            v-text="parseDate(item.updatedAt)"
+          ></p>
         </div>
       </template>
       <template v-slot:[`recentStatus`]="{ item }">
-        <div class="flex flex-row">
+        <div class="flex flex-row" v-if="item.latestJoborder">
           <chip
             :text="item.latestJoborder.jobOrderStatus.statusName"
             :color="item.latestJoborder.jobOrderStatus.color.hex"
           ></chip>
           <span class="px-3">-</span>
           <a href="#" v-text="item.latestJoborder.company.name"></a>
+        </div>
+        <div v-else>
+          <p>No Status</p>
         </div>
       </template>
     </data-table>

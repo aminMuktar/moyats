@@ -53,16 +53,25 @@ class CandidateType(DjangoObjectType):
         pipeline = PipelineWorkflow.objects.filter(
             candidates__id=parent.id
         )
+        if not pipeline.exists():
+            return None
+
         return pipeline.first()
 
     def resolve_latest_joborder(parent, info):
         pipeline = PipelineWorkflow.objects.filter(
             candidates__id=parent.id
         )
+        if not pipeline.exists():
+            return None
+
         joborder = JobOrder.objects.filter(
             pipeline_workflow=pipeline.first()
-        ).latest('created_at')
-        return joborder
+        )
+        jo = joborder.latest('created_at')
+        if not joborder.exists:
+            return None
+        return jo
 
 
 class CandidatesPaginatedType(graphene.ObjectType):

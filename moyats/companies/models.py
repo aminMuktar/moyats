@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from core.models import Color
 from accounts.models import BaseContact, Address
@@ -22,6 +23,8 @@ class Company(models.Model):
         HR_FIRM = 'hr', _('Hr Firm')
         RECRUITMENT_FIRM = 'rf', _('Recuitment Firm')
 
+    company_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=100, unique=True)
     company_status = models.ForeignKey(
         CompanyStatus, on_delete=models.CASCADE, blank=True, null=True)
@@ -49,6 +52,8 @@ class CompanyContactStatus(models.Model):
 
 
 class CompanyContact(models.Model):
+    company_contact_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     phones = models.ForeignKey(

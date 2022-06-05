@@ -6,12 +6,16 @@ import DashHome from "../pages/dashboard/DashHome.vue";
 import Activities from "../pages/dashboard/Activities.vue";
 import JobOrders from "../pages/dashboard/JobOrders.vue";
 import Candidates from "../pages/dashboard/Candidates.vue";
+import Candidate from "../pages/dashboard/CandidatePage.vue"
 import Companies from "../pages/dashboard/Companies.vue";
+import Company from "../pages/dashboard/CompanyPage.vue";
+
 import Contacts from "../pages/dashboard/Contacts.vue";
 import Reports from "../pages/dashboard/Reports.vue";
 import CompanySetup from "../pages/CompanySetup.vue";
 import AccountSettings from "../pages/dashboard/AccountSettings.vue";
 import UserManagement from "../pages/dashboard/UserManagement.vue";
+import NotFound from "../pages/errors/NotFound.vue"
 
 import {
   authguard,
@@ -23,6 +27,11 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     {
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      component: NotFound
+    },
+    {
       path: "/",
       name: "index",
       component: Index,
@@ -31,12 +40,12 @@ export default createRouter({
       path: "/login",
       name: "login",
       component: Login,
-      // beforeEnter: (to, from, next) => {
-      //   loginPageGuard(to, from, next);
-      // },
+      beforeEnter: (to, from, next) => {
+        loginPageGuard(to, from, next);
+      },
     },
     {
-      path: "/asdfasdfqwerqwer",
+      path: "/$#asdfqwerqwer",
       name: "MainDashboard",
       component: Dashboard,
       beforeEnter: (to, from, next) => {
@@ -64,9 +73,19 @@ export default createRouter({
           component: Candidates,
         },
         {
+          path: "/candidates/:cid",
+          name: "Candidate",
+          component: Candidate,
+        },
+        {
           path: "/companies",
           name: "Companies",
           component: Companies,
+        },
+        {
+          path: "/companies/:cpid",
+          name: "Company",
+          component: Company,
         },
         {
           path: "/contacts",

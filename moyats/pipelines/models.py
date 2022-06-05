@@ -1,6 +1,6 @@
+import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from core.models import Color
 
 class Trigger(models.Model):
     class TriggerAction(models.TextChoices):
@@ -15,6 +15,8 @@ class Trigger(models.Model):
         DEFAULT_ON_OPTIONAL = 'do', _('Optional, on by Default')
         DEFAULT_OFF_OPTIONAL = 'df', _('Optional, off by Default')
 
+    trigger_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     aciton = models.CharField(
         max_length=2, choices=TriggerAction.choices, default=TriggerAction.SEND_EMAIL)
     description = models.TextField(null=True, blank=True)
@@ -33,7 +35,7 @@ class PipelineStatus(models.Model):
     description = models.TextField(null=True, blank=True)
     default = models.BooleanField()
     organization = models.ForeignKey("organizations.Organization", on_delete=models.CASCADE, null=True)
-    color = models.ForeignKey(Color, on_delete=models.CASCADE)
+    color = models.ForeignKey("core.Color", on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -42,8 +44,10 @@ class PipelineStatus(models.Model):
 
 
 class PipelineSetup(models.Model):
+    pipeline_setup_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=100)
-    color = models.ForeignKey(Color, on_delete=models.CASCADE)
+    color = models.ForeignKey("core.Color", on_delete=models.CASCADE)
     status = models.ForeignKey(
         PipelineStatus, related_name="status", on_delete=models.CASCADE)
     mapping_status = models.ForeignKey(
@@ -59,6 +63,8 @@ class PipelineSetup(models.Model):
 
 
 class PipelineWorkflow(models.Model):
+    pipeline_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     candidates = models.ManyToManyField("candidates.Candidate", blank=True)
     pipeline_setup = models.ForeignKey(PipelineSetup, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)

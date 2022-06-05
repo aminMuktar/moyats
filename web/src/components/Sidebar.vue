@@ -62,7 +62,7 @@
               dark:hover:bg-gray-700
             "
             :class="{
-              'bg-gray-700': $route.path === side.path,
+              'bg-gray-700': checkPath(side.path),
             }"
             :to="side.path"
           >
@@ -227,6 +227,15 @@ import { defineComponent } from "vue";
 import { ref } from "vue";
 
 export default defineComponent({
+  methods: {
+    checkPath(path: string) {
+      console.log(this.$route.path)
+      const current = this.$route.path.split("/")
+      const valid = current[1] == path.substr(1)
+      // const valid = path == this.$route.path;
+      return valid;
+    },
+  },
   data: () => ({
     showDrop: false,
     isOpen: false,

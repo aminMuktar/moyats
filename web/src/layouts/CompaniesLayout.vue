@@ -9,7 +9,11 @@
     >
       <template v-slot:[`name`]="{ item }">
         <div>
-          <p class="text-sm text-gray-500" v-text="item.name"></p>
+          <router-link
+            class="text-sm text-blue-500 font-semibold"
+            :to="`/companies/${item.companyId}`"
+            v-text="item.name"
+          ></router-link>
         </div>
       </template>
       <template v-slot:[`address`]="{ item }">

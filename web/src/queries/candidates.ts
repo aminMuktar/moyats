@@ -4,7 +4,7 @@ import gql from "graphql-tag"
 export const CANDIDATES = gql`query candidtes($page: Int!, $pageSize: Int!) {
   candidtes(page: $page, pageSize: $pageSize) {
     objects {
-      id
+      candidateId
       latestJoborder{
         id
         jobDetail{

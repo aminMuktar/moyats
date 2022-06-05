@@ -1,4 +1,4 @@
-from pyexpat import model
+import uuid
 from django.db import models
 from accounts.models import Address
 from core.models import BaseContact
@@ -90,6 +90,8 @@ class CandidateQualification(models.Model):
 
 
 class Candidate(models.Model):
+    candidate_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     candidate_profile = models.ForeignKey(
         CandidateProfile, on_delete=models.CASCADE)
     organization = models.ForeignKey(
