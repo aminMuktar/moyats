@@ -1,6 +1,17 @@
 <template>
   <header
-    class="flex items-center border-t-4 border-gray-600 justify-between px-6 py-4 h-16 bg-white border-b-1 z-50"
+    class="
+      flex
+      items-center
+      border-t-4 border-gray-600
+      justify-between
+      px-6
+      py-4
+      h-16
+      bg-white
+      border-b-1
+      z-50
+    "
   >
     <div class="flex items-center">
       <div
@@ -36,26 +47,24 @@
           />
         </svg>
       </button>
-      <div
-        class="relative mx-4 lg:mx-0"
-        v-if="$route.path !== '/company-management'"
-      >
-        <button class="text-gray-800 rounded-full hover:bg-gray-300 p-2 mx-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
+      <div class="relative lg:mx-0">
+        <div class="flex flex-row gap-2">
+          <p
+            class="
+              font-bold
+              text-2xl
+              px-2
+              cursor-pointer
+              bg-red-600
+              rounded-full
+              border-4
+              text-red-300
+            "
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
-            />
-          </svg>
-        </button>
+            A
+          </p>
+          <p class="font-bold text-2xl pt-1">Amen Abe</p>
+        </div>
       </div>
     </div>
 

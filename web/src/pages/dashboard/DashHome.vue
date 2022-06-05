@@ -1,5 +1,5 @@
 <template>
-  <div class="font-sans gap-y-3 flex flex-col">
+  <div class="font-sans gap-y-3 flex flex-col m-5">
     <div>
       <p class="text-3xl pb-5 font-semibold">Welcome Back, {{$store.state.core.u.firstName}}</p>
     </div>
