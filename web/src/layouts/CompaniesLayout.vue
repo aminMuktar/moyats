@@ -1,6 +1,14 @@
 <template>
   <div>
     <data-table
+      @prev="prev"
+      @next="next"
+      :dropts="dropts"
+      :hasNext="hasNext"
+      :hasPrev="hasPrev"
+      :total="total"
+      :page="page"
+      :pages="pages"
       empty-message="You don't have any registered companies"
       :items="companies"
       :headers="headers"
@@ -24,12 +32,12 @@
           ></p>
         </div>
       </template>
-      <template v-slot:[`c`]="{ item }">
+      <template v-slot:[`c`]>
         <div>
           <p class="text-sm text-gray-500" v-text="0"></p>
         </div>
       </template>
-      <template v-slot:[`o`]="{ item }">
+      <template v-slot:[`o`]>
         <div>
           <p class="text-sm text-gray-500" v-text="0"></p>
         </div>
@@ -78,6 +86,12 @@ export default defineComponent({
       });
       if (data) {
         this.companies = JSON.parse(JSON.stringify(data.companies.objects));
+        this.total = data.companies.total;
+        this.page = data.companies.page;
+        this.pages = data.companies.pages;
+        this.hasPrev = data.companies.hasPrev;
+        this.hasNext = data.companies.hasNext;
+        this.setDropt();
       }
     },
     singleSelected(e: any) {
@@ -86,10 +100,30 @@ export default defineComponent({
     allChecked(e: any) {
       console.log(`All Checked, ${e}`);
     },
+    setDropt() {
+      let fin = [];
+      for (let i = 0; i < this.total; i++) {
+        fin.push(`${i + 1}/${this.total}`);
+      }
+      this.dropts = fin;
+    },
+    async prev() {
+      this.page--;
+      await this.getCompanies();
+    },
+    async next() {
+      this.page++;
+      await this.getCompanies();
+    },
   },
   data: () => ({
+    total: 0,
+    pages: 1,
+    hasNext: false,
+    hasPrev: false,
     page: 1,
     pageSize: 1,
+    dropts: [] as any,
     headers: [
       { value: "name", label: "Name" },
       { value: "address", label: "Address" },

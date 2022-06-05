@@ -77,6 +77,11 @@ export const ACCOUNT_SETUP = gql`mutation setupAccount($input: OrgSetupInput!) {
 
 export const ACTIVITIES = gql`query  activities($page:Int!,$pageSize:Int!){
   activities(page: $page, pageSize: $pageSize) {
+    page
+    pages
+    hasNext
+    hasPrev
+    total
     objects {
       id
       contentObject

@@ -97,8 +97,16 @@
         </tr>
       </tbody>
     </table>
-
-    <pagination-row></pagination-row>
+    <pagination-row
+      @prev="$emit('prev')"
+      @next="$emit('next')"
+      :page="page"
+      :pages="pages"
+      :total="total"
+      :hasNext="hasNext"
+      :hasPrev="hasPrev"
+      :dropts="dropts"
+    ></pagination-row>
   </div>
 </template>
 
@@ -112,7 +120,17 @@ export default defineComponent({
     PaginationRow,
     TableFilterSection,
   },
-  props: ["items", "headers", "emptyMessage"],
+  props: [
+    "items",
+    "total",
+    "page",
+    "pages",
+    "hasNext",
+    "hasPrev",
+    "dropts",
+    "headers",
+    "emptyMessage",
+  ],
   methods: {
     getkeys(item: any) {
       return Object.keys(item).filter((x: any) => x !== "checked");

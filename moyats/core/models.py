@@ -38,7 +38,7 @@ class Activity(models.Model):
 
     activity_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
-    annotation = models.TextField(null=True)
+    annotation = models.TextField(null=True, blank=True)
     organization = models.ForeignKey(
         "organizations.Organization", on_delete=models.CASCADE)
     user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE)

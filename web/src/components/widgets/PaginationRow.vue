@@ -1,6 +1,10 @@
 <template>
   <div class="flex justify-end">
-    <button class="p-1 h-11 border-2 hover:bg-gray-200 border-gray-200 m-1">
+    <button
+      @click="$emit('prev')"
+      class="p-1 h-11 border-2 hover:bg-gray-200 border-gray-200 m-1"
+      :class="{ 'cursor-not-allowed text-gray-300': !hasPrev }"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-5 w-5"
@@ -36,7 +40,11 @@
     >
       <option v-for="(opt, x) in dropts" :key="x">{{ opt }}</option>
     </select>
-    <button class="p-1 h-11 border-2 hover:bg-gray-200 border-gray-200 m-1">
+    <button
+      @click="$emit('next')"
+      class="p-1 h-11 border-2 hover:bg-gray-200 border-gray-200 m-1"
+      :class="{ 'cursor-not-allowed text-gray-300': !hasNext }"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-5 w-5"
@@ -56,8 +64,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  data: () => ({
-    dropts: ['1/4', '2/4', '3/4', '4/4'],
-  }),
+  props: ["page", "pages", "total", "hasNext", "hasPrev", "dropts"],
+  methods: {},
 });
 </script>

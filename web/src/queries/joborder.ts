@@ -3,6 +3,10 @@ import { gql } from "graphql-tag";
 export const JOB_ORDERS = gql` query jobOrders($pageSize: Int!, $page: Int!) {
     jobOrders(pageSize: $pageSize, page: $page){
       page
+      pages
+      hasNext
+      hasPrev
+      total
       objects {
         id
         notes

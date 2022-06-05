@@ -3,6 +3,11 @@ import gql from "graphql-tag"
 
 export const CANDIDATES = gql`query candidtes($page: Int!, $pageSize: Int!) {
   candidtes(page: $page, pageSize: $pageSize) {
+    page
+    pages
+    hasNext
+    hasPrev
+    total
     objects {
       candidateId
       latestJoborder{

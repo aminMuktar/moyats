@@ -1,6 +1,14 @@
 <template>
   <div>
     <data-table
+      @prev="prev"
+      @next="next"
+      :dropts="dropts"
+      :hasNext="hasNext"
+      :hasPrev="hasPrev"
+      :total="total"
+      :page="page"
+      :pages="pages"
       empty-message="You don't have any activities yet."
       :items="activities"
       :headers="headers"
@@ -71,12 +79,38 @@ export default defineComponent({
       if (data) {
         const objects = data.activities.objects;
         this.activities = JSON.parse(JSON.stringify(objects));
+        this.total = data.activities.total;
+        this.page = data.activities.page;
+        this.pages = data.activities.pages;
+        this.hasPrev = data.activities.hasPrev;
+        this.hasNext = data.activities.hasNext;
+        this.setDropt();
       }
+    },
+    setDropt() {
+      let fin = [];
+      for (let i = 0; i < this.total; i++) {
+        fin.push(`${i + 1}/${this.total}`);
+      }
+      this.dropts = fin;
+    },
+    async prev() {
+      this.page--;
+      await this.fetchActivities();
+    },
+    async next() {
+      this.page++;
+      await this.fetchActivities();
     },
   },
   data: () => ({
+    total: 0,
+    pages: 1,
+    hasNext: false,
+    hasPrev: false,
     page: 1,
-    pageSize: 2,
+    pageSize: 1,
+    dropts: [] as any,
     headers: [
       { value: "date", label: "Date" },
       { value: "name", label: "Name" },

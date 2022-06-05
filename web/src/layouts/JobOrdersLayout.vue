@@ -1,6 +1,14 @@
 <template>
   <div>
     <data-table
+      @prev="prev"
+      @next="next"
+      :dropts="dropts"
+      :hasNext="hasNext"
+      :hasPrev="hasPrev"
+      :total="total"
+      :page="page"
+      :pages="pages"
       :emptyMessage="emptyMesasge"
       :items="joborders"
       :headers="headers"
@@ -25,13 +33,13 @@
           ></p>
         </div>
       </template>
-      <template v-slot:[`c`]="{ item }">
+      <template v-slot:[`c`]>
         <div>
           <!-- candidates submitted -->
           <p class="text-sm text-gray-500">12</p>
         </div>
       </template>
-      <template v-slot:[`s`]="{ item }">
+      <template v-slot:[`s`]>
         <div>
           <!-- candidates in pipeline -->
           <p class="text-sm text-gray-500">100</p>
@@ -84,7 +92,22 @@ export default defineComponent({
       });
       if (data) {
         this.joborders = JSON.parse(JSON.stringify(data.jobOrders.objects));
+        this.total = data.jobOrders.total;
+        this.page = data.jobOrders.page;
+        this.pages = data.jobOrders.pages;
+        this.hasPrev = data.jobOrders.hasPrev;
+        this.hasNext = data.jobOrders.hasNext;
+        this.setDropt();
       }
+    },
+    setDropt() {
+      let fin = [];
+      for (let i = 0; i < this.total; i++) {
+        fin.push(`${i + 1}/${this.total}`);
+      }
+      console.clear();
+      console.warn(this.total);
+      this.dropts = fin;
     },
     singleSelected(e: any) {
       console.log(e);
@@ -92,10 +115,23 @@ export default defineComponent({
     allChecked(e: any) {
       console.log(`All Checked, ${e}`);
     },
+    async prev() {
+      this.page--;
+      await this.getJobOrders();
+    },
+    async next() {
+      this.page++;
+      await this.getJobOrders();
+    },
   },
   data: () => ({
+    total: 0,
+    pages: 1,
+    hasNext: false,
+    hasPrev: false,
     page: 1,
     pageSize: 2,
+    dropts: [] as any,
     emptyMesasge: "You don't have any job orders yet.",
     headers: [
       { value: "title", label: "Title" },

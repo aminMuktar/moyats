@@ -2,6 +2,11 @@ import gql from "graphql-tag"
 
 export const CONTACTS = gql`query contacts($pageSize: Int!, $page: Int!) {
     contacts(pageSize: $pageSize, page: $page) {
+      page
+      pages
+      hasNext
+      hasPrev
+      total
       objects {
         id
         firstName

@@ -1,6 +1,14 @@
 <template>
   <div>
     <data-table
+      @prev="prev"
+      @next="next"
+      :dropts="dropts"
+      :hasNext="hasNext"
+      :hasPrev="hasPrev"
+      :total="total"
+      :page="page"
+      :pages="pages"
       empty-message="you don't have any candidates yet"
       :items="candidates"
       :headers="headers"
@@ -78,15 +86,41 @@ export default defineComponent({
       });
       if (data) {
         this.candidates = JSON.parse(JSON.stringify(data.candidtes.objects));
+        this.total = data.candidtes.total;
+        this.page = data.candidtes.page;
+        this.pages = data.candidtes.pages;
+        this.hasPrev = data.candidtes.hasPrev;
+        this.hasNext = data.candidtes.hasNext;
+        this.setDropt();
       }
+    },
+    setDropt() {
+      let fin = [];
+      for (let i = 0; i < this.total; i++) {
+        fin.push(`${i + 1}/${this.total}`);
+      }
+      this.dropts = fin;
+    },
+    async prev() {
+      this.page--;
+      await this.getCandidates();
+    },
+    async next() {
+      this.page++;
+      await this.getCandidates();
     },
   },
   async created() {
     await this.getCandidates();
   },
   data: () => ({
+    total: 0,
+    pages: 1,
+    hasNext: false,
+    hasPrev: false,
     page: 1,
     pageSize: 1,
+    dropts: [] as any,
     headers: [
       { value: "name", label: "name" },
       { value: "location", label: "Location" },
