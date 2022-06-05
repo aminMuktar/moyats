@@ -1,9 +1,23 @@
 <template>
   <header
-    class="flex items-center border-t-4 border-gray-600 justify-between px-6 py-4 h-16 bg-white border-b-1"
+    class="flex items-center border-t-4 border-gray-600 justify-between px-6 py-4 h-16 bg-white border-b-1 z-50"
   >
     <div class="flex items-center">
+      <div
+        class="relative mx-4 lg:mx-0"
+        v-if="$route.path === '/company-management'"
+      >
+        <a href="/">
+          <div class="flex items-start mx-7 mt-5 gap-1 mb-5">
+            <img src="../assets/icon.png" class="w-8" alt="" />
+            <span class="mx-2 text-2xl font-semibold text-black font-sans"
+              >Moyats</span
+            >
+          </div>
+        </a>
+      </div>
       <button
+        v-if="$route.path !== '/company-management'"
         @click="isOpen = true"
         class="text-gray-500 focus:outline-none lg:hidden"
       >
@@ -22,7 +36,10 @@
           />
         </svg>
       </button>
-      <div class="relative mx-4 lg:mx-0">
+      <div
+        class="relative mx-4 lg:mx-0"
+        v-if="$route.path !== '/company-management'"
+      >
         <button class="text-gray-800 rounded-full hover:bg-gray-300 p-2 mx-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +60,7 @@
     </div>
 
     <div class="flex items-center">
-      <quick-action-button />
+      <quick-action-button v-if="$route.path !== '/company-management'" />
       <notificaiton-dropdown />
       <account-dropdown />
     </div>

@@ -6,16 +6,15 @@ import DashHome from "../pages/dashboard/DashHome.vue";
 import Activities from "../pages/dashboard/Activities.vue";
 import JobOrders from "../pages/dashboard/JobOrders.vue";
 import Candidates from "../pages/dashboard/Candidates.vue";
-import Candidate from "../pages/dashboard/CandidatePage.vue"
+import Candidate from "../pages/dashboard/CandidatePage.vue";
 import Companies from "../pages/dashboard/Companies.vue";
 import Company from "../pages/dashboard/CompanyPage.vue";
-
 import Contacts from "../pages/dashboard/Contacts.vue";
 import Reports from "../pages/dashboard/Reports.vue";
 import CompanySetup from "../pages/CompanySetup.vue";
 import AccountSettings from "../pages/dashboard/AccountSettings.vue";
-import UserManagement from "../pages/dashboard/UserManagement.vue";
-import NotFound from "../pages/errors/NotFound.vue"
+import CompanyManagement from "../pages/dashboard/CompanyManagement.vue";
+import NotFound from "../pages/errors/NotFound.vue";
 
 import {
   authguard,
@@ -29,7 +28,7 @@ export default createRouter({
     {
       path: "/:pathMatch(.*)*",
       name: "404",
-      component: NotFound
+      component: NotFound,
     },
     {
       path: "/",
@@ -102,12 +101,15 @@ export default createRouter({
           name: "AccountSttings",
           component: AccountSettings,
         },
-        {
-          path: "/user-management",
-          name: "UserManagement",
-          component: UserManagement,
-        },
       ],
+    },
+    {
+      path: "/company-management",
+      name: "CompanyManagement",
+      component: CompanyManagement,
+      beforeEnter: (to, from, next) => {
+        authguard(to, from, next);
+      },
     },
     {
       path: "/company-setup",
