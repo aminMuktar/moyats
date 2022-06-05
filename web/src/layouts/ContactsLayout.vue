@@ -58,16 +58,18 @@
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import { CONTACTS } from "../queries/contact";
-import { parseDate } from "../utils/helpers";
+import { parseDate, updateQparams } from "../utils/helpers";
 import Chip from "../components/widgets/Chip.vue";
 
 export default defineComponent({
   components: { DataTable, Chip },
   async created() {
+    this.page = this.$route.query.page ?? this.page;
     await this.fetchContacts();
   },
   methods: {
     parseDate,
+    updateQparams,
     async fetchContacts() {
       const { data } = await this.$apollo.query({
         query: CONTACTS,
@@ -95,10 +97,12 @@ export default defineComponent({
     async prev() {
       this.page--;
       await this.fetchContacts();
+      this.updateQparams(this.$route.path, this.page, this.pages);
     },
     async next() {
       this.page++;
       await this.fetchContacts();
+      this.updateQparams(this.$route.path, this.page, this.pages);
     },
     singleSelected(e: any) {
       console.log(e);
@@ -112,7 +116,7 @@ export default defineComponent({
     pages: 1,
     hasNext: false,
     hasPrev: false,
-    page: 1,
+    page: 1 as any,
     pageSize: 1,
     dropts: [] as any,
     headers: [

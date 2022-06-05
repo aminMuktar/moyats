@@ -66,16 +66,18 @@ import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import Chip from "../components/widgets/Chip.vue";
 import { COMPANIES } from "../queries/company";
-import { formAddress, parseDate } from "../utils/helpers";
+import { formAddress, parseDate, updateQparams } from "../utils/helpers";
 
 export default defineComponent({
   components: { DataTable, Chip },
   async created() {
+    this.page = this.$route.query.page ?? this.page;
     await this.getCompanies();
   },
   methods: {
     parseDate,
     formAddress,
+    updateQparams,
     async getCompanies() {
       const { data } = await this.$apollo.query({
         query: COMPANIES,
@@ -110,10 +112,12 @@ export default defineComponent({
     async prev() {
       this.page--;
       await this.getCompanies();
+      this.updateQparams(this.$route.path, this.page, this.pages);
     },
     async next() {
       this.page++;
       await this.getCompanies();
+      this.updateQparams(this.$route.path, this.page, this.pages);
     },
   },
   data: () => ({
@@ -121,7 +125,7 @@ export default defineComponent({
     pages: 1,
     hasNext: false,
     hasPrev: false,
-    page: 1,
+    page: 1 as any,
     pageSize: 1,
     dropts: [] as any,
     headers: [

@@ -64,7 +64,8 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  props: ["page", "pages", "total", "hasNext", "hasPrev", "dropts"],
+  props: ["page", "pages", "pageSize", "total", "hasNext", "hasPrev", "dropts"],
+  created(){},
   methods: {},
 });
 </script>

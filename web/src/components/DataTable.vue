@@ -101,6 +101,7 @@
       @prev="$emit('prev')"
       @next="$emit('next')"
       :page="page"
+      :pageSize="pageSize"
       :pages="pages"
       :total="total"
       :hasNext="hasNext"
@@ -124,6 +125,7 @@ export default defineComponent({
     "items",
     "total",
     "page",
+    "pageSize",
     "pages",
     "hasNext",
     "hasPrev",

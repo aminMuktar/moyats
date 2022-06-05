@@ -7,7 +7,8 @@
       :hasNext="hasNext"
       :hasPrev="hasPrev"
       :total="total"
-      :page="page"
+      :page="$route.query.page"
+      :pageSize="pageSize"
       :pages="pages"
       empty-message="You don't have any activities yet."
       :items="activities"
@@ -52,15 +53,17 @@
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import { ACTIVITIES } from "../queries/auth";
-import { parseDate } from "../utils/helpers";
+import { parseDate, updateQparams } from "../utils/helpers";
 
 export default defineComponent({
   components: { DataTable },
   async created() {
+    this.page = this.$route.query.page ?? this.page;
     await this.fetchActivities();
   },
   methods: {
     parseDate,
+    updateQparams,
     singleSelected(e: any) {
       console.log(e);
     },
@@ -97,10 +100,12 @@ export default defineComponent({
     async prev() {
       this.page--;
       await this.fetchActivities();
+      this.updateQparams(this.$route.path, this.page, this.pages);
     },
     async next() {
       this.page++;
       await this.fetchActivities();
+      this.updateQparams(this.$route.path, this.page, this.pages);
     },
   },
   data: () => ({
@@ -108,7 +113,7 @@ export default defineComponent({
     pages: 1,
     hasNext: false,
     hasPrev: false,
-    page: 1,
+    page: 1 as any,
     pageSize: 1,
     dropts: [] as any,
     headers: [

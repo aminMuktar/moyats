@@ -63,13 +63,18 @@ import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import Chip from "../components/widgets/Chip.vue";
 import { CANDIDATES } from "../queries/candidates";
-import { formAddress, parseDate } from "../utils/helpers";
+import { formAddress, parseDate, updateQparams } from "../utils/helpers";
 
 export default defineComponent({
+  async created() {
+    this.page = this.$route.query.page ?? this.page;
+    await this.getCandidates();
+  },
   components: { DataTable, Chip },
   methods: {
     parseDate,
     formAddress,
+    updateQparams,
     singleSelected(e: any) {
       console.log(e);
     },
@@ -104,21 +109,21 @@ export default defineComponent({
     async prev() {
       this.page--;
       await this.getCandidates();
+      this.updateQparams(this.$route.path, this.page, this.pages);
     },
     async next() {
       this.page++;
       await this.getCandidates();
+      this.updateQparams(this.$route.path, this.page, this.pages);
     },
   },
-  async created() {
-    await this.getCandidates();
-  },
+
   data: () => ({
     total: 0,
     pages: 1,
     hasNext: false,
     hasPrev: false,
-    page: 1,
+    page: 1 as any,
     pageSize: 1,
     dropts: [] as any,
     headers: [
