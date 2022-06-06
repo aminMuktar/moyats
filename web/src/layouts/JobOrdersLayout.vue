@@ -17,12 +17,16 @@
     >
       <template v-slot:[`title`]="{ item }">
         <div>
-          <p class="text-sm text-gray-500" v-text="item.jobDetail.title"></p>
+          <router-link
+            class="text-sm text-blue-500 font-semibold"
+            :to="`/joborders/${item.joborderId}`"
+            v-text="item.jobDetail.title"
+          ></router-link>
         </div>
       </template>
       <template v-slot:[`organization`]="{ item }">
         <div>
-          <p class="text-sm text-gray-500" v-text="item.organization.name"></p>
+          <a class="text-sm text-gray-500" v-text="item.organization.name"></a>
         </div>
       </template>
       <template v-slot:[`updated`]="{ item }">
@@ -63,18 +67,6 @@ import { JOB_ORDERS } from "../queries/joborder";
 import { parseDate } from "../utils/helpers";
 import Chip from "../components/widgets/Chip.vue";
 
-interface Activities {
-  Date: any;
-  Name: any;
-  Regarding: any;
-  ActivityType: any;
-  Notes: any;
-  EnteredBy: any;
-  Source: any;
-  JobOrder: any;
-  Company: any;
-  checked: boolean;
-}
 export default defineComponent({
   components: { DataTable, Chip },
   async created() {

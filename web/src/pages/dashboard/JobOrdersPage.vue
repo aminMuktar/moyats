@@ -57,44 +57,43 @@
     <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5">
       <div class="flex flex-col">
         <div>
-          <candidate-primary-card></candidate-primary-card>
-          <candidate-detail-card></candidate-detail-card>
-          <candidate-notes></candidate-notes>
-          <candidate-work-history></candidate-work-history>
+          <joborder-primary-card></joborder-primary-card>
+          <joborder-details></joborder-details>
+          <joborder-company-card></joborder-company-card>
+          <job-order-description-card></job-order-description-card>
+          <joborder-notes></joborder-notes>
+          <joborder-application-card></joborder-application-card>
         </div>
       </div>
-      <div>
-        <candidate-activity-feed></candidate-activity-feed>
-        <candidate-job-order-card></candidate-job-order-card>
-        <candidate-attachment></candidate-attachment>
-      </div>
+      <div></div>
+    </div>
+    <div class="m-5 xl:w-3/4 lg:w-3/4">
+      <joborder-pipeline-card></joborder-pipeline-card>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import CandidateActivityFeed from "../../components/candidates/CandidateActivityFeed.vue";
-import CandidateAttachment from "../../components/candidates/CandidateAttachment.vue";
-import CandidateDetailCard from "../../components/candidates/CandidateDetailCard.vue";
-import CandidateJobOrderCard from "../../components/candidates/CandidateJobOrderCard.vue";
-import CandidateNotes from "../../components/candidates/CandidateNotes.vue";
-import CandidatePrimaryCard from "../../components/candidates/CandidatePrimaryCard.vue";
-import CandidateWorkHistory from "../../components/candidates/CandidateWorkHistory.vue";
-import DashboardCardWidget from "../../components/DashboardCardWidget.vue";
 import Chip from "../../components/widgets/Chip.vue";
+import JoborderPrimaryCard from "../../components/joborders/JoborderPrimaryCard.vue";
+import JoborderDetails from "../../components/joborders/JoborderDetails.vue";
+import JoborderCompanyCard from "../../components/joborders/JoborderCompanyCard.vue";
+import JobOrderDescriptionCard from "../../components/joborders/JobOrderDescriptionCard.vue";
+import JoborderNotes from "../../components/joborders/JoborderNotes.vue";
+import JoborderApplicationCard from "../../components/joborders/JoborderApplicationCard.vue";
+import JoborderPipelineCard from "../../components/joborders/JoborderPipelineCard.vue";
 
 export default defineComponent({
   components: {
     Chip,
-    DashboardCardWidget,
-    CandidatePrimaryCard,
-    CandidateActivityFeed,
-    CandidateDetailCard,
-    CandidateJobOrderCard,
-    CandidateAttachment,
-    CandidateWorkHistory,
-    CandidateNotes,
-  },
+    JoborderPrimaryCard,
+    JoborderDetails,
+    JoborderCompanyCard,
+    JobOrderDescriptionCard,
+    JoborderNotes,
+    JoborderApplicationCard,
+    JoborderPipelineCard
+},
   setup() {},
   data: () => ({}),
 });

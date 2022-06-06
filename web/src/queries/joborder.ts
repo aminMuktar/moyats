@@ -9,6 +9,7 @@ export const JOB_ORDERS = gql` query jobOrders($pageSize: Int!, $page: Int!) {
       total
       objects {
         id
+        joborderId
         notes
         description
         jobDetail {

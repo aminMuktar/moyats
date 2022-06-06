@@ -17,7 +17,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import DashboardCardWidget from "./DashboardCardWidget.vue";
+import DashboardCardWidget from "../DashboardCardWidget.vue";
 
 export default defineComponent({
   components: { DashboardCardWidget },

@@ -2,22 +2,25 @@
   <div>
     <dashboard-card-widget slot="body">
       <template v-slot:header>
-        <p class="p-3 font-semibold text-lg">Primary</p>
+        <p class="p-3 font-semibold text-lg">Company</p>
       </template>
       <template v-slot:body>
         <div>
           <div class="sm:col-span-1 md:flex lg:flex p-2">
             <div class="text-sm w-full lg:w-3/4 xl:w-3/4">
               <div class="flex justify-between my-4 ">
-                <p>Email</p>
-                <p>bdere12345@gmail.com</p>
+                <p>Company</p>
+                <p>Moyats.Inc</p>
               </div>
               <div class="flex justify-between my-4">
-                <p>Phones</p>
-                <p>0911359586</p>
+                <p>Department</p>
+                <div class="text-right">
+                    <p>Jaime Landorf</p>
+                    <p>catsonedemo+jlandorf@gmail.com</p>
+                </div>
               </div>
               <div class="flex justify-between my-4">
-                <p>Social Media</p>
+                <p>Contact</p>
                 <p></p>
               </div>
               <div class="flex justify-between my-4">
@@ -33,7 +36,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import DashboardCardWidget from "./DashboardCardWidget.vue";
+import DashboardCardWidget from "../DashboardCardWidget.vue";
 
 export default defineComponent({
   components: { DashboardCardWidget },

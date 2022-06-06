@@ -2,14 +2,16 @@
   <div>
     <dashboard-card-widget slot="body">
       <template v-slot:header>
-        <p class="p-3 font-semibold text-lg">Activity Feed</p>
+        <p class="p-3 font-semibold text-lg">Job Orders</p>
       </template>
       <template v-slot:body>
         <div>
           <div class="sm:col-span-1 md:flex lg:flex p-2">
-            <div class="w-1/4 ml-4 text-sm"></div>
+            <div class="text-sm w-full lg:w-3/4 xl:w-3/4"></div>
           </div>
-          <p class="text-center py-5">No Activities Yet</p>
+          <p class="text-center py-5">
+            Candidate hasn't applied to any job orders
+          </p>
         </div>
       </template>
     </dashboard-card-widget>
@@ -17,7 +19,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import DashboardCardWidget from "./DashboardCardWidget.vue";
+import DashboardCardWidget from "../DashboardCardWidget.vue";
 
 export default defineComponent({
   components: { DashboardCardWidget },

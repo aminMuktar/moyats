@@ -47,7 +47,7 @@
           />
         </svg>
       </button>
-      <div class="relative lg:mx-0">
+      <div class="relative lg:mx-0 hidden">
         <div class="flex flex-row gap-2">
           <p
             class="
