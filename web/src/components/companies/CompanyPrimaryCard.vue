@@ -7,22 +7,22 @@
       <template v-slot:body>
         <div>
           <table class="table-auto">
-              <tbody>
-              <tr>
-                <td class="p-2">Location</td>
-                <td class="py-2 px-16">{{ formAddress(data.jobDetail.location) }}</td>
-              </tr>
-              <tr>
-                <td class="p-2">Recruiter</td>
-                <td class="py-2 px-16">{{data.owner.firstName}} {{data.owner.firstName}}</td>
-              </tr>
-              <tr>
-                <td class="p-2">Owner</td>
-                <td class="py-2 px-16">{{data.owner.firstName}} {{data.owner.firstName}}</td>
-              </tr>
+            <tbody>
               <tr>
                 <td class="p-2">Address</td>
-                <td class="py-2 px-16">{{ formAddress(data.jobDetail.location) }}</td>
+                <td class="py-2 px-16">Addis Ababa</td>
+              </tr>
+              <tr>
+                <td class="p-2">Phones</td>
+                <td class="py-2 px-16"></td>
+              </tr>
+              <tr>
+                <td class="p-2">Website</td>
+                <td class="py-2 px-16">https://google.com</td>
+              </tr>
+              <tr>
+                <td class="p-2">Social Media</td>
+                <td class="py-2 px-16"></td>
               </tr>
             </tbody>
           </table>

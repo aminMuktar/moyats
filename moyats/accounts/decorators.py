@@ -59,7 +59,6 @@ def social_jwt_token_auth(f):
             first_name=first if first is not None else "",
             last_name=last if last is not None else "",
             username=decoded["email"],
-            user_profile=user_profile,
             source=input.source
         )
         if hasattr(info.context, "user"):

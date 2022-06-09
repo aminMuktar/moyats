@@ -15,11 +15,11 @@ class CompanyQuery(graphene.ObjectType):
     def resolve_companies(self, info, page_size, page, **kwargs):
         org = info.context.user.organizations.first()
         companies = models.Company.objects.filter(organization=org)
-        return core_paginator(companies, page, page_size, types.CompanyPaginatedType)
+        return core_paginator(companies, page_size, page, types.CompanyPaginatedType)
 
     @login_required
     def resolve_contacts(self, info, page_size, page, **kwargs):
         org = info.context.user.organizations.first()
         contacts = models.CompanyContact.objects.filter(
             company__organization=org)
-        return core_paginator(contacts, page, page_size, types.CompanyContactsPaginatedType)
+        return core_paginator(contacts, page_size, page, types.CompanyContactsPaginatedType)

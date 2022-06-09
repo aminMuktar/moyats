@@ -42,11 +42,10 @@ class PipelineStatus(models.Model):
     def __str__(self) -> str:
         return self.status_name
 
-
 class PipelineSetup(models.Model):
     pipeline_setup_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
-    title = models.CharField(max_length=100)
+    step = models.BigIntegerField(null=True)
     color = models.ForeignKey("core.Color", on_delete=models.CASCADE)
     status = models.ForeignKey(
         PipelineStatus, related_name="status", on_delete=models.CASCADE)
@@ -59,16 +58,18 @@ class PipelineSetup(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.title
+        return f"{self.step}-{self.status.status_name}"
 
 
 class PipelineWorkflow(models.Model):
     pipeline_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
+    title = models.CharField(max_length=100, null=True)
     candidates = models.ManyToManyField("candidates.Candidate", blank=True)
-    pipeline_setup = models.ForeignKey(PipelineSetup, on_delete=models.CASCADE)
+    pipeline_setups = models.ManyToManyField(PipelineSetup)
+    default = models.BooleanField(default=False, unique=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.pipeline_setup.title
+        return self.title

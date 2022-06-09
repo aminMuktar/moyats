@@ -2,9 +2,11 @@ import graphene
 from . import models
 from graphene_django import DjangoObjectType
 
+
 class CompanyContactStatusType(DjangoObjectType):
     class Meta:
         model = models.CompanyContactStatus
+
 
 class CompanyContactType(DjangoObjectType):
     class Meta:
@@ -17,6 +19,12 @@ class CompanyStatusType(DjangoObjectType):
 
 
 class CompanyType(DjangoObjectType):
+    contacts = graphene.List(CompanyContactType)
+
+    def resolve_contacts(parent, info):
+        contacts = models.CompanyContact.objects.filter(company__id=parent.id)
+        return contacts        
+
     class Meta:
         model = models.Company
 

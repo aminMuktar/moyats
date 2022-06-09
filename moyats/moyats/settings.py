@@ -47,7 +47,8 @@ INSTALLED_APPS += [
     'emails.apps.EmailsConfig',
     'candidates.apps.CandidatesConfig',
     'core.apps.CoreConfig',
-    'companies.apps.CompaniesConfig'
+    'companies.apps.CompaniesConfig',
+    'application.apps.ApplicationConfig'
 ]
 
 MIDDLEWARE = [

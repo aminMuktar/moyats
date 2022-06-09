@@ -46,6 +46,17 @@ class JobDetail(models.Model):
     def __str__(self) -> str:
         return self.title
 
+class JoborderStatus(models.Model):
+    status_name = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    default = models.BooleanField()
+    color = models.ForeignKey("core.Color", on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.status_name
+
 class JobOrder(models.Model):
     joborder_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
@@ -53,7 +64,7 @@ class JobOrder(models.Model):
     description = models.TextField(null=True, blank=True)
     job_detail = models.ForeignKey(JobDetail, on_delete=models.CASCADE)
     # application
-    job_order_status = models.ForeignKey("pipelines.PipelineStatus", on_delete=models.CASCADE, null=True)
+    job_order_status = models.ForeignKey(JoborderStatus, on_delete=models.CASCADE, null=True)
     organization = models.ForeignKey("organizations.Organization", on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     pipeline_workflow = models.ForeignKey("pipelines.PipelineWorkflow", on_delete=models.CASCADE)

@@ -11,6 +11,7 @@ import Candidate from "../pages/dashboard/CandidatePage.vue";
 import Companies from "../pages/dashboard/Companies.vue";
 import Company from "../pages/dashboard/CompanyPage.vue";
 import Contacts from "../pages/dashboard/Contacts.vue";
+import Contact from "../pages/dashboard/ContactPage.vue"
 import Reports from "../pages/dashboard/Reports.vue";
 import CompanySetup from "../pages/CompanySetup.vue";
 import AccountSettings from "../pages/dashboard/AccountSettings.vue";
@@ -96,6 +97,11 @@ export default createRouter({
           path: "/contacts",
           name: "Contacts",
           component: Contacts,
+        },
+        {
+          path: "/contacts/:cid",
+          name: "Contact",
+          component: Contact,
         },
         {
           path: "/reports",

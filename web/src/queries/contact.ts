@@ -9,6 +9,7 @@ export const CONTACTS = gql`query contacts($pageSize: Int!, $page: Int!) {
       total
       objects {
         id
+        companyContactId
         firstName
         lastName
         reachable
@@ -23,6 +24,7 @@ export const CONTACTS = gql`query contacts($pageSize: Int!, $page: Int!) {
         }  
         company{
           id
+          companyId
           name
           companyStatus{
             name

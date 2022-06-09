@@ -78,30 +78,14 @@
     <!-- start of tabs -->
     <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5">
       <div class="flex flex-col">
-        <div>
-          <candidate-primary-card></candidate-primary-card>
-          <candidate-detail-card></candidate-detail-card>
-          <candidate-notes></candidate-notes>
-          <candidate-work-history></candidate-work-history>
-        </div>
+        <div></div>
       </div>
-      <div>
-        <candidate-activity-feed></candidate-activity-feed>
-        <candidate-job-order-card></candidate-job-order-card>
-        <candidate-attachment></candidate-attachment>
-      </div>
+      <div></div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import CandidateActivityFeed from "../../components/candidates/CandidateActivityFeed.vue";
-import CandidateAttachment from "../../components/candidates/CandidateAttachment.vue";
-import CandidateDetailCard from "../../components/candidates/CandidateDetailCard.vue";
-import CandidateJobOrderCard from "../../components/candidates/CandidateJobOrderCard.vue";
-import CandidateNotes from "../../components/candidates/CandidateNotes.vue";
-import CandidatePrimaryCard from "../../components/candidates/CandidatePrimaryCard.vue";
-import CandidateWorkHistory from "../../components/candidates/CandidateWorkHistory.vue";
 import DashboardCardWidget from "../../components/DashboardCardWidget.vue";
 import Chip from "../../components/widgets/Chip.vue";
 
@@ -109,13 +93,6 @@ export default defineComponent({
   components: {
     Chip,
     DashboardCardWidget,
-    CandidatePrimaryCard,
-    CandidateActivityFeed,
-    CandidateDetailCard,
-    CandidateJobOrderCard,
-    CandidateAttachment,
-    CandidateWorkHistory,
-    CandidateNotes,
   },
   setup() {},
   data: () => ({}),

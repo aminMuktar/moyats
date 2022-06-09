@@ -17,16 +17,22 @@
     >
       <template v-slot:[`name`]="{ item }">
         <div>
-          <p class="text-sm text-gray-500">
+          <router-link
+            :to="`/contacts/${item.companyContactId}`"
+            class="text-sm text-blue-500 font-semibold"
+          >
             {{ item.firstName }} {{ item.lastName }}
-          </p>
+          </router-link>
         </div>
       </template>
       <template v-slot:[`company`]="{ item }">
         <div>
-          <p class="text-sm text-gray-500">
+          <router-link
+            :to="`/companies/${item.company.companyId}`"
+            class="text-sm text-blue-500 font-semibold"
+          >
             {{ item.company.name }}
-          </p>
+          </router-link>
         </div>
       </template>
       <template v-slot:[`status`]="{ item }">

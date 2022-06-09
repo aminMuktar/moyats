@@ -56,6 +56,7 @@ class CompanyContact(models.Model):
         default=uuid.uuid4, editable=False, unique=True)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
+    department = models.CharField(max_length=200, null=True)
     phones = models.ForeignKey(
         BaseContact, on_delete=models.CASCADE, null=True)
     reachable = models.BooleanField(default=True)

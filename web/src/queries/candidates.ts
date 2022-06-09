@@ -12,12 +12,14 @@ export const CANDIDATES = gql`query candidtes($page: Int!, $pageSize: Int!) {
       candidateId
       latestJoborder{
         id
+        joborderId
         jobDetail{
           title
         }
         company{
           id
           name
+          companyId
         }
         jobOrderStatus{
           statusName

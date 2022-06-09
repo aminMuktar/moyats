@@ -6,29 +6,47 @@
       </template>
       <template v-slot:body>
         <div>
-          <div class="sm:col-span-1 md:flex lg:flex p-2">
-            <div class="text-sm w-full lg:w-3/4 xl:w-3/4">
-              <div class="flex justify-between my-4 ">
-                <p>Company</p>
-                <p>Moyats.Inc</p>
-              </div>
-              <div class="flex justify-between my-4">
-                <p>Department</p>
-                <div class="text-right">
-                    <p>Jaime Landorf</p>
-                    <p>catsonedemo+jlandorf@gmail.com</p>
-                </div>
-              </div>
-              <div class="flex justify-between my-4">
-                <p>Contact</p>
-                <p></p>
-              </div>
-              <div class="flex justify-between my-4">
-                <p>Address</p>
-                <p>Addis Ababa, Ethiopia, 1000</p>
-              </div>
-            </div>
-          </div>
+          <table class="table-auto">
+            <tbody>
+              <tr>
+                <td class="p-2">Company</td>
+                <td class="py-2 px-20">{{ data.company.name }}</td>
+              </tr>
+
+              <tr>
+                <td class="p-2">Department</td>
+                <td
+                  class="py-2 px-20"
+                  v-if="
+                    data.company.contacts && data.company.contacts.length > 0
+                  "
+                >
+                  {{ data.company.contacts[0].department }}
+                </td>
+                <td v-else class="p-2"></td>
+              </tr>
+
+              <tr>
+                <td class="p-2">Contact</td>
+                <td
+                  class="px-20"
+                  v-if="
+                    data.company.contacts && data.company.contacts.length > 0
+                  "
+                >
+                  <div class="pt-2" v-html="formatContacts(data.company.contacts)">
+                  </div>
+                </td>
+                <td v-else class="py-2 px-20"></td>
+              </tr>
+              <tr>
+                <td class="p-2">Address</td>
+                <td class="py-2 px-20">
+                  {{ formAddress(data.company.address) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </template>
     </dashboard-card-widget>
@@ -37,9 +55,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
+import { formAddress, formatContacts } from "../../utils/helpers";
+import Chip from "../widgets/Chip.vue";
 
 export default defineComponent({
-  components: { DashboardCardWidget },
+  components: { DashboardCardWidget, Chip },
   setup() {},
+  props: ["data"],
+  methods: {
+    formAddress,
+    formatContacts,
+  },
 });
 </script>

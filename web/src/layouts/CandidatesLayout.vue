@@ -49,7 +49,17 @@
             :color="item.latestJoborder.jobOrderStatus.color.hex"
           ></chip>
           <span class="px-3">-</span>
-          <a href="#" v-text="item.latestJoborder.company.name"></a>
+          <router-link
+            class="text-sm text-blue-500 font-semibold"
+            :to="`/joborders/${item.latestJoborder.joborderId}`"
+            v-text="item.latestJoborder.jobDetail.title"
+          ></router-link>
+          <span class="px-3">-</span>
+          <router-link
+            class="text-sm text-blue-500 font-semibold"
+            :to="`/companies/${item.latestJoborder.company.companyId}`"
+            v-text="item.latestJoborder.company.name"
+          ></router-link>
         </div>
         <div v-else>
           <p>No Status</p>
@@ -124,7 +134,7 @@ export default defineComponent({
     hasNext: false,
     hasPrev: false,
     page: 1 as any,
-    pageSize: 1,
+    pageSize: 10,
     dropts: [] as any,
     headers: [
       { value: "name", label: "name" },

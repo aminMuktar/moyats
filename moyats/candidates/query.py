@@ -13,4 +13,4 @@ class CandidateQuery(graphene.ObjectType):
     def resolve_candidtes(self, info, page_size, page, **kwargs):
         org = info.context.user.organizations.first()
         cands = Candidate.objects.filter(organization=org)
-        return core_paginator(cands, page, page_size, types.CandidatesPaginatedType)
+        return core_paginator(cands, page_size, page, types.CandidatesPaginatedType)

@@ -1,23 +1,20 @@
 <template>
   <div class="">
-    <div class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2">
+    <div
+      class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2"
+      v-if="joborder"
+    >
       <div class="flex flex-row p-2 gap-4">
         <div>
-          <p class="pb-2">Activity</p>
-          <div class="flex flex-row gap-3">
-            <div class="flex flex-row gap-1">
-              <chip :text="1" :color="'#6092ef'"></chip>
-              <p>pipeline</p>
-            </div>
-            <div class="flex flex-row gap-1">
-              <chip :text="12" :color="'#6092ef'"></chip>
-              <p>Submitted</p>
-            </div>
-          </div>
+          <p class="pb-2">status</p>
+          <chip
+            :text="joborder.jobOrderStatus.statusName"
+            :color="joborder.jobOrderStatus.color.hex"
+          ></chip>
         </div>
       </div>
       <div>
-        <p class="pb-2">Phones</p>
+        <p class="pb-2">Location</p>
         <div class="flex flex-row gap-2 mt-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -26,46 +23,105 @@
             fill="currentColor"
           >
             <path
-              d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+              d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"
             />
           </svg>
-          <p>+251911359586</p>
+          <p>{{ formAddress(joborder.jobDetail.location) }}</p>
         </div>
       </div>
       <div>
-        <p class="pb-2">E-mail</p>
+        <p class="pb-2">Activity</p>
+        <div class="flex flex-row gap-2 mt-2">
+          <div class="flex flex-row gap-1">
+            <span
+              class="
+                text-white
+                p-1
+                h-6
+                w-6
+                text-center text-xs
+                rounded-full
+                bg-orange-500
+              "
+              >4</span
+            >
+            <p>Candidates</p>
+          </div>
+          <div class="flex flex-row gap-1">
+            <span
+              class="
+                text-white
+                p-1
+                h-6
+                w-6
+                text-center text-xs
+                rounded-full
+                bg-orange-500
+              "
+              >4</span
+            >
+            <p>Submitted</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="pb-2">Company</p>
         <div class="flex flex-row gap-2 mt-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+              fill-rule="evenodd"
+              d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
+              clip-rule="evenodd"
             />
           </svg>
-          <p>bdere12345@gmail.com</p>
+
+          <p>{{ joborder.company.name }}</p>
+        </div>
+      </div>
+      <div>
+        <p class="pb-2">Owner</p>
+        <div class="flex flex-row gap-2 mt-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <p>
+            <span>{{ joborder.owner.firstName }}</span>
+            <span>{{ joborder.owner.lastName }}</span>
+          </p>
         </div>
       </div>
     </div>
-    <!-- start of tabs -->
     <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5">
       <div class="flex flex-col">
-        <div>
-          <joborder-primary-card></joborder-primary-card>
-          <joborder-details></joborder-details>
-          <joborder-company-card></joborder-company-card>
+        <div v-if="joborder">
+          <joborder-primary-card :data="joborder"></joborder-primary-card>
+          <joborder-details :data="joborder"></joborder-details>
+          <joborder-company-card :data="joborder"></joborder-company-card>
           <job-order-description-card></job-order-description-card>
           <joborder-notes></joborder-notes>
           <joborder-application-card></joborder-application-card>
         </div>
       </div>
-      <div></div>
+      <div>
+        <joborder-activity-feed-card></joborder-activity-feed-card>
+        <joborder-attachments></joborder-attachments>
+        <joborder-review-process-card></joborder-review-process-card>
+      </div>
     </div>
     <div class="m-5 xl:w-3/4 lg:w-3/4">
       <joborder-pipeline-card></joborder-pipeline-card>
@@ -82,6 +138,11 @@ import JobOrderDescriptionCard from "../../components/joborders/JobOrderDescript
 import JoborderNotes from "../../components/joborders/JoborderNotes.vue";
 import JoborderApplicationCard from "../../components/joborders/JoborderApplicationCard.vue";
 import JoborderPipelineCard from "../../components/joborders/JoborderPipelineCard.vue";
+import JoborderActivityFeedCard from "../../components/joborders/JoborderActivityFeedCard.vue";
+import JoborderAttachments from "../../components/joborders/JoborderAttachments.vue";
+import JoborderReviewProcessCard from "../../components/joborders/JoborderReviewProcessCard.vue";
+import { JOB_ORDER } from "../../queries/joborder";
+import { formAddress } from "../../utils/helpers";
 
 export default defineComponent({
   components: {
@@ -92,9 +153,32 @@ export default defineComponent({
     JobOrderDescriptionCard,
     JoborderNotes,
     JoborderApplicationCard,
-    JoborderPipelineCard
-},
+    JoborderPipelineCard,
+    JoborderActivityFeedCard,
+    JoborderAttachments,
+    JoborderReviewProcessCard,
+  },
   setup() {},
-  data: () => ({}),
+  data: () => ({
+    joborder: null as any,
+  }),
+  async created() {
+    await this.parseJobOrder();
+  },
+  methods: {
+    formAddress,
+    async parseJobOrder() {
+      console.warn(this.$route.params);
+      const { data } = await this.$apollo.query({
+        query: JOB_ORDER,
+        variables: {
+          id: this.$route.params.jid,
+        },
+      });
+      if (data) {
+        this.joborder = data.jobOrder;
+      }
+    },
+  },
 });
 </script>
