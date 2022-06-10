@@ -30,3 +30,31 @@ export const COMPANIES = gql`query companies($pageSize: Int!, $page: Int!) {
   `
 
   
+
+export const COMPANY = gql`query company($cid: String!) {
+  company(cid: $cid) {
+    id
+    name
+    website
+    phones{
+      cellNumber
+    }
+    owner{
+      firstName
+      lastName
+    }
+    companyStatus {
+      id
+      name
+      default
+      color {
+        hex
+      }
+    }
+    address {
+      country
+      city
+    }
+  }
+}
+`

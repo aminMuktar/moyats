@@ -10,15 +10,19 @@
             <tbody>
               <tr>
                 <td class="p-2">Address</td>
-                <td class="py-2 px-16">Addis Ababa</td>
+                <td class="py-2 px-16">{{ formAddress(data.address) }}</td>
               </tr>
               <tr>
                 <td class="p-2">Phones</td>
-                <td class="py-2 px-16"></td>
+                <td class="py-2 px-16" v-if="data.phones">
+                  {{ data.phones.cellNumber }}
+                </td>
               </tr>
               <tr>
                 <td class="p-2">Website</td>
-                <td class="py-2 px-16">https://google.com</td>
+                <td class="py-2 px-16 text-blue-500" v-if="data.website">
+                  <a target="_blank" :href="data.website">{{ data.website }}</a>
+                </td>
               </tr>
               <tr>
                 <td class="p-2">Social Media</td>

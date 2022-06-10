@@ -39,3 +39,50 @@ export const CONTACTS = gql`query contacts($pageSize: Int!, $page: Int!) {
     }
   }
   `
+
+export const CONTACT = gql`query contact($cid: String!){
+  contact(cid: $cid) {
+    id
+    companyContactId
+    reachable
+    phones {
+      cellNumber
+    }
+    address{
+      city
+      country
+    }
+    contactReportsTo{
+      companyContactId
+      firstName
+      lastName
+    }
+    department
+    firstName
+    lastName
+    email
+    status {
+      name
+      color {
+        hex
+      }
+    }
+    owner{
+      firstName
+      lastName
+    }
+    company {
+      id
+      name
+      companyStatus {
+        name
+        color {
+          hex
+        }
+      }
+    }
+    createdAt
+    updatedAt
+  }
+}
+`

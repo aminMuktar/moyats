@@ -10,17 +10,18 @@
             <tbody>
               <tr>
                 <td class="p-2">Company</td>
-                <td class="py-2 px-16">Amen Abe</td>
+                <td class="py-2 px-16">{{ data.company.name }}</td>
               </tr>
               <tr>
                 <td class="p-2">Department</td>
-                <td class="py-2 px-16">
-                    Hr Record
-                </td>
+                <td class="py-2 px-16">{{ data.department }}</td>
               </tr>
               <tr>
                 <td class="p-2">Reports To</td>
-                <td class="py-2 px-16">Other Contact Name</td>
+                <td class="py-2 px-16" v-if="data.contactReportsTo">
+                  {{ data.contactReportsTo.firstName }}
+                  {{ data.contactReportsTo.lastName }}
+                </td>
               </tr>
             </tbody>
           </table>

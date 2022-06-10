@@ -9,20 +9,18 @@
           <table class="table-auto">
             <tbody>
               <tr>
-                <td class="p-2">Left Company</td>
-                <td class="py-2 px-16">No</td>
-              </tr>
-              <tr>
                 <td class="p-2">Created</td>
-                <td class="py-2 px-16">04-22-2022</td>
+                <td class="py-2 px-16">{{ parseDate(data.createdAt) }}</td>
               </tr>
               <tr>
                 <td class="p-2">Updated</td>
-                <td class="py-2 px-16">06-08-2022</td>
+                <td class="py-2 px-16">{{ parseDate(data.updatedAt) }}</td>
               </tr>
               <tr>
                 <td class="p-2">Owner</td>
-                <td class="py-2 px-16">Amen Abe</td>
+                <td class="py-2 px-16">
+                  {{ data.owner.firstName }} {{ data.owner.lastName }}
+                </td>
               </tr>
               <tr>
                 <td class="p-2">Tags</td>
@@ -31,7 +29,10 @@
               <tr>
                 <td class="p-2">Status</td>
                 <td class="py-2 px-16">
-                    <Chip :text="'active'" :color="'green'"></Chip>
+                  <Chip
+                    :text="data.status.name"
+                    :color="data.status.color.hex"
+                  ></Chip>
                 </td>
               </tr>
             </tbody>
@@ -44,7 +45,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
-import { formAddress } from "../../utils/helpers";
+import { formAddress, parseDate } from "../../utils/helpers";
 import Chip from "../widgets/Chip.vue";
 
 export default defineComponent({
@@ -53,6 +54,7 @@ export default defineComponent({
   created() {},
   methods: {
     formAddress,
+    parseDate,
   },
 });
 </script>

@@ -5,7 +5,17 @@
   >
     <button
       v-if="showBtn"
-      class="w-10 h-10 bg-white shadow-xl rounded flex justify-center items-center fixed"
+      class="
+        w-10
+        h-10
+        bg-white
+        shadow-xl
+        rounded
+        flex
+        justify-center
+        items-center
+        fixed
+      "
       @click="sliderActivator()"
     >
       <svg
@@ -26,30 +36,44 @@
     </button>
     <transition name="nested">
       <div
-        class="w-full h-screen bg-white shadow-lg shadow-black-500/50"
+        class="
+          w-full
+          sm:w-1/2
+          md:w-1/2
+          lg:w-1/2
+          xl:w-1/2
+          h-screen
+          bg-white
+          shadow-lg shadow-black-500/50
+          fixed
+        "
         v-show="display"
       >
-      <div class="flex justify-end">
-        <button @click="closeSlider" class="p-2 hover:bg-gray-100 m-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-              clip-rule="evenodd"
-            />
-            <path
-              fill-rule="evenodd"
-              d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
+        <div class="flex justify-between bg-gray-100">
+          <p class="pt-3 px-2 border-b">Header Text for Quick-Action</p>
+          <button @click="closeSlider" class="p-2 hover:bg-gray-100 m-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="flex p-2">
+          <p>content for the body goes here</p>
+        </div>
       </div>
     </transition>
   </div>

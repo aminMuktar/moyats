@@ -1,5 +1,7 @@
 import graphene
+from accounts.models import BaseUser
 from . import models
+from accounts.types import BaseUserType
 from graphene_django import DjangoObjectType
 
 
@@ -9,6 +11,13 @@ class CompanyContactStatusType(DjangoObjectType):
 
 
 class CompanyContactType(DjangoObjectType):
+    owner = graphene.Field(BaseUserType)
+
+    def resolve_owner(parent, info):
+        owner = BaseUser.objects.filter(
+            organizations__id=parent.company.organization.id)
+        return owner.first()
+
     class Meta:
         model = models.CompanyContact
 
@@ -20,10 +29,16 @@ class CompanyStatusType(DjangoObjectType):
 
 class CompanyType(DjangoObjectType):
     contacts = graphene.List(CompanyContactType)
+    owner = graphene.Field(BaseUserType)
+
+    def resolve_owner(parent, info):
+        owner = BaseUser.objects.filter(
+            organizations__id=parent.organization.id)
+        return owner.first()
 
     def resolve_contacts(parent, info):
         contacts = models.CompanyContact.objects.filter(company__id=parent.id)
-        return contacts        
+        return contacts
 
     class Meta:
         model = models.Company
