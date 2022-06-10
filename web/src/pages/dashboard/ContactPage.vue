@@ -78,14 +78,28 @@
     <!-- start of tabs -->
     <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5">
       <div class="flex flex-col">
-        <div></div>
+        <div>
+          <contacts-primary-card></contacts-primary-card>
+          <contact-detail-card></contact-detail-card>
+          <contact-company-card></contact-company-card>
+          <contacts-notes-card></contacts-notes-card>
+        </div>
       </div>
-      <div></div>
+      <div>
+        <contacts-activity-feed-card></contacts-activity-feed-card>
+        <contacts-joborder-card></contacts-joborder-card>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import ContactCompanyCard from "../../components/contacts/ContactCompanyCard.vue";
+import ContactDetailCard from "../../components/contacts/ContactDetailCard.vue";
+import ContactsActivityFeedCard from "../../components/contacts/ContactsActivityFeedCard.vue";
+import ContactsJoborderCard from "../../components/contacts/ContactsJoborderCard.vue";
+import ContactsNotesCard from "../../components/contacts/ContactsNotesCard.vue";
+import ContactsPrimaryCard from "../../components/contacts/ContactsPrimaryCard.vue";
 import DashboardCardWidget from "../../components/DashboardCardWidget.vue";
 import Chip from "../../components/widgets/Chip.vue";
 
@@ -93,6 +107,12 @@ export default defineComponent({
   components: {
     Chip,
     DashboardCardWidget,
+    ContactsPrimaryCard,
+    ContactDetailCard,
+    ContactCompanyCard,
+    ContactsNotesCard,
+    ContactsActivityFeedCard,
+    ContactsJoborderCard,
   },
   setup() {},
   data: () => ({}),

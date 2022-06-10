@@ -123,7 +123,7 @@ export default defineComponent({
     hasNext: false,
     hasPrev: false,
     page: 1 as any,
-    pageSize: 1,
+    pageSize: 10,
     dropts: [] as any,
     headers: [
       { value: "name", label: "Name" },
