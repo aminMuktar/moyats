@@ -12,7 +12,6 @@ class CandidateInput(graphene.InputObjectType):
     email = graphene.String()
     organization = graphene.String()
     phone = graphene.String()
-    # socialMediaType = graphene.String()
     socialMedias = graphene.List(SocialMediaInput)
     country = graphene.String()
     city = graphene.String()
