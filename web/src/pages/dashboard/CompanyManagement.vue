@@ -70,7 +70,6 @@ export default defineComponent({
   },
   async created() {
     await this.companiesList();
-    console.log(this.listOfCompanies);
   },
   methods: {
     async companiesList() {

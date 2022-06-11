@@ -9,9 +9,10 @@ from pipelines.query import PipelineQuery
 from companies.query import CompanyQuery
 from joborders.query import JobOrderQuery
 from candidates.query import CandidateQuery
+from application.query import ApplicationQuery
 
 
-class Query(AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, graphene.ObjectType):
+class Query(ApplicationQuery, AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, graphene.ObjectType):
     pass
 
 
