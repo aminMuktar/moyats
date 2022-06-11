@@ -2,6 +2,7 @@ import graphene
 import graphql_jwt
 from core.query import CoreQuery
 from accounts.query import AccountsQuery
+from candidates.mutation import AddCandidate
 from organizations.mutations import CreateOrganization
 from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration
 from organizations.query import OrganizationQuery
@@ -23,6 +24,7 @@ class Mutation(graphene.ObjectType):
     register = AddNewUser.Field()
     social_auth = SocialMediaRegistration.Field()
     setup_account = CreateOrganization.Field()
+    add_candidate = AddCandidate.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
