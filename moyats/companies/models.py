@@ -25,8 +25,9 @@ class Company(models.Model):
 
     company_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
-    name = models.CharField(max_length=100, unique=True)
-    website = models.URLField(null=True, blank=True, help_text="Optional field for companies websites")
+    name = models.CharField(max_length=100, unique=True, null=True)
+    website = models.URLField(
+        null=True, blank=True, help_text="Optional field for companies websites")
     phones = models.ForeignKey(
         BaseContact, on_delete=models.CASCADE, null=True)
     company_status = models.ForeignKey(

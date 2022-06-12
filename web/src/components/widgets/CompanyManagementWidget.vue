@@ -1,6 +1,8 @@
 <template>
   <router-link v-bind:to="url">
-    <div class="bg-white w-96 h-80 mt-10 rounded-lg shadow-md p-9">
+    <div
+      class="bg-white md:w-full lg:w-full lg:h-96 h-80 mt-10 rounded-lg shadow-md p-9 relative"
+    >
       <div class="text-3xl capitalize">
         <slot name="header"></slot>
       </div>
@@ -17,6 +19,6 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  props: ["url"],
+  props: ["url", "add"],
 });
 </script>

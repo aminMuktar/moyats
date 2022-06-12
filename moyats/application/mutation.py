@@ -8,7 +8,6 @@ from accounts.models import Address, BaseContact
 from .models import CandidateProfile
 from .types import CandidateType
 from core.helpers import (
-    social_media_exists,
     org_exists,
 )
 
@@ -37,9 +36,6 @@ class AddCandidate(graphene.Mutation):
                 first_name=input.firstName,
                 middle_name=input.middleName,
                 last_name=input.lastName,)
-
-        # if not social_media_exists(input.socialMediaType):
-        #     raise Exception("Socal does not exist")
 
         if not org_exists(input.organization):
             raise Exception("Organization does not exist")

@@ -34,30 +34,14 @@
         <div class="flex flex-row gap-2 mt-2">
           <div class="flex flex-row gap-1">
             <span
-              class="
-                text-white
-                p-1
-                h-6
-                w-6
-                text-center text-xs
-                rounded-full
-                bg-orange-500
-              "
+              class="text-white p-1 h-6 w-6 text-center text-xs rounded-full bg-orange-500"
               >4</span
             >
             <p>Candidates</p>
           </div>
           <div class="flex flex-row gap-1">
             <span
-              class="
-                text-white
-                p-1
-                h-6
-                w-6
-                text-center text-xs
-                rounded-full
-                bg-orange-500
-              "
+              class="text-white p-1 h-6 w-6 text-center text-xs rounded-full bg-orange-500"
               >4</span
             >
             <p>Submitted</p>
@@ -168,7 +152,6 @@ export default defineComponent({
   methods: {
     formAddress,
     async parseJobOrder() {
-      console.warn(this.$route.params);
       const { data } = await this.$apollo.query({
         query: JOB_ORDER,
         variables: {

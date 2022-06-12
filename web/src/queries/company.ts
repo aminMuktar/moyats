@@ -1,6 +1,7 @@
-import gql from "graphql-tag"
+import gql from "graphql-tag";
 
-export const COMPANIES = gql`query companies($pageSize: Int!, $page: Int!) {
+export const COMPANIES = gql`
+  query companies($pageSize: Int!, $page: Int!) {
     companies(pageSize: $pageSize, page: $page) {
       page
       pages
@@ -11,6 +12,16 @@ export const COMPANIES = gql`query companies($pageSize: Int!, $page: Int!) {
         id
         companyId
         name
+        owner {
+          firstName
+          lastName
+        }
+        organization {
+          name
+          orgType
+          description
+          subdomain
+        }
         companyStatus {
           id
           name
@@ -27,9 +38,18 @@ export const COMPANIES = gql`query companies($pageSize: Int!, $page: Int!) {
       }
     }
   }
+<<<<<<< Updated upstream
+`;
+
+<<<<<<< HEAD
+
+=======
+export const COMPANY = gql`
+  query company($cid: String!) {
+    company(cid: $cid) {
+=======
   `
-
-
+>>>>>>> 5b0d8bbc18897dae4550c5644dc058628aaf9c31
 
 export const COMPANY = gql`query company($cid: String!) {
   company(cid: $cid) {
@@ -44,17 +64,35 @@ export const COMPANY = gql`query company($cid: String!) {
       lastName
     }
     companyStatus {
+>>>>>>> Stashed changes
       id
       name
-      default
-      color {
-        hex
+      website
+      phones {
+        cellNumber
+      }
+      owner {
+        firstName
+        lastName
+      }
+      companyStatus {
+        id
+        name
+        default
+        color {
+          hex
+        }
+      }
+      address {
+        country
+        city
       }
     }
-    address {
-      country
-      city
+    owner{
+      firstName
+      lastName
     }
+    createdAt
+    updatedAt
   }
-}
-`
+`;

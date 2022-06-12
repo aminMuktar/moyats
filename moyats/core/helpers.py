@@ -4,8 +4,9 @@ import math
 from datetime import datetime
 from datetime import timedelta
 from organizations.models import Organization
-from accounts.models import BaseUser, EmailVerificationCode
+from accounts.models import BaseUser, EmailVerificationCode, BaseContact, Address
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from candidates.models import SocialMedia, CandidateProfile
 
 
 def user_exists(email):
@@ -65,3 +66,27 @@ def core_paginator(qs, page_size, page, paginated_type, **kwargs):
         objects=page_obj.object_list,
         **kwargs
     )
+
+
+def social_media_exists(socialType):
+    socialM = SocialMedia.objects.filter(type=socialType)
+    return socialM.exists()
+
+
+def phone_exists(phone):
+    phoneC = BaseContact.objects.filter(phone=phone)
+    return phoneC.exists()
+
+
+def address_exists(address):
+    addressC = Address.objects.filter(address=address)
+    return addressC.exists()
+
+
+def candidate_exist(firstName, middleName, lastName):
+    cand_exist = CandidateProfile.objects.filter(
+        first_name=firstName,
+        middle_name=middleName,
+        last_name=lastName
+    )
+    return cand_exist.exists()
