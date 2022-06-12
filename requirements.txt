@@ -15,4 +15,4 @@ django-redis
 coverage
 django-cors-headers
 firebase-admin
-dotenv
+python-dotenv

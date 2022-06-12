@@ -9,12 +9,6 @@ class BaseUserType(DjangoObjectType):
         exclude = ("id", "password", "is_superuser", "is_staff")
 
 
-class UserProfileType(DjangoObjectType):
-    class Meta:
-        model = models.UserProfile
-        exclude = ("id",)
-
-
 class BaseContactType(DjangoObjectType):
     class Meta:
         model = BaseContact
@@ -31,3 +25,4 @@ class NotificationSettingType(DjangoObjectType):
     class Meta:
         model = models.NotificationSetting
         exclude = ("id",)
+

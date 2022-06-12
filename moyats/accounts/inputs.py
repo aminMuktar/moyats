@@ -10,8 +10,6 @@ class NewUserInput(graphene.InputObjectType):
 
 
 class SocialRegistrationInput(graphene.InputObjectType):
-    # first_name = graphene.String()
-    # last_name = graphene.String()
     source = graphene.String()
     email = graphene.String()
     photo_url = graphene.String()

@@ -21,16 +21,18 @@
     </template>
     <template v-slot:list>
       <div class="py-1">
-        <a
-          href="#"
+        <router-link
+          v-if="!empty"
+          to="/account-settings"
           :class="[
             'hover:bg-gray-100 cursor-pointer',
             selected ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
             'block px-4 py-2 text-sm',
           ]"
-          >Account settings</a
+          >Account settings</router-link
         >
         <a
+          v-if="!empty"
           href="#"
           :class="[
             'hover:bg-gray-100 cursor-pointer',
@@ -60,6 +62,9 @@ import MenuDropDown from "./MenuDropDown.vue";
 export default defineComponent({
   components: { MenuDropDown },
   setup() {},
+  props: {
+    empty: Boolean,
+  },
   data: () => ({
     active: false,
     selected: false,
@@ -73,6 +78,7 @@ export default defineComponent({
         .then(({ data }) => {
           if (data) {
             this.$store.commit("clearToken");
+            localStorage.clear();
             location.assign("/login");
           }
         });
@@ -80,4 +86,3 @@ export default defineComponent({
   },
 });
 </script>
-

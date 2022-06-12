@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from core.models import BaseContact, Color
 from django.utils.translation import gettext_lazy as _
+from django.contrib.contenttypes.fields import GenericRelation
 
 
 class OrganizationStatus(models.Model):
@@ -32,6 +33,8 @@ class OrganizationMember(models.Model):
         EDITOR = 'ed', _('Is Editor')
         READ_ONLY = 'ro', _('Read Only')
 
+    org_member_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE, null=True)
     title = models.CharField(null=True, blank=True, max_length=100)
     permission_level = models.CharField(
@@ -66,6 +69,7 @@ class Organization(models.Model):
     members = models.ManyToManyField(OrganizationMember, blank=True)
     employees_count = models.IntegerField(null=True, blank=True)
     subdomain = models.CharField(max_length=200, null=True, blank=True)
+    activity = GenericRelation("core.Activity")
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

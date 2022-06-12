@@ -6,7 +6,7 @@ from core.helpers import(
     is_valid_uuid, link_expired)
 from django.contrib.auth import login
 from accounts.inputs import NewUserInput, SocialRegistrationInput
-from accounts.models import BaseUser, UserProfile, EmailVerificationCode
+from accounts.models import BaseUser, EmailVerificationCode
 from graphql_jwt.decorators import setup_jwt_cookie
 from graphql_jwt import signals, mixins
 from .decorators import jwt_token_auth, social_jwt_token_auth
@@ -104,26 +104,17 @@ class AddNewUser(graphene.Mutation):
         if user_exists(input.email):
             raise Exception("E-mail is already registered")
 
-        user_profile = UserProfile.objects.create(
-            first_name=input.first_name,
-            middle_name=input.middle_name,
-            last_name=input.last_name,
-        )
         base_contact = BaseContact.objects.create(
             cell_number=input.first_name,
         )
         user = BaseUser.objects.create_user(
             email=input.email,
             username=input.email,
+            first_name=input.first_name,
+            last_name=input.last_name,
             password=input.password,
-            user_profile=user_profile,
             base_contact=base_contact,
         )
-        # user.organizations.create(
-        #     name=input.company_title,
-        #     verified=False,
-        #     org_type=input.company_type.lower(),
-        #     subdomain=input.subdomain
-        # )
+
         create_email_verification_link(user)
         return AddNewUser(response=user)

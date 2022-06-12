@@ -111,15 +111,15 @@
           </div>
         </div>
 
-        <div>
+        <div class="gap-y-3 flex flex-col">
           <button
-            class="p-3 bg-red-500 text-white w-full"
+            class="p-3 bg-red-500 text-white w-full rounded-xl"
             @click="signInWithGoogle"
           >
             Google
           </button>
           <button
-            class="p-3 bg-black text-white w-full mb-5"
+            class="p-3 bg-black text-white w-full mb-5 rounded-xl"
             @click="signInWithGithub"
           >
             Github
@@ -221,10 +221,23 @@ export default defineComponent({
           input: { accessToken, source },
         },
       });
+      if (errors) {
+        console.error(errors);
+        return;
+      }
       if (data) {
         this.$store.commit("setToken", true);
+        await this.saveUserData();
         window.location.assign("/dashboard");
       }
+    },
+    async saveUserData() {
+      const {
+        data: { accountUser },
+      } = await this.$apollo.query({
+        query: q.ACCOUNT_DATA,
+      });
+      await this.$store.commit("saveUdata", accountUser);
     },
     async login(e: any) {
       e.preventDefault();
@@ -235,12 +248,15 @@ export default defineComponent({
           password: this.password,
         },
       });
-
+      if (errors) {
+        const [{message}] = errors
+        console.error(message);
+        return;
+      }
       if (data) {
         this.$store.commit("setToken", true);
-        window.location.href = "http://" + window.location.host + "/dashboard";
-      } else {
-        console.log("errorrrr", errors);
+        await this.saveUserData();
+        window.location.assign("/dashboard");
       }
     },
   },

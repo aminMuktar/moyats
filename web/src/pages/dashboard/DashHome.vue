@@ -1,7 +1,7 @@
 <template>
-  <div class="font-sans gap-y-3 flex flex-col">
+  <div class="font-sans gap-y-3 flex flex-col m-5">
     <div>
-      <p class="text-3xl pb-5 font-semibold">My Dashboard</p>
+      <p class="text-3xl pb-5 font-semibold">Welcome Back, {{$store.state.core.u.firstName}}</p>
     </div>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3">
       <stat-widget v-for="x in 3" :key="x">

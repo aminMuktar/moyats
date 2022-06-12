@@ -8,6 +8,9 @@ import Router from "./routes/index";
 import { key, store } from "./store";
 import { FIREBASE_CONFIG } from './firebase.config'
 import * as firebase from '@firebase/app';
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
+
 import '@firebase/messaging';
 
 
@@ -36,5 +39,6 @@ maap.use(apolloProvider)
 maap.use(Router)
 maap.use(store, key)
 maap.use(VueApexCharts);
+maap.use(VueTelInput)
 maap.mount("#app");
 maap.config.globalProperties.$fapp = app

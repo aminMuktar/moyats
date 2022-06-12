@@ -32,16 +32,22 @@
         lg:translate-x-0 lg:static lg:inset-0
       "
     >
-      <div class="flex items-start justify-start mt-3 border-b-2 border-gray-700">
-        <div class="flex items-start mx-7 gap-1 mb-3">
-          <img src="../assets/icon.png" class="w-10" alt="">
-          <span class="mx-2 text-2xl font-semibold text-white pt-2 font-sans">Moyats</span>
-        </div>
+      <div
+        class="flex items-start justify-start mt-3 border-b-2 border-gray-700"
+        style="height: 52px"
+      >
+        <router-link to="/dashboard">
+          <div class="flex items-start mx-7 gap-1 mb-3">
+            <img src="../assets/icon.png" class="w-8 mt-1" alt="" />
+            <span class="mx-2 text-2xl font-semibold text-white pt-1 font-sans"
+              >Moyats</span
+            >
+          </div>
+        </router-link>
       </div>
       <ul class="space-y-2 mt-5">
         <li v-for="(side, idx) in sideItems" :key="idx">
           <router-link
-            :to="side.path"
             class="
               flex
               items-center
@@ -56,12 +62,160 @@
               dark:hover:bg-gray-700
             "
             :class="{
-              'bg-gray-700': $route.path === side.path,
+              'bg-gray-700': checkPath(side.path),
             }"
+            :to="side.path"
           >
             <div v-html="side.icon"></div>
             <span class="ml-3" v-text="side.title"></span>
           </router-link>
+        </li>
+        <li>
+          <a
+            @click="showDrop = !showDrop"
+            type="button"
+            class="
+              flex
+              select-none
+              cursor-pointer
+              items-center
+              p-2
+              mx-2
+              text-base
+              font-normal
+              text-gray-900
+              rounded-lg
+              transition
+              duration-75
+              group
+              hover:bg-gray-100
+              dark:text-white dark:hover:bg-gray-700
+            "
+            aria-controls="dropdown-example"
+            data-collapse-toggle="dropdown-example"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="
+                flex-shrink-0
+                w-6
+                h-6
+                text-gray-500
+                transition
+                duration-75
+                group-hover:text-gray-900
+                dark:text-gray-400 dark:group-hover:text-white
+              "
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span
+              class="flex-1 ml-3 text-left whitespace-nowrap"
+              sidebar-toggle-item
+              >More</span
+            >
+            <svg
+              v-if="showDrop"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <svg
+              v-else
+              sidebar-toggle-item
+              class="w-6 h-6 mx-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
+          <ul id="dropdown-example" v-show="showDrop" class="py-2 space-y-2">
+            <li>
+              <a
+                href="#"
+                class="
+                  flex
+                  items-center
+                  p-2
+                  mx-2
+                  pl-11
+                  text-base
+                  font-normal
+                  text-gray-900
+                  rounded-lg
+                  transition
+                  duration-75
+                  group
+                  hover:bg-gray-100
+                  dark:text-white dark:hover:bg-gray-700
+                "
+                >Email</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="
+                  flex
+                  items-center
+                  p-2
+                  mx-2
+                  pl-11
+                  text-base
+                  font-normal
+                  text-gray-900
+                  rounded-lg
+                  transition
+                  duration-75
+                  group
+                  hover:bg-gray-100
+                  dark:text-white dark:hover:bg-gray-700
+                "
+                >Tasks</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="
+                  flex
+                  mx-2
+                  items-center
+                  p-2
+                  pl-11
+                  text-base
+                  font-normal
+                  text-gray-900
+                  rounded-lg
+                  transition
+                  duration-75
+                  group
+                  hover:bg-gray-100
+                  dark:text-white dark:hover:bg-gray-700
+                "
+                >Workflows</a
+              >
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -73,7 +227,17 @@ import { defineComponent } from "vue";
 import { ref } from "vue";
 
 export default defineComponent({
+  methods: {
+    checkPath(path: string) {
+      console.log(this.$route.path)
+      const current = this.$route.path.split("/")
+      const valid = current[1] == path.substr(1)
+      // const valid = path == this.$route.path;
+      return valid;
+    },
+  },
   data: () => ({
+    showDrop: false,
     isOpen: false,
     activeClass: "bg-gray-600 bg-opacity-25 text-gray-100 border-gray-100",
     inactiveClass:
@@ -155,4 +319,3 @@ export default defineComponent({
   }),
 });
 </script>
-

@@ -1,5 +1,5 @@
+import uuid
 from django.db import models
-from joborders.models import JobOrder
 from django.utils.translation import gettext_lazy as _
 
 
@@ -11,6 +11,8 @@ class EmailReport(models.Model):
         UNSUBSCRIBED = 'us', _('Unsubscribed')
         MARKED_SPAM = 'ms', _('Marked Spam')
 
+    email_report_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     opens = models.BigIntegerField(default=0)
     clicks = models.BigIntegerField(default=0)
     bounces = models.BigIntegerField(default=0)
@@ -31,6 +33,8 @@ class EmailRecipient(models.Model):
         CANDIDATE = 'ca', _('Candidate')
         CUSTOM_DETAIL = 'cd', _('Custom Detail')
 
+    email_recipient_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     type = models.CharField(choices=EmailRecipientType.choices, max_length=2)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
@@ -44,7 +48,9 @@ class EmailRecipient(models.Model):
         return self.first_name
 
 class CoreEmail(models.Model):
-    regarding = models.ForeignKey(JobOrder, on_delete=models.CASCADE)
+    email_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
+    regarding = models.ForeignKey("joborders.JobOrder", on_delete=models.CASCADE)
     recipient = models.ForeignKey(EmailRecipient, on_delete=models.CASCADE)
     subject = models.TextField()
     body = models.TextField()

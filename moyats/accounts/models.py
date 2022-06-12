@@ -5,21 +5,6 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
 
-class UserProfile(models.Model):
-    profile_pic = models.ImageField(
-        upload_to='uploads/% Y/% m/% d/', null=True, blank=True)
-    first_name = models.CharField(max_length=50)
-    middle_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def full_name(self):
-        return f"{self.first_name} {self.last_name}"
-
-    def __str__(self) -> str:
-        return self.full_name()
-
-
 class Address(models.Model):
     country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
@@ -59,9 +44,7 @@ class BaseUser(AbstractUser):
         GITHUB = 'gh', _('Github')
 
     base_contact = models.ForeignKey(
-        BaseContact, on_delete=models.CASCADE, null=True)
-    user_profile = models.ForeignKey(
-        UserProfile, on_delete=models.CASCADE, null=True)
+        BaseContact, on_delete=models.CASCADE, null=True, blank=True)
     account_type = models.CharField(
         choices=AccountType.choices, max_length=2, default=AccountType.BASE_USER)
     source = models.CharField(
@@ -70,12 +53,14 @@ class BaseUser(AbstractUser):
         "organizations.Organization", blank=True)
     blocked = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True)
+    address = models.ForeignKey(
+        Address, on_delete=models.CASCADE, null=True, blank=True)
     signiture = models.TextField(null=True, blank=True)
     access_token = models.TextField(
         null=True, blank=True, help_text="Access token for social authed users.", editable=True)
     notification_setting = models.ForeignKey(
         NotificationSetting, on_delete=models.CASCADE, null=True, blank=True)
+    setup_complete = models.BooleanField(default=False)
     timezone = models.CharField(max_length=200, blank=True, null=True)
     date_format = models.CharField(max_length=100, blank=True, null=True)
     updated_At = models.DateTimeField(auto_now=True, null=True)

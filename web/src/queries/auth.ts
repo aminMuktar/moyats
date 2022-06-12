@@ -31,12 +31,8 @@ export const ACCOUNT_DATA = gql`
         homeNumber
       }
       isActive
-      userProfile {
-        profilePic
-        firstName
-        middleName
-        lastName
-      }
+      firstName
+      lastName
       accountType
       blocked
       emailVerified
@@ -46,6 +42,7 @@ export const ACCOUNT_DATA = gql`
         city
         zipCode
       }
+      setupComplete
       signiture
       notificationSetting {
         setting
@@ -68,3 +65,39 @@ export const SOCIAL_AUTH = gql`mutation socialAuth($input:SocialRegistrationInpu
     }
   }
 }`
+
+export const ACCOUNT_SETUP = gql`mutation setupAccount($input: OrgSetupInput!) {
+  setupAccount(input: $input) {
+    response {
+      name
+      createdAt
+    }
+  }
+}`
+
+export const ACTIVITIES = gql`query  activities($page:Int!,$pageSize:Int!){
+  activities(page: $page, pageSize: $pageSize) {
+    page
+    pages
+    hasNext
+    hasPrev
+    total
+    objects {
+      id
+      contentObject
+      activityType
+      createdAt
+      contentType {
+        id
+        appLabel
+        model
+      } 
+      user{
+        firstName
+        lastName
+      }
+    }
+  }
+}
+`
+

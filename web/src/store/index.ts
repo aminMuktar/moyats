@@ -10,14 +10,14 @@ export const key: InjectionKey<Store<State>> = Symbol();
 export const CoreModule = {
   state: {
     token: false,
-    test: ""
+    u: null
   },
   mutations: {
     clearToken(state: any) {
       state.token = false
     },
-    setTest(state: any, token: any) {
-      state.test = token
+    saveUdata(state: any, data: any) {
+      state.u = data
     },
     setToken(state: any, token: any) {
       state.token = token;
@@ -31,7 +31,7 @@ export const store = createStore<State>({
   },
   plugins: [createPersistedState({
     storage: window.localStorage,
-    paths: ["core.token", "core.test"],
+    paths: ["core.token", "core.u"],
   })],
 });
 

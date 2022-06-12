@@ -1,4 +1,4 @@
-from pyexpat import model
+import uuid
 from django.db import models
 from accounts.models import Address
 from core.models import BaseContact
@@ -25,7 +25,7 @@ class CandidateSource(models.Model):
 
 
 class SocialMedia(models.Model):
-    class SocialMediaType(models.TextChoices):
+    class SocialMedias(models.TextChoices):
         LINKEDIN = 'ln', _('LinkedIn')
         FACEBOOK = 'fb', _('Facebook')
         INSTAGRAM = 'is', _('Instragram')
@@ -33,7 +33,7 @@ class SocialMedia(models.Model):
         GITHUB = 'gi', _('Github')
         TIKTOK = 'tk', _('TikTok')
 
-    type = models.CharField(max_length=2, choices=SocialMediaType.choices)
+    type = models.CharField(max_length=2, choices=SocialMedias.choices)
     link = models.URLField()
     updated_At = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -90,8 +90,14 @@ class CandidateQualification(models.Model):
 
 
 class Candidate(models.Model):
+    candidate_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     candidate_profile = models.ForeignKey(
         CandidateProfile, on_delete=models.CASCADE)
+    organization = models.ForeignKey(
+        "organizations.Organization", on_delete=models.CASCADE,
+        null=True
+    )
     phones = models.ForeignKey(
         BaseContact, on_delete=models.CASCADE, null=True)
     social_medias = models.ManyToManyField(SocialMedia)
