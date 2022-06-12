@@ -29,7 +29,7 @@ export const COMPANIES = gql`query companies($pageSize: Int!, $page: Int!) {
   }
   `
 
-  
+
 
 export const COMPANY = gql`query company($cid: String!) {
   company(cid: $cid) {
