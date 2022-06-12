@@ -38,11 +38,29 @@ export const COMPANIES = gql`
       }
     }
   }
+<<<<<<< Updated upstream
 `;
 
 export const COMPANY = gql`
   query company($cid: String!) {
     company(cid: $cid) {
+=======
+  `
+
+export const COMPANY = gql`query company($cid: String!) {
+  company(cid: $cid) {
+    id
+    name
+    website
+    phones{
+      cellNumber
+    }
+    owner{
+      firstName
+      lastName
+    }
+    companyStatus {
+>>>>>>> Stashed changes
       id
       name
       website
@@ -66,5 +84,11 @@ export const COMPANY = gql`
         city
       }
     }
+    owner{
+      firstName
+      lastName
+    }
+    createdAt
+    updatedAt
   }
 `;

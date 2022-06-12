@@ -40,7 +40,7 @@
       <div class="flex flex-col">
         <div>
           <company-primary-card :data="company"></company-primary-card>
-          <company-details-card></company-details-card>
+          <company-details-card :data="company"></company-details-card>
         </div>
       </div>
       <div>
