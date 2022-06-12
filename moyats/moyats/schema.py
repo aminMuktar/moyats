@@ -2,6 +2,8 @@ import graphene
 import graphql_jwt
 from core.query import CoreQuery
 from accounts.query import AccountsQuery
+from candidates.mutation import AddCandidate
+from joborders.mutations import JobOrderMutation
 from organizations.mutations import CreateOrganization
 from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration
 from organizations.query import OrganizationQuery
@@ -9,9 +11,10 @@ from pipelines.query import PipelineQuery
 from companies.query import CompanyQuery
 from joborders.query import JobOrderQuery
 from candidates.query import CandidateQuery
+from application.query import ApplicationQuery
 
 
-class Query(AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, graphene.ObjectType):
+class Query(ApplicationQuery, AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, graphene.ObjectType):
     pass
 
 
@@ -22,6 +25,8 @@ class Mutation(graphene.ObjectType):
     register = AddNewUser.Field()
     social_auth = SocialMediaRegistration.Field()
     setup_account = CreateOrganization.Field()
+    add_candidate = AddCandidate.Field()
+    add_job_order = JobOrderMutation.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
