@@ -60,6 +60,8 @@ export default defineComponent({
   async created() {
     this.page = this.$route.query.page ?? this.page;
     await this.fetchActivities();
+    this.$store.commit("setActivities", this.activities);
+    console.log(this.$store.state.core.activities[0].activityId);
   },
   methods: {
     parseDate,

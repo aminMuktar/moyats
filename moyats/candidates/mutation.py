@@ -1,6 +1,5 @@
 import graphene
 from .utils import get_type
-
 from organizations.models import Organization
 from .models import Candidate, CandidateSource, SocialMedia
 from .inputs import CandidateInput
@@ -8,7 +7,6 @@ from accounts.models import Address, BaseContact
 from .models import CandidateProfile
 from .types import CandidateType
 from core.helpers import (
-    social_media_exists,
     org_exists,
 )
 

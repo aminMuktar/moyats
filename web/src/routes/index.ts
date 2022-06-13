@@ -16,6 +16,7 @@ import CompanySetup from "../pages/CompanySetup.vue";
 import AccountSettings from "../pages/dashboard/AccountSettings.vue";
 import CompanyManagement from "../pages/dashboard/CompanyManagement.vue";
 import NotFound from "../pages/errors/NotFound.vue";
+import Activity from "../pages/dashboard/ActivityDetail.vue";
 
 import {
   authguard,
@@ -61,6 +62,11 @@ export default createRouter({
           path: "/activities",
           name: "Activities",
           component: Activities,
+        },
+        {
+          path: "/activity/:aid",
+          name: "Activity",
+          component: Activity,
         },
         {
           path: "/joborders",

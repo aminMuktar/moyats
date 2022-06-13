@@ -56,48 +56,76 @@ export const ACCOUNT_DATA = gql`
   }
 `;
 
-export const SOCIAL_AUTH = gql`mutation socialAuth($input:SocialRegistrationInput!){
-  socialAuth(input:$input){
-    response{
-      firstName
-      lastName
-      createdAt
-    }
-  }
-}`
-
-export const ACCOUNT_SETUP = gql`mutation setupAccount($input: OrgSetupInput!) {
-  setupAccount(input: $input) {
-    response {
-      name
-      createdAt
-    }
-  }
-}`
-
-export const ACTIVITIES = gql`query  activities($page:Int!,$pageSize:Int!){
-  activities(page: $page, pageSize: $pageSize) {
-    page
-    pages
-    hasNext
-    hasPrev
-    total
-    objects {
-      id
-      contentObject
-      activityType
-      createdAt
-      contentType {
-        id
-        appLabel
-        model
-      } 
-      user{
+export const SOCIAL_AUTH = gql`
+  mutation socialAuth($input: SocialRegistrationInput!) {
+    socialAuth(input: $input) {
+      response {
         firstName
         lastName
+        createdAt
       }
     }
   }
-}
-`
+`;
 
+export const ACCOUNT_SETUP = gql`
+  mutation setupAccount($input: OrgSetupInput!) {
+    setupAccount(input: $input) {
+      response {
+        name
+        createdAt
+      }
+    }
+  }
+`;
+
+export const ACTIVITIES = gql`
+  query activities($page: Int!, $pageSize: Int!) {
+    activities(page: $page, pageSize: $pageSize) {
+      page
+      pages
+      hasNext
+      hasPrev
+      total
+      objects {
+        id
+        activityId
+        contentObject
+        activityType
+        createdAt
+        contentType {
+          id
+          appLabel
+          model
+        }
+        user {
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;
+
+export const ACTIVITY_INFO = gql`
+  query activity($activityId: String!) {
+    activity(activityId: $activityId) {
+      activity {
+        id
+        activityId
+        contentObject
+        activityType
+        createdAt
+        contentType {
+          id
+          appLabel
+          model
+        }
+        user {
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;
