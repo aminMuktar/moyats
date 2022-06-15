@@ -5,17 +5,7 @@
   >
     <button
       v-if="showBtn"
-      class="
-        w-10
-        h-10
-        bg-white
-        shadow-xl
-        rounded
-        flex
-        justify-center
-        items-center
-        fixed
-      "
+      class="w-10 h-10 bg-white shadow-xl rounded flex justify-center items-center fixed"
       @click="sliderActivator()"
     >
       <svg
@@ -36,17 +26,7 @@
     </button>
     <transition name="nested">
       <div
-        class="
-          w-full
-          sm:w-1/2
-          md:w-1/2
-          lg:w-1/2
-          xl:w-1/2
-          h-screen
-          bg-white
-          shadow-lg shadow-black-500/50
-          fixed
-        "
+        class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 h-screen bg-white shadow-lg shadow-black-500/50 fixed"
         v-show="display"
       >
         <div class="flex justify-between bg-gray-100">
@@ -82,13 +62,7 @@
                 <div class="w-full ml-10">
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Title"
                     type="text"
                     id="name"
@@ -103,39 +77,21 @@
                 <div class="flex gap-2">
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="City"
                     type="text"
                     id="name"
                   />
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="State"
                     type="text"
                     id="name"
                   />
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Zip Code"
                     type="text"
                     id="name"
@@ -149,14 +105,7 @@
                 </div>
                 <select
                   required
-                  class="
-                    w-1/3
-                    p-1
-                    text-sm
-                    border-gray-200 border-2
-                    rounded-lg
-                    text-gray-600
-                  "
+                  class="w-1/3 p-1 text-sm border-gray-200 border-2 rounded-lg text-gray-600"
                   placeholder="Title"
                   type="selector"
                   id="name"
@@ -176,16 +125,7 @@
                   <div class="bg-blue-300 rounded-lg flex left-0">
                     <a
                       href=""
-                      class="
-                        h-full
-                        w-full
-                        flex
-                        justify-center
-                        items-center
-                        pl-4
-                        pr-4
-                        text-gray-600
-                      "
+                      class="h-full w-full flex justify-center items-center pl-4 pr-4 text-gray-600"
                     >
                       Someone</a
                     >
@@ -201,16 +141,7 @@
                   <div class="bg-blue-300 rounded-lg">
                     <a
                       href=""
-                      class="
-                        h-full
-                        w-full
-                        flex
-                        justify-center
-                        items-center
-                        pl-4
-                        pr-4
-                        text-gray-600
-                      "
+                      class="h-full w-full flex justify-center items-center pl-4 pr-4 text-gray-600"
                     >
                       Someone</a
                     >
@@ -225,13 +156,7 @@
                 <div>
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Source"
                     type="text"
                     id="name"
@@ -246,13 +171,7 @@
                 <div>
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Sourcer"
                     type="text"
                     id="name"
@@ -267,13 +186,7 @@
                 <div>
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Group"
                     type="text"
                     id="name"
@@ -305,13 +218,7 @@
                 <div>
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Start date"
                     type="text"
                     id="name"
@@ -326,13 +233,7 @@
                 <div>
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Salery"
                     type="text"
                     id="name"
@@ -347,13 +248,7 @@
                 <div>
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Duration"
                     type="text"
                     id="name"
@@ -368,13 +263,7 @@
                 <div>
                   <input
                     required
-                    class="
-                      w-full
-                      p-1
-                      text-sm
-                      border-gray-200 border-2
-                      rounded-lg
-                    "
+                    class="w-full p-1 text-sm border-gray-200 border-2 rounded-lg"
                     placeholder="Maximum Rate"
                     type="text"
                     id="name"

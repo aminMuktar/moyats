@@ -1,6 +1,7 @@
-import gql from "graphql-tag"
+import gql from "graphql-tag";
 
-export const COMPANIES = gql`query companies($pageSize: Int!, $page: Int!) {
+export const COMPANIES = gql`
+  query companies($pageSize: Int!, $page: Int!) {
     companies(pageSize: $pageSize, page: $page) {
       page
       pages
@@ -27,34 +28,39 @@ export const COMPANIES = gql`query companies($pageSize: Int!, $page: Int!) {
       }
     }
   }
-  `
+`;
 
-  
-
-export const COMPANY = gql`query company($cid: String!) {
-  company(cid: $cid) {
-    id
-    name
-    website
-    phones{
-      cellNumber
-    }
-    owner{
-      firstName
-      lastName
-    }
-    companyStatus {
+export const COMPANY = gql`
+  query company($cid: String!) {
+    company(cid: $cid) {
       id
       name
-      default
-      color {
-        hex
+      website
+      phones {
+        cellNumber
       }
-    }
-    address {
-      country
-      city
+      owner {
+        firstName
+        lastName
+      }
+      companyStatus {
+        id
+        name
+        default
+        color {
+          hex
+        }
+      }
+      address {
+        country
+        city
+      }
+      owner{
+        firstName
+        lastName
+      }
+      createdAt
+      updatedAt
     }
   }
-}
-`
+`;

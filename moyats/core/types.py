@@ -1,4 +1,5 @@
 import json
+from this import d
 import graphene
 from . import models
 from django.core import serializers
@@ -6,9 +7,11 @@ from graphene_django import DjangoObjectType
 from graphene.types.generic import GenericScalar
 from django.contrib.contenttypes.models import ContentType
 
+
 class ColorType(DjangoObjectType):
     class Meta:
         model = models.Color
+
 
 class ContentObjectType(DjangoObjectType):
     class Meta:
@@ -43,3 +46,17 @@ class ActivityPaginatedType(graphene.ObjectType):
     has_prev = graphene.Boolean()
     objects = graphene.List(ActivityType)
     total = graphene.Int()
+
+
+class UniqueActivityType(graphene.ObjectType):
+    activity = graphene.Field(ActivityType)
+
+    def resolve_activity(parent, info, **kwargs):
+        owner = models.Activity.objects.filter(
+            user=parent.user,
+            activity_id=parent.activity_id
+        )
+        return owner.first()
+
+    class Meta:
+        model = models.Activity

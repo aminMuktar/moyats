@@ -7,7 +7,9 @@
       <template v-slot:body>
         <div>
           <div class="sm:col-span-1 md:flex lg:flex p-2">
-            <div class="w-1/4 ml-4 text-sm"></div>
+            <div class="w-1/4 ml-4 text-sm">
+              <p>asdf</p>
+            </div>
           </div>
           <p class="text-center py-5">No Activities Yet</p>
         </div>

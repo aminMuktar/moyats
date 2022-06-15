@@ -15,7 +15,8 @@
             <div class="w-1/4 ml-4 text-sm text-blue-500">
               <slot name="path"></slot>
             </div>
-            <div class="text-sm ml-4 mt-4">
+            <div class="h-2"></div>
+            <div class="text-sm ml-4">
               <slot name="bodyDesc"></slot>
             </div>
           </div>

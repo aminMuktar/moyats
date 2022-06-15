@@ -11,12 +11,13 @@ import Candidate from "../pages/dashboard/CandidatePage.vue";
 import Companies from "../pages/dashboard/Companies.vue";
 import Company from "../pages/dashboard/CompanyPage.vue";
 import Contacts from "../pages/dashboard/Contacts.vue";
-import Contact from "../pages/dashboard/ContactPage.vue"
+import Contact from "../pages/dashboard/ContactPage.vue";
 import Reports from "../pages/dashboard/Reports.vue";
 import CompanySetup from "../pages/CompanySetup.vue";
 import AccountSettings from "../pages/dashboard/AccountSettings.vue";
 import CompanyManagement from "../pages/dashboard/CompanyManagement.vue";
 import NotFound from "../pages/errors/NotFound.vue";
+import Activity from "../pages/dashboard/ActivityDetail.vue";
 
 import {
   authguard,
@@ -64,6 +65,11 @@ export default createRouter({
           component: Activities,
         },
         {
+          path: "/activity/:aid",
+          name: "Activity",
+          component: Activity,
+        },
+        {
           path: "/joborders",
           name: "JobOrders",
           component: JobOrders,
@@ -94,14 +100,14 @@ export default createRouter({
           component: Company,
         },
         {
-          path: "/contacts",
-          name: "Contacts",
-          component: Contacts,
-        },
-        {
           path: "/contacts/:cid",
           name: "Contact",
           component: Contact,
+        },
+        {
+          path: "/contacts",
+          name: "Contacts",
+          component: Contacts,
         },
         {
           path: "/reports",
