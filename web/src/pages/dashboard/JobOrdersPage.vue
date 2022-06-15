@@ -96,7 +96,7 @@
           <joborder-primary-card :data="joborder"></joborder-primary-card>
           <joborder-details :data="joborder"></joborder-details>
           <joborder-company-card :data="joborder"></joborder-company-card>
-          <job-order-description-card></job-order-description-card>
+          <job-order-description-card :data="joborder"></job-order-description-card>
           <joborder-notes></joborder-notes>
           <joborder-application-card></joborder-application-card>
         </div>

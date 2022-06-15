@@ -55,6 +55,12 @@ export const COMPANY = gql`
         country
         city
       }
+      owner{
+        firstName
+        lastName
+      }
+      createdAt
+      updatedAt
     }
   }
 `;

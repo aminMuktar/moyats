@@ -13,10 +13,6 @@
                 <td class="py-2 px-16"></td>
               </tr>
               <tr>
-                <td class="p-2">Key Technologies</td>
-                <td class="py-2 px-16"></td>
-              </tr>
-              <tr>
                 <td class="p-2">Created</td>
                 <td class="py-2 px-16">{{ parseDate(data.createdAt) }}</td>
               </tr>
@@ -33,7 +29,10 @@
               <tr>
                 <td class="p-2">Status</td>
                 <td class="py-2 px-16">
-                  <Chip :text="'active'" :color="'green'"></Chip>
+                  <Chip
+                    :text="data.companyStatus.name"
+                    :color="data.companyStatus.color.hex"
+                  ></Chip>
                 </td>
               </tr>
             </tbody>
