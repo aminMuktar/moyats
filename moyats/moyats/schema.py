@@ -2,7 +2,6 @@ import graphene
 import graphql_jwt
 from core.query import CoreQuery
 from accounts.query import AccountsQuery
-from candidates.mutation import AddCandidate
 from organizations.mutations import CreateOrganization
 from organizations.query import OrganizationQuery
 from pipelines.query import PipelineQuery
@@ -10,6 +9,11 @@ from companies.query import CompanyQuery
 from joborders.query import JobOrderQuery
 from candidates.query import CandidateQuery
 from application.query import ApplicationQuery
+from candidates.mutation import (
+    AddCandidate,
+    UpdateCandidatePrimary,
+    UpdateCandidateDetail
+)
 from joborders.mutations import (
     JobOrderMutation,
     UpdateJobOrderPrimary,
@@ -69,5 +73,8 @@ class Mutation(graphene.ObjectType):
     update_joborder_application = UpdateJoborderApplication.Field()
     update_joborder_attachments = AddJobOrderAttachments.Field()
     update_joborder_company = UpdateJobOrderCompany.Field()
+    #  candidates mutations
+    update_candidate_primary = UpdateCandidatePrimary.Field()
+    update_candidate_detail = UpdateCandidateDetail.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
