@@ -3,6 +3,8 @@ from django.db import models
 from accounts.models import Address
 from django.utils.translation import gettext_lazy as _
 from companies.models import Company
+from application.models import Application
+from core.models import Attachment
 
 
 class JobOrderTypes(models.Model):
@@ -39,6 +41,7 @@ class JobDetail(models.Model):
     salary = models.CharField(max_length=100)
     duration = models.CharField(max_length=100)
     max_rate = models.CharField(max_length=100)
+    min_rate = models.CharField(max_length=100, null=True)
     order_type = models.ForeignKey(JobOrderTypes, on_delete=models.CASCADE)
     category = models.ForeignKey(JobOrderCategory, on_delete=models.CASCADE)
     openings = models.BigIntegerField()
@@ -71,9 +74,11 @@ class JobOrder(models.Model):
     notes = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     job_detail = models.ForeignKey(JobDetail, on_delete=models.CASCADE)
-    # application
+    application = models.ForeignKey(
+        Application, on_delete=models.CASCADE, null=True)
     job_order_status = models.ForeignKey(
         JoborderStatus, on_delete=models.CASCADE, null=True)
+    attachments = models.ManyToManyField(Attachment, blank=True)
     organization = models.ForeignKey(
         "organizations.Organization", on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)

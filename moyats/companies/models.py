@@ -5,6 +5,8 @@ from accounts.models import BaseContact, Address
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 
+from core.models import Attachment
+
 
 class CompanyStatus(models.Model):
     name = models.CharField(max_length=300)
@@ -34,6 +36,8 @@ class Company(models.Model):
         CompanyStatus, on_delete=models.CASCADE, blank=True, null=True)
     verified = models.BooleanField()
     description = models.TextField(blank=True, null=True)
+    notes = models.TextField(null=True, blank=True)
+    attachments = models.ManyToManyField(Attachment, blank=True)
     organization = models.ForeignKey(
         "organizations.Organization", on_delete=models.CASCADE, null=True)
     activity = GenericRelation("core.Activity")
@@ -67,6 +71,7 @@ class CompanyContact(models.Model):
     reachable = models.BooleanField(default=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     email = models.EmailField()
+    notes = models.TextField(null=True, blank=True)
     contact_reports_to = models.ForeignKey(
         "self", related_name="reports_to", null=True, blank=True, on_delete=models.CASCADE)
     status = models.ForeignKey(
