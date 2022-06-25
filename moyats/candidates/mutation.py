@@ -1,14 +1,83 @@
+from xmlrpc.client import Boolean
 import graphene
 from .utils import get_type
 from organizations.models import Organization
 from .models import Candidate, CandidateSource, SocialMedia
-from .inputs import CandidateInput
+from .inputs import CandidateInput, CandidatePrimaryInput
 from accounts.models import Address, BaseContact
 from .models import CandidateProfile
 from .types import CandidateType
 from core.helpers import (
     org_exists,
 )
+
+
+class UpdateCandidateDetail(graphene.Mutation):
+    response = graphene.Boolean()
+
+    class Arguments:
+        input = CandidateDetailInput()
+        candidate = graphene.UUID()
+
+    def mutate(self, info, status, candidate, **kwargs):
+        return UpdateCandidateDetail(response=True)
+
+
+class UpdateCandidatePrimary(graphene.Mutation):
+    response = graphene.Boolean()
+
+    class Arguments:
+        input = CandidatePrimaryInput()
+        candidate = graphene.UUID()
+
+    def mutate(self, info, input: CandidatePrimaryInput, candidate, **kwargs):
+        cand = Candidate.objects.filter(candidate_id=candidate)
+        if not cand.exists():
+            raise Exception("Candidate not found")
+        # check for null
+        if input.address:
+            address = Address.objects.filter(id=input.address)
+            if not address.exists():
+                raise Exception("Address not found")
+            cand.update(address=address.first())
+        if input.social_medias:
+            for sm in input.social_medias:
+                cand.first().social_medias.create(link=sm.link, type=sm.type)
+
+        cand_profile = CandidateProfile.objects.filter(
+            id=cand.first().candidate_profile.id
+        )
+        if cand_profile.exists():
+            cand_profile.update(
+                first_name=input.candidate_profile.first_name if input.candidate_profile.first_name else cand_profile.first().first_name,
+                last_name=input.candidate_profile.last_name if input.candidate_profile.last_name else cand_profile.first().last_name,
+                middle_name=input.candidate_profile.middle_name if input.candidate_profile.middle_name else cand_profile.first().middle_name,
+                email=input.candidate_profile.email if input.candidate_profile.email else cand_profile.first().email
+            )
+        else:
+            cand.candidate_profile.create(
+                first_name=input.candidate_profile.first_name,
+                last_name=input.candidate_profile.last_name,
+                middle_name=input.candidate_profile.middle_name,
+                email=input.candidate_profile.email
+            )
+        phones = cand.first().phones
+        if not phones:
+            bcontact = BaseContact.objects.create(
+                cell_number=input.phones.cell_number,
+                work_number=input.phones.work_number,
+                home_number=input.phones.home_number
+            )
+            cand.update(phones=bcontact)
+        else:
+            bcontact = BaseContact.objects.filter(id=phones.id)
+            bcontact.update(
+                cell_number=input.phones.cell_number if input.phones.cell_number else phones.cell_number,
+                work_number=input.phones.work_number if input.phones.work_number else phones.work_number,
+                home_number=input.phones.home_number if input.phones.home_number else phones.home_number,
+            )
+
+        return UpdateCandidatePrimary(response=True)
 
 
 class AddCandidate(graphene.Mutation):

@@ -1,6 +1,25 @@
 import graphene
 
 
+class JobOrderPrimaryInput(graphene.InputObjectType):
+    title = graphene.String()
+    location = graphene.Int()
+    recruiter = graphene.Int()
+
+
+class JobOrderDetailInput(graphene.InputObjectType):
+    salary = graphene.String()
+    duration = graphene.String()
+    max_rate = graphene.String()
+    min_rate = graphene.String()
+    type = graphene.String()
+    category = graphene.Int()
+    publish = graphene.Boolean()
+    openings = graphene.Int()
+    remaining_openings = graphene.Int()
+    status = graphene.String()
+
+
 class JobOrderInputs(graphene.InputObjectType):
     notes = graphene.String()
     desctiption = graphene.String()

@@ -16,7 +16,7 @@ class Application(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.description
+        return str(self.application_id)
 
 
 class ApplicationQuestion(models.Model):

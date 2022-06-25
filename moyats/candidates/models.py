@@ -3,15 +3,7 @@ from django.db import models
 from accounts.models import Address
 from core.models import BaseContact
 from django.utils.translation import gettext_lazy as _
-
-
-class Attachment(models.Model):
-    filename = models.CharField(max_length=200)
-    file = models.FileField(upload_to="uploads/attachments")
-    is_resume = models.BooleanField()
-
-    def __str__(self) -> str:
-        return self.filename
+from core.models import Attachment
 
 
 class CandidateSource(models.Model):

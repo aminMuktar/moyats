@@ -6,7 +6,18 @@
       </template>
       <template v-slot:body>
         <div>
-          <div class="sm:col-span-1 md:flex lg:flex p-2 overflow-y-scroll" style="height: 30rem">
+          <div
+            class="
+              sm:col-span-1
+              md:flex
+              lg:flex
+              p-2
+              scroll-smooth
+              hover:scroll-auto
+              overflow-y-scroll
+            "
+            style="height: 30rem"
+          >
             <div class="w-full ml-4 text-sm">
               <ol class="relative border-l border-gray-200">
                 <li class="mb-10 ml-6">
@@ -74,14 +85,7 @@
                     "
                     >Released on January 13th, 2022</time
                   >
-                  <p
-                    class="
-                      mb-4
-                      text-base
-                      font-normal
-                      text-gray-500
-                    "
-                  >
+                  <p class="mb-4 text-base font-normal text-gray-500">
                     Get access to over 20+ pages including a dashboard layout,
                     charts, kanban board, calendar, and pre-order E-commerce &
                     Marketing pages.
@@ -149,14 +153,7 @@
                       ></path>
                     </svg>
                   </span>
-                  <h3
-                    class="
-                      mb-1
-                      text-lg
-                      font-semibold
-                      text-gray-900
-                    "
-                  >
+                  <h3 class="mb-1 text-lg font-semibold text-gray-900">
                     Flowbite Figma v1.3.0
                   </h3>
                   <time
@@ -170,13 +167,7 @@
                     "
                     >Released on December 7th, 2021</time
                   >
-                  <p
-                    class="
-                      text-base
-                      font-normal
-                      text-gray-500
-                    "
-                  >
+                  <p class="text-base font-normal text-gray-500">
                     All of the pages and components are first designed in Figma
                     and we keep a parity between the two versions even as we
                     update the project.
