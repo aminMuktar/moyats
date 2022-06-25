@@ -4,3 +4,4 @@ moyats-env
 uploads
 migrations
 .env
+moyats.sock
