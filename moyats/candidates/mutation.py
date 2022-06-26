@@ -16,7 +16,7 @@ class UpdateCandidateDetail(graphene.Mutation):
     response = graphene.Boolean()
 
     class Arguments:
-        input = CandidateDetailInput()
+        # input = CandidateDetailInput()
         candidate = graphene.UUID()
 
     def mutate(self, info, status, candidate, **kwargs):

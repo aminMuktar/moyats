@@ -52,6 +52,7 @@ INSTALLED_APPS += [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,7 +61,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'moyats.urls'
@@ -157,12 +157,12 @@ INTERNAL_IPS = [
 # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:3000',
-]  # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    'http://127.0.0.1:3000',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://127.0.0.1:3000',
+# ]  # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     'http://127.0.0.1:3000',
+# ]
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 

@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "./index.css";
 import VueApexCharts from "vue3-apexcharts";
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client/core";
+import { ApolloClient, createHttpLink, HttpLink, InMemoryCache } from "@apollo/client/core";
 import { createApolloProvider } from "@vue/apollo-option";
 import Router from "./routes/index";
 import { key, store } from "./store";
@@ -15,10 +15,8 @@ import '@firebase/messaging';
 
 
 const app = firebase.initializeApp(FIREBASE_CONFIG)
-
-const httpLink = new HttpLink({
-  // You should use an absolute URL here
-  uri: "http://127.0.0.1:8000/graphql/",
+const httpLink = createHttpLink({
+  uri: "https://mooyats.com/graphql/",
   credentials: "include",
 });
 
@@ -27,6 +25,7 @@ const apolloClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
   connectToDevTools: true,
+  credentials: "include"
 });
 
 // Create a provider

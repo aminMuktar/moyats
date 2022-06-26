@@ -8,6 +8,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from graphql_playground.views import GraphQLPlaygroundView
 from graphene_file_upload.django import FileUploadGraphQLView
 from graphql_jwt.decorators import jwt_cookie
+from django.views.generic import TemplateView
+
+
+class HomePageView(TemplateView):
+    template_name: str = "home.html"
 
 
 class GqlView(FileUploadGraphQLView, LoginRequiredMixin):
@@ -19,4 +24,4 @@ urlpatterns = [
     path('playground/', GraphQLPlaygroundView.as_view(endpoint="/graphql/")),
     path('__debug__/', include('debug_toolbar.urls')),
     path('admin/', admin.site.urls),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

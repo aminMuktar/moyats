@@ -13,7 +13,9 @@
   >
     <div class="max-w-md w-full space-y-8">
       <div class="justify-center flex-row flex">
-        <img src="../assets/icon.png" class="justify-center w-16 h-16" alt="" />
+        <router-link to="/">
+          <img src="../assets/icon.png" class="justify-center w-16 h-16" alt="" />
+        </router-link>
       </div>
       <h2 class="mt-6 text-center text-3xl font-semibold text-gray-900">
         Sign in to your account
@@ -256,7 +258,7 @@ export default defineComponent({
       if (data) {
         this.$store.commit("setToken", true);
         await this.saveUserData();
-        window.location.assign("/dashboard");
+        // window.location.assign("/dashboard");
       }
     },
   },

@@ -12,8 +12,9 @@ export const authguard = (to: any, form: any, next: any) => {
     router.push("/login")
   } else if (!ustate.setupComplete) {
     router.push("/company-setup")
+  }else{
+    next()
   }
-  next()
 };
 
 export const loginPageGuard = (to: any, from: any, next: any) => {
