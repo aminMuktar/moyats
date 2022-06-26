@@ -2,7 +2,6 @@
   <div class="flex w-full flex-col">
     <div class="flex p-2 border-b-2 flex-row w-full fixed gap-2 bg-white">
       <button
-        @click="saveChanges($refs.form)"
         class="
           bg-green-500
           p-2
@@ -11,6 +10,7 @@
           tracking-wider
           hover:bg-green-600
         "
+        @click="saveChanges"
       >
         Save Changes
       </button>
@@ -38,6 +38,7 @@
           </div>
           <div class="w-full ml-10">
             <input
+              v-model="f.title"
               required
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="Title"
@@ -53,6 +54,7 @@
           </div>
           <div class="flex gap-2">
             <input
+              v-model="f.city"
               required
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="City"
@@ -60,6 +62,7 @@
               id="name"
             />
             <input
+              v-model="f.state"
               required
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="State"
@@ -67,18 +70,19 @@
               id="name"
             />
             <input
+              v-model="f.zipcode"
               required
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
-              placeholder="Zip Code"
+              placeholder="Country"
               type="text"
               id="name"
             />
           </div>
         </div>
         <div class="flex col-span-2 w-full p-2">
-          <label class="sr-only" for="name">Job Type</label>
+          <label class="sr-only" for="name">Position Type</label>
           <div class="w-52">
-            <span class="m-3">Job Type*</span>
+            <span class="m-3">Position Type*</span>
           </div>
           <select
             required
@@ -93,12 +97,42 @@
             placeholder="Title"
             type="selector"
             id="name"
+            v-model="f.positionType"
           >
-            <option value="">Something</option>
-            <option value="">Something</option>
-            <option value="">Something</option>
-            <option value="">Something</option>
-            <option value="">Something</option>
+            <option
+              :value="px.v"
+              v-for="(px, ix) in positionTypes"
+              :key="ix"
+              v-text="px.l"
+            ></option>
+          </select>
+        </div>
+        <div class="flex col-span-2 w-full p-2">
+          <label class="sr-only" for="name">Job Order Type</label>
+          <div class="w-52">
+            <span class="m-3">Job Order Type*</span>
+          </div>
+          <select
+            required
+            class="
+              w-1/3
+              p-2
+              text-sm
+              border-gray-200 border-2
+              rounded-md
+              text-gray-600
+            "
+            placeholder="Title"
+            type="selector"
+            id="name"
+            v-model="f.orderType"
+          >
+            <option
+              :value="px.v"
+              v-for="(px, ix) in orderTypes"
+              :key="ix"
+              v-text="px.l"
+            ></option>
           </select>
         </div>
         <div class="flex col-span-2 w-full p-2">
@@ -150,68 +184,7 @@
             </div>
           </div>
         </div>
-        <div class="col-span-2 flex p-2">
-          <div class="w-52">
-            <label class="sr-only" for="name"></label>
-            <span class="m-3">Source* </span>
-          </div>
-          <div>
-            <input
-              required
-              class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
-              placeholder="Source"
-              type="text"
-              id="name"
-            />
-          </div>
-        </div>
-        <div class="col-span-2 flex p-2">
-          <div class="w-52">
-            <label class="sr-only" for="name">Title</label>
-            <span class="m-3">Sourcer* </span>
-          </div>
-          <div>
-            <input
-              required
-              class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
-              placeholder="Sourcer"
-              type="text"
-              id="name"
-            />
-          </div>
-        </div>
-        <div class="col-span-2 flex p-2">
-          <div class="w-52">
-            <label class="sr-only" for="name">Group</label>
-            <span class="m-3">Group* </span>
-          </div>
-          <div>
-            <input
-              required
-              class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
-              placeholder="Group"
-              type="text"
-              id="name"
-            />
-          </div>
-        </div>
-
         <!-- second section start -->
-        <div class="w-full border-t-2 my-2"></div>
-
-        <div class="col-span-2 flex p-2">
-          <div class="w-52">
-            <label class="sr-only" for="name">Hot</label>
-            <span class="m-3">Hot* </span>
-          </div>
-          <div>
-            <input
-              required
-              class="p-1 text-sm border-gray-200 border-2 rounded-md"
-              type="checkbox"
-            />
-          </div>
-        </div>
         <div class="col-span-2 flex p-2">
           <div class="w-52">
             <label class="sr-only" for="name">Start Date</label>
@@ -229,14 +202,15 @@
         </div>
         <div class="col-span-2 flex p-2">
           <div class="w-52">
-            <label class="sr-only" for="name">Salery</label>
-            <span class="m-3">Salery* </span>
+            <label class="sr-only" for="name">Salary</label>
+            <span class="m-3">Salary* </span>
           </div>
           <div>
             <input
+              v-model="f.salary"
               required
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
-              placeholder="Salery"
+              placeholder="Salary"
               type="text"
               id="name"
             />
@@ -249,6 +223,7 @@
           </div>
           <div>
             <input
+              v-model="f.duration"
               required
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="Duration"
@@ -265,6 +240,7 @@
           <div>
             <input
               required
+              v-model="f.maxRate"
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="Maximum Rate"
               type="text"
@@ -272,8 +248,246 @@
             />
           </div>
         </div>
-        <div class="col-span-2 flex p-2 mb-52"></div>
+        <div class="col-span-2 flex p-2">
+          <div class="w-52">
+            <label class="sr-only" for="name">Maximum Rate</label>
+            <span class="m-3">Minimum Rate* </span>
+          </div>
+          <div>
+            <input
+              v-model="f.minRate"
+              required
+              class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
+              placeholder="Maximum Rate"
+              type="text"
+              id="name"
+            />
+          </div>
+        </div>
+        <div class="col-span-2 flex p-2">
+          <div class="w-52">
+            <label class="sr-only" for="name">Openinigs</label>
+            <span class="m-3">Openinigs* </span>
+          </div>
+          <div>
+            <input
+              v-model="f.openings"
+              required
+              class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
+              placeholder="Maximum Rate"
+              type="text"
+              id="name"
+            />
+          </div>
+        </div>
+        <div class="flex col-span-2 w-full p-2 border-t-2">
+          <div class="w-52">
+            <span class="m-3">Status* </span>
+          </div>
+          <select
+            required
+            class="
+              w-1/3
+              p-2
+              text-sm
+              border-gray-200 border-2
+              rounded-md
+              text-gray-600
+            "
+            placeholder="Title"
+            type="selector"
+            id="name"
+            v-model="f.positionType"
+          >
+            <option
+              :value="st.v"
+              v-for="(st, ix) in statuses"
+              :key="ix"
+              v-text="st.l"
+            ></option>
+          </select>
+        </div>
+        <div class="flex col-span-2 w-full p-2">
+          <div class="w-52">
+            <span class="m-3">Pipeline Workflow* </span>
+          </div>
+          <select
+            required
+            class="
+              w-1/3
+              p-2
+              text-sm
+              border-gray-200 border-2
+              rounded-md
+              text-gray-600
+            "
+            placeholder="Title"
+            type="selector"
+            id="name"
+            v-model="f.pipeline_workflow"
+          >
+            <option
+              :value="st.v"
+              v-for="(st, ix) in pipeline_workflows"
+              :key="ix"
+              v-text="st.l"
+            ></option>
+          </select>
+        </div>
+        <div class="flex col-span-2 w-full p-2">
+          <div class="w-52">
+            <span class="m-3">Category* </span>
+          </div>
+          <select
+            required
+            class="
+              w-1/3
+              p-2
+              text-sm
+              border-gray-200 border-2
+              rounded-md
+              text-gray-600
+            "
+            placeholder="Title"
+            type="selector"
+            id="name"
+            v-model="f.positionType"
+          >
+            <option
+              :value="st.v"
+              v-for="(st, ix) in statuses"
+              :key="ix"
+              v-text="st.l"
+            ></option>
+          </select>
+        </div>
+        <div class="flex col-span-2 w-full p-2 border-t-2">
+          <div class="w-52">
+            <span class="m-3">Company* </span>
+          </div>
+          <select
+            required
+            class="
+              w-1/3
+              p-2
+              text-sm
+              border-gray-200 border-2
+              rounded-md
+              text-gray-600
+            "
+            placeholder="Title"
+            type="selector"
+            id="name"
+            v-model="f.positionType"
+          >
+            <option
+              :value="st.v"
+              v-for="(st, ix) in statuses"
+              :key="ix"
+              v-text="st.l"
+            ></option>
+          </select>
+        </div>
+        <div class="flex col-span-2 w-full p-2">
+          <div class="w-52">
+            <span class="m-3">Contact* </span>
+          </div>
+          <select
+            required
+            class="
+              w-1/3
+              p-2
+              text-sm
+              border-gray-200 border-2
+              rounded-md
+              text-gray-600
+            "
+            placeholder="Title"
+            type="selector"
+            id="name"
+            v-model="f.positionType"
+          >
+            <option
+              :value="st.v"
+              v-for="(st, ix) in statuses"
+              :key="ix"
+              v-text="st.l"
+            ></option>
+          </select>
+        </div>
       </div>
+
+      <div class="col-span-1 flex flex-col p-2 border-t-2 mr-10">
+        <label class="p-3" for="">Description</label>
+        <textarea
+          id="message"
+          rows="4"
+          class="
+            block
+            p-2.5
+            w-full
+            m-2 bg-gray-100
+            text-sm text-gray-900
+            rounded-lg
+            border border-gray-300
+            focus:ring-blue-500 focus:border-blue-500
+          "
+          placeholder="Your message..."
+        ></textarea>
+      </div>
+      <div class="col-span-1 flex-col flex p-2 border-t-2 mr-10">
+        <p class="p-1 pb-5 font-bold text-xl">Applications</p>
+        <div class="mt-3">
+          <div class="flex items-center mb-4 px-2">
+            <input
+              id="default-checkbox"
+              type="checkbox"
+              value=""
+              class="
+                w-4
+                h-4
+                text-blue-600
+                bg-gray-100
+                rounded
+                border-gray-300
+                focus:ring-blue-500
+                focus:ring-2
+              "
+            />
+            <label
+              for="default-checkbox"
+              class="ml-2 text-sm font-medium text-gray-900"
+              >Default checkbox</label
+            >
+          </div>
+          <div class="flex items-center px-2">
+            <input
+              checked
+              id="checked-checkbox"
+              type="checkbox"
+              value=""
+              class="
+                w-4
+                h-4
+                text-blue-600
+                bg-gray-100
+                rounded
+                border-gray-300
+                focus:ring-blue-500
+                dark:focus:ring-blue-600 
+                focus:ring-2
+              "
+            />
+            <label
+              for="checked-checkbox"
+              class="ml-2 text-sm font-medium text-gray-900"
+              >Checked state</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-2 flex p-2 mb-52"></div>
     </form>
   </div>
 </template>
@@ -282,10 +496,42 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   setup() {},
+  data: () => ({
+    f: {
+      title: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      positionType: "",
+      recruiter: 10,
+      owner: 10,
+      orderType: "",
+      salary: "",
+      duration: "",
+      maxRate: "",
+      minRate: "",
+      category: "",
+      openings: 0,
+      pipeline_workflow: "",
+      publish: false,
+    },
+    statuses: [
+      { l: "Active", v: "lkjlk23lkj123lk12l" },
+      { l: "Closed", v: "lkjlk23lkj123lk12l" },
+    ],
+    pipeline_workflows: [{ l: "General Application", v: "lkjlk23lkj123lk12l" }],
+    orderTypes: [{ l: "Hire", v: "lkjlk23lkj123lk12l" }],
+    positionTypes: [
+      { l: "Remote", v: "rm" },
+      { l: "Full Time", v: "fl" },
+      { l: "Part Time", v: "pt" },
+      { l: "Freelance", v: "fr" },
+      { l: "With Relocation", v: "rl" },
+    ],
+  }),
   methods: {
-    saveChanges(e) {
-      e.preventDefault();
-      e.submit();
+    saveChanges() {
+      console.log(this.f);
     },
   },
 });

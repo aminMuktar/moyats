@@ -10,13 +10,13 @@ import { FIREBASE_CONFIG } from './firebase.config'
 import * as firebase from '@firebase/app';
 import VueTelInput from 'vue-tel-input';
 import 'vue-tel-input/dist/vue-tel-input.css';
-
 import '@firebase/messaging';
 
-
 const app = firebase.initializeApp(FIREBASE_CONFIG)
+const prod = false;
+const uri = prod ? "https://mooyats.com/graphql/" : "http://127.0.0.1:8000/graphql/"
 const httpLink = createHttpLink({
-  uri: "https://mooyats.com/graphql/",
+  uri,
   credentials: "include",
 });
 

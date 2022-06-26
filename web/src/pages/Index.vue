@@ -163,16 +163,16 @@
               <p class="text-sm pb-3 text-center" v-text="mem.position"></p>
               <div class="flex flex-row justify-center gap-3">
                 <a :href="mem.facebook">
-                  <img src="../assets/files/Vector-1.png" alt="" />
+                  <!-- <img src="../assets/files/Vector-1.png" alt="" /> -->
                 </a>
                 <a :href="mem.twitter">
-                  <img src="../assets/files/Vector-2.png" alt="" />
+                  <!-- <img src="../assets/files/Vector-2.png" alt="" /> -->
                 </a>
                 <a :href="mem.instagram">
-                  <img src="../assets/files/Group.png" alt="" />
+                  <!-- <img src="../assets/files/Group.png" alt="" /> -->
                 </a>
                 <a :href="mem.linkedIn">
-                  <img src="../assets/files/Group-123.png" alt="" />
+                  <!-- <img src="../assets/files/Group-123.png" alt="" /> -->
                 </a>
               </div>
             </div>
@@ -306,16 +306,16 @@
                 </div>
                 <div class="flex flex-row mb-10 gap-3 hidden">
                   <a :href="socials.facebook" target="_blank">
-                    <img src="../assets/files/Group-10.png" alt="" />
+                    <!-- <img src="../assets/files/Group-10.png" alt="" /> -->
                   </a>
                   <a :href="socials.twitter" target="_blank">
-                    <img src="../assets/files/Group-9.png" alt="" />
+                    <!-- <img src="../assets/files/Group-9.png" alt="" /> -->
                   </a>
                   <a :href="socials.instagram" target="_blank">
-                    <img src="../assets/files/Group-7.png" alt="" />
+                    <!-- <img src="../assets/files/Group-7.png" alt="" /> -->
                   </a>
                   <a :href="socials.linkedin" target="_blank">
-                    <img src="../assets/files/Group-8.png" alt="" />
+                    <!-- <img src="../assets/files/Group-8.png" alt="" /> -->
                   </a>
                 </div>
               </div>
@@ -371,16 +371,16 @@
             <li>
               <div class="xl:px-6 pt-2 lg:px-6 flex flex-row mb-10 gap-3">
                 <a :href="socials.facebook" target="_blank">
-                  <img src="../assets/files/Group-10.png" alt="" />
+                  <!-- <img src="../assets/files/Group-10.png" alt="" /> -->
                 </a>
                 <a :href="socials.twitter" target="_blank">
-                  <img src="../assets/files/Group-9.png" alt="" />
+                  <!-- <img src="../assets/files/Group-9.png" alt="" /> -->
                 </a>
                 <a :href="socials.instagram" target="_blank">
-                  <img src="../assets/files/Group-7.png" alt="" />
+                  <!-- <img src="../assets/files/Group-7.png" alt="" /> -->
                 </a>
                 <a :href="socials.linkedin" target="_blank">
-                  <img src="../assets/files/Group-8.png" alt="" />
+                  <!-- <img src="../assets/files/Group-8.png" alt="" /> -->
                 </a>
               </div>
             </li>
