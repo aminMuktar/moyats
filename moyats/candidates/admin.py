@@ -1,7 +1,8 @@
 from . import models
 from django.contrib import admin
+from core.models import Attachment
 
-admin.site.register(models.Attachment)
+admin.site.register(Attachment)
 admin.site.register(models.CandidateSource)
 admin.site.register(models.SocialMedia)
 admin.site.register(models.CandidateProfile)

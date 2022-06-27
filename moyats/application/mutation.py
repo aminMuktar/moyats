@@ -1,8 +1,7 @@
 import graphene
 from .utils import get_type
-
 from organizations.models import Organization
-from .models import Candidate, CandidateSource, SocialMedia
+from .models import Candidate, CandidateSource, 
 from .inputs import CandidateInput
 from accounts.models import Address, BaseContact
 from .models import CandidateProfile

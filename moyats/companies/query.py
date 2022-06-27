@@ -3,6 +3,7 @@ from . import types
 from . import models
 from core.helpers import core_paginator
 from graphql_jwt.decorators import login_required
+from django.db.models import Q
 
 
 class CompanyQuery(graphene.ObjectType):
@@ -15,6 +16,34 @@ class CompanyQuery(graphene.ObjectType):
         types.CompanyContactsPaginatedType, page_size=graphene.Int(), page=graphene.Int())
     contact = graphene.Field(
         types.CompanyContactType, cid=graphene.String())
+    search_company = graphene.List(
+        types.CompanyType, query=graphene.String()
+    )
+    search_company_contact = graphene.List(
+        types.CompanyContactType, company=graphene.UUID(), query=graphene.String()
+    )
+
+    @login_required
+    def resolve_search_company_contact(self, info, query, company, **kwargs):
+        org = info.context.user.organizations.first()
+        companies = models.Company.objects.filter(
+            organization=org, company_id=company
+        )
+        if not companies.exists():
+            raise Exception("company not found")
+        contacts = models.CompanyContact.objects.filter(
+            Q(company=companies.first()), Q(
+                first_name__icontains=query) | Q(last_name__icontains=query)
+        )
+        return contacts
+
+    @login_required
+    def resolve_search_company(self, info, query, **kwargs):
+        org = info.context.user.organizations.first()
+        companies = models.Company.objects.filter(
+            name__contains=query, organization=org
+        )
+        return companies
 
     @login_required
     def resolve_company(self, info, cid, **kwargs):

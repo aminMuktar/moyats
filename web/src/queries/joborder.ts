@@ -152,3 +152,40 @@ export const JOB_ORDER = gql`query jobOrder($id: String!){
   }
 }
 `
+
+export const POSITION_TYPES = gql`query {
+  positionTypes{
+    id
+    label
+  }
+}
+`
+
+export const JOB_ORDER_TYPES = gql`query{
+  joborderTypes{
+    id
+    typeName
+  }
+}`
+
+export const JOB_ORDER_STATUS = gql`query {
+  joborderStatus {
+    id
+    statusName
+  }
+}`
+
+export const JOBORDER_CATEGORIES = gql`query {
+  categories{
+    id
+    categoryName
+  }
+}`
+
+export const APPLICATIONS = gql`query {
+  joborderApplications{
+    id
+    applicationId
+    description
+  }
+}`

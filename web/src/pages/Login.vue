@@ -258,7 +258,7 @@ export default defineComponent({
       if (data) {
         this.$store.commit("setToken", true);
         await this.saveUserData();
-        // window.location.assign("/dashboard");
+        window.location.assign("/dashboard");
       }
     },
   },

@@ -64,3 +64,19 @@ export const COMPANY = gql`
     }
   }
 `;
+
+
+export const SEARCH_COMPANY = gql`query  searchCompany($query: String!){
+  searchCompany(query: $query){
+    companyId
+    name
+  }
+}`
+
+
+export const SEARCH_RECRUITER = gql`query  searchRecruiter($query: String!){
+  searchRecruiter(query: $query){
+    firstName
+    lastName
+  }
+}`

@@ -97,7 +97,6 @@ export default defineComponent({
       for (let i = 0; i < this.total; i++) {
         fin.push(`${i + 1}/${this.total}`);
       }
-      console.clear();
       console.warn(this.total);
       this.dropts = fin;
     },

@@ -1,11 +1,9 @@
 import uuid
 from django.db import models
 from accounts.models import Address
-from django.utils.translation import gettext_lazy as _
 from companies.models import Company
-from application.models import Application
 from core.models import Attachment
-
+from .enums import PositionTypes
 
 class JobOrderTypes(models.Model):
     type_name = models.CharField(max_length=200)
@@ -24,13 +22,6 @@ class JobOrderCategory(models.Model):
 
 
 class JobDetail(models.Model):
-    class PositionTypes(models.TextChoices):
-        REMOTE = 'rm', _('Remote')
-        FULL_TIME = 'fl', _('Full Time')
-        PART_TIME = 'pt', _('Part Time')
-        FREELANCE = 'fr', _('Freelance')
-        WITH_RELOCATION = 'rl', _('With Relocation')
-
     title = models.CharField(max_length=200)
     location = models.ForeignKey(Address, on_delete=models.CASCADE)
     position_type = models.CharField(
@@ -74,8 +65,8 @@ class JobOrder(models.Model):
     notes = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     job_detail = models.ForeignKey(JobDetail, on_delete=models.CASCADE)
-    application = models.ForeignKey(
-        Application, on_delete=models.CASCADE, null=True)
+    applications = models.ManyToManyField(
+        "application.Application", blank=True, null=True)
     job_order_status = models.ForeignKey(
         JoborderStatus, on_delete=models.CASCADE, null=True)
     attachments = models.ManyToManyField(Attachment, blank=True)

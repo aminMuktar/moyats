@@ -43,6 +43,8 @@ class BaseUser(AbstractUser):
         LINKEDIN = 'ln', _('LinkedIn')
         GITHUB = 'gh', _('Github')
 
+    user_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
     base_contact = models.ForeignKey(
         BaseContact, on_delete=models.CASCADE, null=True, blank=True)
     account_type = models.CharField(

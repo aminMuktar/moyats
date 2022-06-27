@@ -60,3 +60,8 @@ class UniqueActivityType(graphene.ObjectType):
 
     class Meta:
         model = models.Activity
+
+
+class EnumType(graphene.ObjectType):
+    id = graphene.String()
+    label = graphene.String()
