@@ -1,7 +1,7 @@
 <template>
   <div class="flex col-span-2 w-full p-2 z-auto">
     <div class="w-52">
-      <span class="m-3">Recruiter* </span>
+      <span class="m-3">Contact* </span>
     </div>
     <div>
       <div class="bg-blue-400 rounded-md" v-if="selectedVal">
@@ -46,7 +46,7 @@
             v-model="value"
             class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
             autocomplete="off"
-            placeholder="search for companies"
+            placeholder="search for contacts"
           />
         </div>
         <div
@@ -84,13 +84,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Autocomplete from "../../components/Autocomplete.vue";
-import { searchRecruiter } from "../../services";
+import { searchCompanyContacts } from "../../services";
 
 export default defineComponent({
   setup() {},
   components: {
     Autocomplete,
   },
+  props: ["cid"],
   data: () => ({
     selectedVal: null as any,
     value: "",
@@ -112,9 +113,12 @@ export default defineComponent({
     },
     async searchFilter() {
       if (this.value) {
-        const { data, errors } = await searchRecruiter(this.value);
+        const { data, errors } = await searchCompanyContacts({
+          company: this.cid.companyId,
+          query: this.value,
+        });
         if (!errors) {
-          return data.searchRecruiter;
+          return data.searchCompanyContact;
         } else {
           return [] as any;
         }
@@ -126,7 +130,7 @@ export default defineComponent({
       this.value = value.name;
       this.showOptions = false;
       this.selectedVal = value;
-      this.$emit('itemClicked', value)
+      this.$emit("itemClicked", value);
     },
   },
 });

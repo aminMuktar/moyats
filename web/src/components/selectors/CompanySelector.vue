@@ -109,6 +109,7 @@ export default defineComponent({
     clear() {
       this.selectedVal = null;
       this.value = "";
+      this.$emit('cleared')
     },
     async searchCompanyFilter() {
       if (this.value) {
@@ -126,6 +127,7 @@ export default defineComponent({
       this.value = value.name;
       this.showOptions = false;
       this.selectedVal = value;
+      this.$emit('itemClicked', value)
     },
   },
 });

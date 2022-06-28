@@ -1,4 +1,4 @@
-import { APPLICATIONS, JOBORDER_CATEGORIES, JOB_ORDER_STATUS, JOB_ORDER_TYPES, POSITION_TYPES } from "../queries/joborder"
+import { APPLICATIONS, COMPANY_CONTACTS, JOBORDER_CATEGORIES, JOB_ORDER_STATUS, JOB_ORDER_TYPES, POSITION_TYPES } from "../queries/joborder"
 import { apolloClient } from "../v-apollo"
 
 export const fetchPositionTypes = async () => {
@@ -32,6 +32,14 @@ export const fetchJoborderCategories = async () => {
 export const fetchApplications = async () => {
     const res = await apolloClient.query({
         query: APPLICATIONS
+    })
+    return res
+}
+
+export const searchCompanyContacts = async (variables:any) => {
+    const res = await await apolloClient.query({
+        query: COMPANY_CONTACTS,
+        variables
     })
     return res
 }

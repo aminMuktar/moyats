@@ -189,3 +189,16 @@ export const APPLICATIONS = gql`query {
     description
   }
 }`
+
+export const COMPANY_CONTACTS = gql`query searchCompanyContact($company: UUID!  $query: String!){
+    searchCompanyContact(
+      company: $company
+      query: $query
+    ) {
+      id
+      firstName
+      lastName
+      companyContactId
+    }
+  }
+`

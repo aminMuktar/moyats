@@ -1,39 +1,39 @@
 <template>
   <div class="flex w-full flex-col">
-    <div
-      class="flex p-2 border-b-2 flex-row w-full fixed gap-2 bg-white"
-      style="z-index: 100"
-    >
-      <button
-        class="
-          bg-green-500
-          p-2
-          text-white
-          rounded-md
-          tracking-wider
-          hover:bg-green-600
-        "
-        @click="saveChanges"
+    <form class="w-full" ref="form" @submit="saveChanges">
+      <div
+        class="flex p-2 border-b-2 flex-row w-full fixed gap-2 bg-white"
+        style="z-index: 100"
       >
-        Save Changes
-      </button>
-      <button
-        @click="$emit('close')"
-        class="
-          border-red-500
-          p-2
-          border-2
-          text-red-700
-          rounded-md
-          tracking-wider
-          hover:bg-red-100
-        "
-      >
-        Cancel
-      </button>
-    </div>
-    <form class="w-full mt-16" ref="form">
-      <div class="grid grid-cols-1 w-full">
+        <button
+          type="submit"
+          class="
+            bg-green-500
+            p-2
+            text-white
+            rounded-md
+            tracking-wider
+            hover:bg-green-600
+          "
+        >
+          Save Changes
+        </button>
+        <button
+          @click="$emit('close')"
+          class="
+            border-red-500
+            p-2
+            border-2
+            text-red-700
+            rounded-md
+            tracking-wider
+            hover:bg-red-100
+          "
+        >
+          Cancel
+        </button>
+      </div>
+      <div class="grid grid-cols-1 w-full mt-16">
         <div class="flex col-span-2 w-full p-4">
           <div class="w-52">
             <label class="sr-only" for="name">Title</label>
@@ -55,23 +55,37 @@
             <label class="sr-only" for="name">Location</label>
             <span class="m-3 w-full">Location*</span>
           </div>
-          <div class="flex gap-2">
-            <input
-              v-model="f.city"
-              required
-              class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
-              placeholder="City"
-              type="text"
-              id="name"
-            />
-            <input
-              v-model="f.state"
-              required
-              class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
-              placeholder="State"
-              type="text"
-              id="name"
-            />
+          <div
+            class="
+              grid
+              xl:grid-cols-3
+              lg:grid-cols-3
+              md:grid-cols-2
+              sm:grid-cols-2
+              grid-cols-1
+              gap-2
+            "
+          >
+            <div>
+              <input
+                v-model="f.city"
+                required
+                class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
+                placeholder="City"
+                type="text"
+                id="name"
+              />
+            </div>
+            <div>
+              <input
+                v-model="f.state"
+                required
+                class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
+                placeholder="State"
+                type="text"
+                id="name"
+              />
+            </div>
             <input
               v-model="f.zipcode"
               required
@@ -131,7 +145,7 @@
             v-model="f.orderType"
           >
             <option
-              :value="px.v"
+              :value="px.id"
               v-for="(px, ix) in orderTypes"
               :key="ix"
               v-text="px.typeName"
@@ -192,11 +206,10 @@
         <div class="col-span-2 flex p-2">
           <div class="w-52">
             <label class="sr-only" for="name">Maximum Rate</label>
-            <span class="m-3">Maximum Rate* </span>
+            <span class="m-3">Maximum Rate </span>
           </div>
           <div>
             <input
-              required
               v-model="f.maxRate"
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="Maximum Rate"
@@ -208,12 +221,11 @@
         <div class="col-span-2 flex p-2">
           <div class="w-52">
             <label class="sr-only" for="name">Maximum Rate</label>
-            <span class="m-3">Minimum Rate* </span>
+            <span class="m-3">Minimum Rate </span>
           </div>
           <div>
             <input
               v-model="f.minRate"
-              required
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="Maximum Rate"
               type="text"
@@ -254,10 +266,10 @@
             placeholder="Title"
             type="selector"
             id="name"
-            v-model="f.positionType"
+            v-model="f.orderStatus"
           >
             <option
-              :value="st.v"
+              :value="st.id"
               v-for="(st, ix) in statuses"
               :key="ix"
               v-text="st.statusName"
@@ -311,15 +323,23 @@
             v-model="f.category"
           >
             <option
-              :value="st.v"
+              :value="st.id"
               v-for="(st, ix) in categories"
               :key="ix"
               v-text="st.categoryName"
             ></option>
           </select>
         </div>
-        <company-selector @itemClicked="companySelected"></company-selector>
-        <div class="flex col-span-2 w-full p-2">
+        <company-selector
+          @cleared="f.company = null"
+          @itemClicked="companySelected"
+        ></company-selector>
+        <company-contact-selector
+          @itemClicked="companyContactSelected"
+          :cid="f.company"
+          v-if="f.company"
+        ></company-contact-selector>
+        <!-- <div class="flex col-span-2 w-full p-2" v-if="f.company">
           <div class="w-52">
             <span class="m-3">Contact* </span>
           </div>
@@ -336,7 +356,7 @@
             placeholder="Title"
             type="selector"
             id="name"
-            v-model="f.positionType"
+            v-model="f.contact"
           >
             <option
               :value="st.v"
@@ -345,12 +365,13 @@
               v-text="st.l"
             ></option>
           </select>
-        </div>
+        </div> -->
       </div>
 
       <div class="col-span-1 flex flex-col p-2 border-t-2 mr-10">
         <label class="p-3" for="">Description</label>
         <textarea
+          v-model="f.description"
           id="message"
           rows="4"
           class="
@@ -370,6 +391,7 @@
       <div class="col-span-1 flex flex-col p-2 border-t-2 mr-10">
         <label class="p-3" for="">Notes</label>
         <textarea
+          v-model="f.notes"
           id="message"
           rows="4"
           class="
@@ -407,6 +429,7 @@
                 border-gray-300
                 focus:ring-blue-500 focus:ring-2
               "
+              @change="f.application = app"
             />
             <label
               for="default-checkbox"
@@ -425,6 +448,8 @@
 import { defineComponent } from "vue";
 import RecruiterSelector from "../selectors/RecruiterSelector.vue";
 import CompanySelector from "../selectors/CompanySelector.vue";
+import CompanyContactSelector from "../selectors/CompanyContactSelector.vue";
+
 import {
   fetchApplications,
   fetchJoborderCategories,
@@ -434,7 +459,7 @@ import {
 } from "../../services";
 
 export default defineComponent({
-  components: { RecruiterSelector, CompanySelector },
+  components: { RecruiterSelector, CompanySelector, CompanyContactSelector },
   setup() {},
   async created() {
     await this.loadPositionTypes();
@@ -450,7 +475,7 @@ export default defineComponent({
       state: "",
       zipcode: "",
       positionType: "",
-      recruiter: 10,
+      recruiter: null,
       owner: 10,
       orderType: "",
       salary: "",
@@ -458,10 +483,18 @@ export default defineComponent({
       maxRate: "",
       minRate: "",
       category: "",
+      orderStatus: "",
+      description: "",
+      notes: "",
       openings: 0,
+      application: null,
       pipeline_workflow: "",
       publish: false,
+      company: null,
+      contact: null,
     },
+    companyContacts: [] as any,
+    companyPicked: false,
     positionTypes: [] as any,
     selectedVal: null as any,
     statuses: [] as any,
@@ -504,9 +537,17 @@ export default defineComponent({
         this.applications = data.joborderApplications;
       }
     },
-    recruiterSelected() {},
-    companySelected() {},
-    saveChanges() {
+    recruiterSelected(v) {
+      this.f.recruiter = v;
+    },
+    companySelected(v) {
+      this.f.company = v;
+    },
+    companyContactSelected(v) {
+      this.f.contact = v;
+    },
+    saveChanges(e) {
+      e.preventDefault();
       console.log(this.f);
     },
   },
