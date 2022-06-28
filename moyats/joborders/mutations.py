@@ -185,7 +185,7 @@ class UpdateJobOrderPrimary(graphene.Mutation):
         return UpdateJobOrderPrimary(response=True)
 
 
-class JobOrderMutation(graphene.Mutation):
+class AddJobOrder(graphene.Mutation):
     response = graphene.Field(JobOrderType)
 
     class Arguments:
@@ -195,84 +195,91 @@ class JobOrderMutation(graphene.Mutation):
     def mutate(self, info, input: JobOrderInputs):
 
         recruiter = OrganizationMember.objects.filter(
-            user=info.context.user.id
+            org_member_id=input.recruiter
         )
 
         order_type = JobOrderTypes.objects.filter(
-            type_name=input.order_type
+            id=input.order_type
         )
+        if not recruiter.exists():
+            raise Exception("Recruiter not found")
 
         if not order_type.exists():
             raise Exception("Order Type not found")
 
         category = JobOrderCategory.objects.filter(
-            category_name=input.catagory
+            id=input.category
         )
 
         if not category.exists():
             raise Exception("Category Does not exist")
 
         # Test location
-        location = Address.objects.filter(
-            country=input.location
+        location = Address.objects.create(
+            country=input.country,
+            city=input.city,
         )
-
-        if not location.exists():
-            raise Exception("Location not found")
 
         job_details = JobDetail.objects.create(
             title=input.title,
-            location=location.first(),
+            location=location,
             position_type=input.position_type,
             recruiter=recruiter.first(),
             start_date=input.start_date,
             salary=input.salary,
             max_rate=input.max_rate,
+            min_rate=input.min_rate,
             duration=input.duration,
             order_type=order_type.first(),
             openings=input.openings,
-            remaining_openings=input.remaining_openings,
-            publish=input.publish,
+            remaining_openings=input.openings,
             category=category.first(),
-            hot=input.hot
         )
 
         job_order_status = JoborderStatus.objects.filter(
-            status_name=input.job_order_status
+            id=input.status
         )
 
         if not job_order_status.exists():
             raise Exception("Job order status Does not exist")
 
         company = Company.objects.filter(
-            name=input.company
+            company_id=input.company
         )
 
         if not company.exists():
             raise Exception("Company Does not exist")
 
-        pipeline_workflow = PipelineWorkflow.objects.filter(
-            title=input.pipeline_workflow
-        )
+        # use defauly pipeline workflow for joborders if pipeline is dead
+        pipeline_workflow = None
+        if input.pipeline_workflow:
+            pipeline_workflow = PipelineWorkflow.objects.filter(
+                title=input.pipeline_workflow
+            )
+        else:
+            pipeline_workflow = PipelineWorkflow.objects.filter(
+                default=True
+            )
+
 
         if not pipeline_workflow.exists():
             raise Exception("Pipeline Does not exist")
 
-        organization = Organization.objects.filter(
-            name=input.organization
-        )
-
-        if not organization.exists():
-            raise Exception("Organization Does not exist")
+        org = info.context.user.organizations.first()
 
         add_job_order = JobOrder.objects.create(
             notes=input.notes,
-            description=input.desctiption,
+            description=input.description,
             job_detail=job_details,
             job_order_status=job_order_status.first(),
-            organization=organization.first(),
+            organization=org,
             company=company.first(),
             pipeline_workflow=pipeline_workflow.first()
         )
+        for app in input.applications:
+            ap = Application.objects.filter(application_id=app)
+            if not ap.exists():
+                raise Exception("Application not found")
+            add_job_order.applications.add(ap.first())
 
-        return JobOrderMutation(response=add_job_order)
+        return AddJobOrder(response=add_job_order)

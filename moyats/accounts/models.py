@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 class Address(models.Model):
     country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    zip_code = models.BigIntegerField()
+    zip_code = models.BigIntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:

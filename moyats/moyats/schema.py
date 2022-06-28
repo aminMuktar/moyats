@@ -15,7 +15,7 @@ from candidates.mutation import (
     UpdateCandidateDetail
 )
 from joborders.mutations import (
-    JobOrderMutation,
+    AddJobOrder,
     UpdateJobOrderPrimary,
     UpdateJobOrderStatus,
     UpdateJobOrderDetails,
@@ -52,7 +52,7 @@ class Mutation(graphene.ObjectType):
     social_auth = SocialMediaRegistration.Field()
     setup_account = CreateOrganization.Field()
     add_candidate = AddCandidate.Field()
-    add_job_order = JobOrderMutation.Field()
+    add_joborder = AddJobOrder.Field()
     # contact mutations
     update_contact_primary = ContactPrimaryInfoUpdateMutation.Field()
     update_contact_status = CompanyContactStatusUpdate.Field()

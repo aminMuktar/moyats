@@ -37,7 +37,7 @@ class JobDetail(models.Model):
     category = models.ForeignKey(JobOrderCategory, on_delete=models.CASCADE)
     openings = models.BigIntegerField()
     remaining_openings = models.BigIntegerField()
-    hot = models.BooleanField()
+    hot = models.BooleanField(default=False)
     publish = models.BooleanField(
         default=True, help_text="publish job order on publish status change")
     updated_At = models.DateTimeField(auto_now=True)

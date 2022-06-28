@@ -43,7 +43,7 @@ class OrganizationMember(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.permission_level
+        return str(self.org_member_id)
 
 
 class Organization(models.Model):
