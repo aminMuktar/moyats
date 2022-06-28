@@ -121,7 +121,7 @@ export default defineComponent({
     hasNext: false,
     hasPrev: false,
     page: 1,
-    pageSize: 2,
+    pageSize: 10,
     dropts: [] as any,
     emptyMesasge: "You don't have any job orders yet.",
     headers: [

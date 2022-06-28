@@ -202,3 +202,12 @@ export const COMPANY_CONTACTS = gql`query searchCompanyContact($company: UUID!  
     }
   }
 `
+
+export const ADD_JOBORDER = gql`mutation addJobOrder($input: JobOrderInputs!) {
+  addJoborder(input: $input) {
+    response {
+      id
+    }
+  }
+}
+`

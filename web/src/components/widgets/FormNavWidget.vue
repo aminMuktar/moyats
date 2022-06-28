@@ -72,8 +72,15 @@
           </button>
         </div>
         <div class="overflow-y-scroll" style="height: 100%">
-          <job-order-form @close="closeSlider" v-if="$route.name === 'JobOrders'"></job-order-form>
-          <candidates-form @close="closeSlider" v-if="$route.name === 'Candidates'"></candidates-form>
+          <job-order-form
+            @close="closeSlider"
+            v-if="$route.name === 'JobOrders'"
+            @joborderadded="closeSlider"
+          ></job-order-form>
+          <candidates-form
+            @close="closeSlider"
+            v-if="$route.name === 'Candidates'"
+          ></candidates-form>
         </div>
       </div>
     </transition>

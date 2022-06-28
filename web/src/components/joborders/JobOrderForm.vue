@@ -19,6 +19,7 @@
           Save Changes
         </button>
         <button
+          type="button"
           @click="$emit('close')"
           class="
             border-red-500
@@ -87,7 +88,7 @@
               />
             </div>
             <input
-              v-model="f.zipcode"
+              v-model="f.country"
               required
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="Country"
@@ -163,12 +164,16 @@
           </div>
           <div>
             <input
+              pattern="[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])"
+              aria-errormessage="Failed nigga"
               required
+              v-model="f.startDate"
               class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
               placeholder="Start date"
               type="text"
               id="name"
             />
+            <small>please use yyyy-mm-dd format Example: 2000-05-05</small>
           </div>
         </div>
         <div class="col-span-2 flex p-2">
@@ -451,6 +456,7 @@ import CompanySelector from "../selectors/CompanySelector.vue";
 import CompanyContactSelector from "../selectors/CompanyContactSelector.vue";
 
 import {
+  addJobOrder,
   fetchApplications,
   fetchJoborderCategories,
   fetchJoborderStatuses,
@@ -472,12 +478,13 @@ export default defineComponent({
     f: {
       title: "",
       city: "",
+      country: "",
       state: "",
-      zipcode: "",
       positionType: "",
-      recruiter: null,
+      recruiter: null as any,
       owner: 10,
       orderType: "",
+      startDate: "",
       salary: "",
       duration: "",
       maxRate: "",
@@ -486,12 +493,12 @@ export default defineComponent({
       orderStatus: "",
       description: "",
       notes: "",
-      openings: 0,
-      application: null,
+      openings: "",
+      application: null as any,
       pipeline_workflow: "",
       publish: false,
-      company: null,
-      contact: null,
+      company: null as any,
+      contact: null as any,
     },
     companyContacts: [] as any,
     companyPicked: false,
@@ -546,9 +553,37 @@ export default defineComponent({
     companyContactSelected(v) {
       this.f.contact = v;
     },
-    saveChanges(e) {
+    async saveChanges(e) {
       e.preventDefault();
-      console.log(this.f);
+      const { data, errors } = await addJobOrder({
+        input: {
+          notes: this.f.notes,
+          description: this.f.description,
+          title: this.f.title,
+          city: this.f.city,
+          state: this.f.state,
+          country: this.f.country,
+          positionType: this.f.positionType,
+          recruiter: "c332fa7e-359b-4945-845b-8b1e7e7d78e3",
+          startDate: this.f.startDate,
+          salary: this.f.salary,
+          maxRate: this.f.maxRate,
+          minRate: this.f.minRate,
+          duration: this.f.duration,
+          openings: this.f.openings,
+          orderType: this.f.orderType,
+          category: this.f.category,
+          status: this.f.orderStatus,
+          company: this.f.company.companyId,
+          contact: this.f.contact.companyContactId,
+          applications: [this.f.application.applicationId],
+        },
+      });
+      if (!errors) {
+        console.log(data);
+        alert("job order has been added");
+        this.$emit("joborderadded");
+      }
     },
   },
 });
