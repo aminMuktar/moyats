@@ -79,6 +79,7 @@ export default defineComponent({
       this.loading = true;
       const { data } = await this.$apollo.query({
         query: JOB_ORDERS,
+        fetchPolicy: "network-only",
         variables: {
           page: this.page,
           pageSize: this.pageSize,

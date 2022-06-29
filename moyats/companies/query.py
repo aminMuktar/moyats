@@ -41,7 +41,7 @@ class CompanyQuery(graphene.ObjectType):
     def resolve_search_company(self, info, query, **kwargs):
         org = info.context.user.organizations.first()
         companies = models.Company.objects.filter(
-            name__contains=query, organization=org
+            Q(organization=org), Q(name__icontains=query)
         )
         return companies
 
