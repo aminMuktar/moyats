@@ -12,6 +12,7 @@
       :emptyMessage="emptyMesasge"
       :items="joborders"
       :headers="headers"
+      :loadingState="loading"
       @checkedAll="allChecked"
       @selected="singleSelected"
     >
@@ -75,6 +76,7 @@ export default defineComponent({
   methods: {
     parseDate,
     async getJobOrders() {
+      this.loading = true;
       const { data } = await this.$apollo.query({
         query: JOB_ORDERS,
         variables: {
@@ -83,6 +85,7 @@ export default defineComponent({
         },
       });
       if (data) {
+        this.loading = false;
         this.joborders = JSON.parse(JSON.stringify(data.jobOrders.objects));
         this.total = data.jobOrders.total;
         this.page = data.jobOrders.page;
@@ -90,10 +93,12 @@ export default defineComponent({
         this.hasPrev = data.jobOrders.hasPrev;
         this.hasNext = data.jobOrders.hasNext;
         this.setDropt();
+      } else {
+        this.loading = false;
       }
     },
     setDropt() {
-      let fin = [];
+      let fin = [] as any;
       for (let i = 0; i < this.total; i++) {
         fin.push(`${i + 1}/${this.total}`);
       }
@@ -120,6 +125,7 @@ export default defineComponent({
     pages: 1,
     hasNext: false,
     hasPrev: false,
+    loading: false,
     page: 1,
     pageSize: 10,
     dropts: [] as any,
