@@ -564,7 +564,7 @@ export default defineComponent({
           state: this.f.state,
           country: this.f.country,
           positionType: this.f.positionType,
-          recruiter: "c332fa7e-359b-4945-845b-8b1e7e7d78e3",
+          recruiter: this.f.recruiter.orgMemberId,
           startDate: this.f.startDate,
           salary: this.f.salary,
           maxRate: this.f.maxRate,

@@ -76,8 +76,11 @@ export const SEARCH_COMPANY = gql`query  searchCompany($query: String!){
 
 export const SEARCH_RECRUITER = gql`query  searchRecruiter($query: String!){
   searchRecruiter(query: $query){
-    userId
-    firstName
-    lastName
+    orgMemberId
+    user{
+      username
+      firstName
+      lastName
+    }
   }
 }`

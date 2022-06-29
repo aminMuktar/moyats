@@ -18,7 +18,7 @@
               font-semibold
             "
           >
-            {{ selectedVal.firstName }} {{ selectedVal.lastName }}
+            {{ selectedVal.user.firstName }} {{ selectedVal.user.lastName }}
           </a>
           <button type="button" class="gap-2" @click="clear">
             <svg
@@ -73,7 +73,7 @@
               @click="setInput(value)"
               class="px-3 py-2 cursor-pointer hover:bg-gray-200"
             >
-              {{ value.firstName }} {{ value.lastName }}
+              {{ value.user.firstName }} {{ value.user.lastName }}
             </li>
           </ul>
         </div>

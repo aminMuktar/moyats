@@ -11,7 +11,7 @@ from . import models
 from core.helpers import core_paginator
 from graphql_jwt.decorators import login_required
 from .enums import PositionTypes
-
+from organizations.types import OrganizationMemberType
 
 class JobOrderQuery(graphene.ObjectType):
     job_orders = graphene.Field(
@@ -26,12 +26,14 @@ class JobOrderQuery(graphene.ObjectType):
     joborder_status = graphene.List(types.JoborderStatusType)
     joborder_applications = graphene.List(ApplicationType)
     categories = graphene.List(types.JobOrderCategoryType)
-    search_recruiter = graphene.List(BaseUserType, query=graphene.String())
+    search_recruiter = graphene.List(OrganizationMemberType, query=graphene.String())
 
     @login_required
     def resolve_search_recruiter(self, info, query):
-        return BaseUser.objects.filter(
-            Q(first_name__icontains=query) | Q(last_name__icontains=query))
+        org = info.context.user.organizations.first()
+        members = org.members.filter(
+            Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query))
+        return members
 
     @login_required
     def resolve_categories(self, info, **kwargs):
