@@ -10,6 +10,7 @@ class JobOrderPrimaryInput(graphene.InputObjectType):
 
 class JobOrderDetailInput(graphene.InputObjectType):
     salary = graphene.String()
+    start_date = graphene.Date()
     duration = graphene.String()
     max_rate = graphene.String()
     min_rate = graphene.String()
@@ -17,7 +18,6 @@ class JobOrderDetailInput(graphene.InputObjectType):
     category = graphene.Int()
     publish = graphene.Boolean()
     openings = graphene.Int()
-    remaining_openings = graphene.Int()
     status = graphene.String()
 
 

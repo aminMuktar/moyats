@@ -113,6 +113,7 @@ export const JOB_ORDER = gql`query jobOrder($id: String!){
       }
       positionType
       category {
+        id
         categoryName
       }
       publish
@@ -120,6 +121,7 @@ export const JOB_ORDER = gql`query jobOrder($id: String!){
       startDate
       salary
       maxRate
+      minRate
       openings
       remainingOpenings
     }
@@ -232,6 +234,22 @@ export const ADD_JOBORDER = gql`mutation addJobOrder($input: JobOrderInputs!) {
 
 export const UPDATE_JOBORDER_PRIMARY = gql`mutation updateJoborderPrimary($input: JobOrderPrimaryInput!,$joborder: UUID!) {
   updateJoborderPrimary(input: $input, joborder: $joborder) {
+    response
+  }
+}
+`
+export const UPDATE_JOBORDER_DETAIL = gql`mutation updateJoborderDetails(
+  $input: JobOrderDetailInput!
+  $joborder: String!
+) {
+  updateJoborderDetails(input: $input, joborder: $joborder) {
+    response
+  }
+}
+`
+
+export const UPDATE_JOBORDER_COMPANY = gql`mutation updateJoborderCompany($company: UUID!, $joborder: UUID!) {
+  updateJoborderCompany(company: $company, joborder: $joborder) {
     response
   }
 }

@@ -357,6 +357,7 @@
             </select>
           </div>
           <company-selector
+            :showHeader="true"
             @cleared="f.company = null"
             @itemClicked="companySelected"
           ></company-selector>

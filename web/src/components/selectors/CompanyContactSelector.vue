@@ -1,6 +1,6 @@
 <template>
   <div class="flex col-span-2 w-full p-2 z-auto">
-    <div class="w-52">
+    <div class="w-52" v-if="showHeader">
       <span class="m-3">Contact* </span>
     </div>
     <div>
@@ -91,7 +91,7 @@ export default defineComponent({
   components: {
     Autocomplete,
   },
-  props: ["cid"],
+  props: ["cid", "showHeader"],
   data: () => ({
     selectedVal: null as any,
     value: "",

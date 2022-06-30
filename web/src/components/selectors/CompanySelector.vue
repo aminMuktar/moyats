@@ -1,43 +1,10 @@
 <template>
   <div class="flex col-span-2 w-full p-2 z-auto">
-    <div class="w-52">
+    <div class="w-52" v-if="showHeader">
       <span class="m-3">Company* </span>
     </div>
     <div>
-      <div class="bg-blue-400 rounded-md" v-if="selectedVal">
-        <div class="flex">
-          <a
-            class="
-              h-full
-              w-full
-              flex
-              justify-center
-              items-center
-              p-2
-              text-gray-700
-              font-semibold
-            "
-          >
-            {{ selectedVal.name }}</a
-          >
-          <button type="button" class="gap-2" @click="clear">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 mx-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
+      <pill :clearable="true" v-if="selectedVal" :text="selectedVal.name" @clear="clear"></pill>
       <div v-else>
         <div class="relative overflow-hidden">
           <input
@@ -85,11 +52,14 @@
 import { defineComponent } from "vue";
 import Autocomplete from "../../components/Autocomplete.vue";
 import { searchCompany } from "../../services";
+import Pill from "../pill.vue";
 
 export default defineComponent({
   setup() {},
+  props: ["showHeader"],
   components: {
     Autocomplete,
+    Pill,
   },
   data: () => ({
     selectedVal: null as any,
@@ -109,7 +79,7 @@ export default defineComponent({
     clear() {
       this.selectedVal = null;
       this.value = "";
-      this.$emit('cleared')
+      this.$emit("cleared");
     },
     async searchCompanyFilter() {
       if (this.value) {
@@ -127,7 +97,7 @@ export default defineComponent({
       this.value = value.name;
       this.showOptions = false;
       this.selectedVal = value;
-      this.$emit('itemClicked', value)
+      this.$emit("itemClicked", value);
     },
   },
 });

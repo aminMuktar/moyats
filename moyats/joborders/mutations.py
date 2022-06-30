@@ -124,12 +124,13 @@ class UpdateJobOrderDetails(graphene.Mutation):
         jorder_detail.update(
             salary=input.salary,
             duration=input.duration,
+            start_date=input.start_date,
             max_rate=input.max_rate,
             min_rate=input.min_rate,
             position_type=input.type,
             category=category.first(),
             openings=input.openings,
-            remaining_openings=input.remaining_openings,
+            remaining_openings=input.openings,
             publish=input.publish
         )
         return UpdateJobOrderDetails(response=True)

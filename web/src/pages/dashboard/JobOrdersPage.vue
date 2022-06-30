@@ -114,8 +114,15 @@
             :data="joborder"
             @updated="parseJobOrder()"
           ></joborder-primary-card>
-          <joborder-details :data="joborder"></joborder-details>
-          <joborder-company-card :data="joborder"></joborder-company-card>
+          <joborder-details
+            :loading="loading"
+            :data="joborder"
+            @updated="parseJobOrder()"
+          ></joborder-details>
+          <joborder-company-card
+            @updated="parseJobOrder()"
+            :data="joborder"
+          ></joborder-company-card>
           <job-order-description-card
             :data="joborder"
           ></job-order-description-card>
@@ -175,7 +182,6 @@ export default defineComponent({
   methods: {
     formAddress,
     async parseJobOrder() {
-      console.log("Dawgx");
       this.loading = true;
       const { data } = await this.$apollo.query({
         query: JOB_ORDER,

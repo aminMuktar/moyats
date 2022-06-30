@@ -59,3 +59,19 @@ export const updateJobOrderPrimary = async (variables: any) => {
     })
     return res
 }
+
+export const updateJoborderDetail = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.UPDATE_JOBORDER_DETAIL,
+        variables
+    })
+    return res
+}
+
+export const updateJoborderCompany = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.UPDATE_JOBORDER_COMPANY,
+        variables
+    })
+    return res
+}

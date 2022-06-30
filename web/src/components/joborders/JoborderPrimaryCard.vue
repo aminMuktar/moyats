@@ -117,6 +117,7 @@
                         @clear="editRec = true"
                       ></pill>
                       <recruiter-selector
+                        @itemClicked="itemClicked"
                         :showLabel="false"
                         v-if="editRec"
                       ></recruiter-selector>
@@ -194,6 +195,9 @@ export default defineComponent({
   methods: {
     formAddress,
     getFullName,
+    itemClicked(value) {
+      this.recruiter = value.orgMemberId;
+    },
     async saveChanges() {
       // TODO: validate inputs here
       this.editMode = false;
@@ -213,7 +217,7 @@ export default defineComponent({
         this.editRec = false;
         this.$emit("updated");
       } else {
-        this.loading = true;
+        this.loading = false;
       }
     },
   },
