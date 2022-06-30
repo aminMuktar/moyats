@@ -20,6 +20,15 @@ export const JOB_ORDERS = gql` query jobOrders($pageSize: Int!, $page: Int!) {
             city
             zipCode
           }
+          recruiter{
+            id
+            orgMemberId
+            user{
+              userId
+              firstName
+              lastName
+            }
+          }
           positionType
           category {
             categoryName
@@ -92,6 +101,15 @@ export const JOB_ORDER = gql`query jobOrder($id: String!){
         country
         city
         zipCode
+      }
+      recruiter{
+        id
+        orgMemberId
+        user{
+          userId
+          firstName
+          lastName
+        }
       }
       positionType
       category {
@@ -208,6 +226,13 @@ export const ADD_JOBORDER = gql`mutation addJobOrder($input: JobOrderInputs!) {
     response {
       id
     }
+  }
+}
+`
+
+export const UPDATE_JOBORDER_PRIMARY = gql`mutation updateJoborderPrimary($input: JobOrderPrimaryInput!,$joborder: UUID!) {
+  updateJoborderPrimary(input: $input, joborder: $joborder) {
+    response
   }
 }
 `

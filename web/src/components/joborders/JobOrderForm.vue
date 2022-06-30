@@ -174,6 +174,7 @@
             </select>
           </div>
           <recruiter-selector
+            :show-label="true"
             @itemClicked="recruiterSelected"
           ></recruiter-selector>
           <!-- second section start -->
@@ -485,6 +486,7 @@ import {
   fetchPositionTypes,
 } from "../../services";
 import Spinner from "../Spinner.vue";
+import { uuid } from "vue-uuid";
 
 export default defineComponent({
   components: {
@@ -495,6 +497,7 @@ export default defineComponent({
   },
   setup() {},
   async created() {
+    await this.$store.commit("updateFormupdateStatus", uuid.v4());
     await this.loadPositionTypes();
     await this.loadJoborderTypes();
     await this.loadJoborderStatus();
@@ -604,7 +607,7 @@ export default defineComponent({
           category: this.f.category,
           status: this.f.orderStatus,
           company: this.f.company.companyId,
-          contact: this.f.contact.companyContactId,
+          contact: this.f.contact ? this.f.contact.companyContactId : null,
           applications: this.f.application
             ? [this.f.application.applicationId]
             : null,
@@ -612,9 +615,9 @@ export default defineComponent({
       });
       if (!errors) {
         this.loadingState = false;
-        console.log(data);
-        alert("job order has been added");
         this.$emit("joborderadded");
+        this.$store.commit("updateFormupdateStatus", uuid.v4());
+        this.$emit("close");
       } else {
         this.loadingState = false;
       }

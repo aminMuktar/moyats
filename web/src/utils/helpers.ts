@@ -21,3 +21,8 @@ export const updateQparams = (path: string, page: number, pageSize: number) => {
 export const formatContacts = (contacts: any) => {
   return contacts.map((e: any) => `${e.firstName}, ${e.email}<br/>`).join("\n");
 }
+
+
+export const getFullName = (name) => {
+  return `${name.firstName} ${name.lastName}`
+}

@@ -73,6 +73,21 @@ export default defineComponent({
   async created() {
     await this.getJobOrders();
   },
+  computed: {
+    getFormupdateStatus() {
+      this.getJobOrders();
+      return this.$store.getters.getFormupdateStatus;
+    },
+  },
+  watch: {
+    getFormupdateStatus(value) {
+      if (value) {
+        console.log(this.$store.getters.getFormupdateStatus, "dawgx");
+        this.getJobOrders();
+      }
+    },
+  },
+
   methods: {
     parseDate,
     async getJobOrders() {

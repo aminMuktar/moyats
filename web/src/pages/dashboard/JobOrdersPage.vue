@@ -34,14 +34,30 @@
         <div class="flex flex-row gap-2 mt-2">
           <div class="flex flex-row gap-1">
             <span
-              class="text-white p-1 h-6 w-6 text-center text-xs rounded-full bg-orange-500"
+              class="
+                text-white
+                p-1
+                h-6
+                w-6
+                text-center text-xs
+                rounded-full
+                bg-orange-500
+              "
               >4</span
             >
             <p>Candidates</p>
           </div>
           <div class="flex flex-row gap-1">
             <span
-              class="text-white p-1 h-6 w-6 text-center text-xs rounded-full bg-orange-500"
+              class="
+                text-white
+                p-1
+                h-6
+                w-6
+                text-center text-xs
+                rounded-full
+                bg-orange-500
+              "
               >4</span
             >
             <p>Submitted</p>
@@ -93,10 +109,16 @@
     <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5">
       <div class="flex flex-col">
         <div v-if="joborder">
-          <joborder-primary-card :data="joborder"></joborder-primary-card>
+          <joborder-primary-card
+            :loading="loading"
+            :data="joborder"
+            @updated="parseJobOrder()"
+          ></joborder-primary-card>
           <joborder-details :data="joborder"></joborder-details>
           <joborder-company-card :data="joborder"></joborder-company-card>
-          <job-order-description-card :data="joborder"></job-order-description-card>
+          <job-order-description-card
+            :data="joborder"
+          ></job-order-description-card>
           <joborder-notes></joborder-notes>
           <joborder-application-card></joborder-application-card>
         </div>
@@ -145,6 +167,7 @@ export default defineComponent({
   setup() {},
   data: () => ({
     joborder: null as any,
+    loading: false,
   }),
   async created() {
     await this.parseJobOrder();
@@ -152,14 +175,20 @@ export default defineComponent({
   methods: {
     formAddress,
     async parseJobOrder() {
+      console.log("Dawgx");
+      this.loading = true;
       const { data } = await this.$apollo.query({
         query: JOB_ORDER,
+        fetchPolicy: "network-only",
         variables: {
           id: this.$route.params.jid,
         },
       });
       if (data) {
+        this.loading = false;
         this.joborder = data.jobOrder;
+      } else {
+        this.loading = false;
       }
     },
   },

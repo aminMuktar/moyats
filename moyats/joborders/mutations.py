@@ -162,10 +162,10 @@ class UpdateJobOrderPrimary(graphene.Mutation):
 
     class Arguments:
         input = JobOrderPrimaryInput(required=True)
-        joborder = graphene.String()
+        joborder = graphene.UUID()
 
     @login_required
-    def mutate(self, info, input, joborder, **kwargs):
+    def mutate(self, info, input: JobOrderPrimaryInput, joborder, **kwargs):
         jborder = JobOrder.objects.filter(
             joborder_id=joborder
         )
@@ -173,14 +173,23 @@ class UpdateJobOrderPrimary(graphene.Mutation):
             raise Exception("Joborder not found")
 
         recruiter = OrganizationMember.objects.filter(
-            user=input.recruiter
+            org_member_id=input.recruiter
         )
-        location = Address.objects.filter(id=input.location)
         if not recruiter.exists():
             raise Exception("Recruiter not found")
+
+        loc = None
+        location = Address.objects.filter(
+            country=input.country, city=input.city)
+        if not location.exists():
+            loc = Address.objects.create(
+                country=input.country, city=input.city)
+        else:
+            loc = location.first()
+        print(loc,"D"*30)
         jorder_details = jborder.first().job_detail
         JobDetail.objects.filter(id=jorder_details.id).update(
-            title=input.title, location=location.first(),
+            location=loc,
             recruiter=recruiter.first())
         return UpdateJobOrderPrimary(response=True)
 
@@ -261,7 +270,6 @@ class AddJobOrder(graphene.Mutation):
                 default=True
             )
 
-
         if not pipeline_workflow.exists():
             raise Exception("Pipeline Does not exist")
 
@@ -276,6 +284,7 @@ class AddJobOrder(graphene.Mutation):
             company=company.first(),
             pipeline_workflow=pipeline_workflow.first()
         )
+
         for app in input.applications:
             ap = Application.objects.filter(application_id=app)
             if not ap.exists():

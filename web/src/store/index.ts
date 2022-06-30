@@ -12,8 +12,12 @@ export const CoreModule = {
     token: false,
     u: null,
     activities: null,
+    formupdateStatus: null,
   },
   mutations: {
+    updateFormupdateStatus(state: any, data: any) {
+      state.formupdateStatus = data
+    },
     clearToken(state: any) {
       state.token = false;
     },
@@ -27,6 +31,11 @@ export const CoreModule = {
       state.activities = activities;
     },
   },
+  getters: {
+    getFormupdateStatus(state) {
+      return state.formupdateStatus
+    }
+  }
 };
 
 export const store = createStore<State>({

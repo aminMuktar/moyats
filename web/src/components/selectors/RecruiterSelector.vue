@@ -1,43 +1,15 @@
 <template>
   <div class="flex col-span-2 w-full p-2 z-auto">
-    <div class="w-52">
+    <div class="w-52" v-if="showLabel">
       <span class="m-3">Recruiter* </span>
     </div>
     <div>
-      <div class="bg-blue-400 rounded-md" v-if="selectedVal">
-        <div class="flex">
-          <a
-            class="
-              h-full
-              w-full
-              flex
-              justify-center
-              items-center
-              p-2
-              text-gray-700
-              font-semibold
-            "
-          >
-            {{ selectedVal.user.firstName }} {{ selectedVal.user.lastName }}
-          </a>
-          <button type="button" class="gap-2" @click="clear">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 mx-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
+      <pill
+        :clearable="true"
+        :text="getFullName(selectedVal.user)"
+        v-if="selectedVal"
+        @clear="clear"
+      ></pill>
       <div v-else>
         <div class="relative overflow-hidden">
           <input
@@ -46,7 +18,7 @@
             v-model="value"
             class="w-full p-2 text-sm border-gray-200 border-2 rounded-md"
             autocomplete="off"
-            placeholder="search for companies"
+            placeholder="search for recruiters in your organization"
           />
         </div>
         <div
@@ -85,12 +57,18 @@
 import { defineComponent } from "vue";
 import Autocomplete from "../../components/Autocomplete.vue";
 import { searchRecruiter } from "../../services";
+import { getFullName } from "../../utils/helpers";
+import Pill from "../pill.vue";
+import Chip from "../widgets/Chip.vue";
 
 export default defineComponent({
   setup() {},
   components: {
     Autocomplete,
+    Chip,
+    Pill,
   },
+  props: ["showLabel"],
   data: () => ({
     selectedVal: null as any,
     value: "",
@@ -110,6 +88,7 @@ export default defineComponent({
       this.selectedVal = null;
       this.value = "";
     },
+    getFullName,
     async searchFilter() {
       if (this.value) {
         const { data, errors } = await searchRecruiter(this.value);
@@ -126,7 +105,7 @@ export default defineComponent({
       this.value = value.name;
       this.showOptions = false;
       this.selectedVal = value;
-      this.$emit('itemClicked', value)
+      this.$emit("itemClicked", value);
     },
   },
 });
