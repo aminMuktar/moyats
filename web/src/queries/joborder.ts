@@ -87,7 +87,6 @@ export const JOB_ORDER = gql`query jobOrder($id: String!){
   jobOrder(id: $id) {
     id
     joborderId
-    notes
     description
     owner{
       username
@@ -254,3 +253,16 @@ export const UPDATE_JOBORDER_COMPANY = gql`mutation updateJoborderCompany($compa
   }
 }
 `
+
+export const UPDATE_JOBORDER_DESC = gql`mutation updateJoborderDescription($description: String!, $joborder: String!) {
+  updateJoborderDescription(description: $description, joborder: $joborder) {
+    response
+  }
+}
+`
+export const UPDATE_JOBORDER_NOTES = gql`
+mutation updateJoborderNotes($notes: String!, $joborder: String!) {
+  updateJoborderNotes(notes: $notes, joborder: $joborder) {
+    response
+  }
+}`

@@ -124,9 +124,13 @@
             :data="joborder"
           ></joborder-company-card>
           <job-order-description-card
+            @updated="parseJobOrder()"
             :data="joborder"
           ></job-order-description-card>
-          <joborder-notes></joborder-notes>
+          <joborder-notes
+            :data="joborder"
+            @updated="parseJobOrder()"
+          ></joborder-notes>
           <joborder-application-card></joborder-application-card>
         </div>
       </div>
