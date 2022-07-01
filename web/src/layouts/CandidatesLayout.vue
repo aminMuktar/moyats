@@ -1,6 +1,5 @@
 <template>
   <div>
-    DAWG {{ $store.getters.getFormupdateStatus }}
     <data-table
       @prev="prev"
       @next="next"

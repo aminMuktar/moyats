@@ -15,3 +15,13 @@ export const addCandidate = async (variables: any) => {
     })
     return res
 }
+
+
+export const fetchCandidate = async (variables: any) => {
+    const res = await apolloClient.query({
+        query: q.CANDIDATE,
+        fetchPolicy: "network-only",
+        variables
+    })
+    return res
+}

@@ -76,13 +76,25 @@
       </div>
     </div>
     <!-- start of tabs -->
-    <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5">
+    <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5" v-if="candidate">
       <div class="flex flex-col">
         <div>
-          <candidate-primary-card></candidate-primary-card>
-          <candidate-detail-card></candidate-detail-card>
-          <candidate-notes></candidate-notes>
-          <candidate-work-history></candidate-work-history>
+          <candidate-primary-card
+            :data="candidate"
+            @updated="parseCandidates()"
+          ></candidate-primary-card>
+          <candidate-detail-card
+            :data="candidate"
+            @updated="parseCandidates()"
+          ></candidate-detail-card>
+          <candidate-notes
+            :data="candidate"
+            @updated="parseCandidates()"
+          ></candidate-notes>
+          <candidate-work-history
+            :data="candidate"
+            @updated="parseCandidates()"
+          ></candidate-work-history>
         </div>
       </div>
       <div>
@@ -104,6 +116,7 @@ import CandidatePrimaryCard from "../../components/candidates/CandidatePrimaryCa
 import CandidateWorkHistory from "../../components/candidates/CandidateWorkHistory.vue";
 import DashboardCardWidget from "../../components/DashboardCardWidget.vue";
 import Chip from "../../components/widgets/Chip.vue";
+import { fetchCandidate } from "../../services/candidates";
 
 export default defineComponent({
   components: {
@@ -117,7 +130,26 @@ export default defineComponent({
     CandidateWorkHistory,
     CandidateNotes,
   },
-  setup() {},
-  data: () => ({}),
+  async created() {
+    await this.parseCandidate();
+  },
+  data: () => ({
+    loading: false,
+    candidate: null,
+  }),
+  methods: {
+    parseCandidates() {},
+    async parseCandidate() {
+      const { data, errors } = await fetchCandidate({
+        candidate: this.$route.params.cid,
+      });
+      if (data) {
+        this.loading = false;
+        this.candidate = data.candidate;
+      } else {
+        this.loading = false;
+      }
+    },
+  },
 });
 </script>

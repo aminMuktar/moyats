@@ -1,7 +1,6 @@
 import graphene
 
 
-
 class SocialMediaInput(graphene.InputObjectType):
     link = graphene.String()
     type = graphene.String()
@@ -41,7 +40,7 @@ class CandidateInput(graphene.InputObjectType):
     source = graphene.String()
     keySkills = graphene.String()
     currentEmployeer = graphene.String()
-
+    notes = graphene.String()
     dateAvailable = graphene.String()
     currentPay = graphene.String()
     desiredPay = graphene.String()

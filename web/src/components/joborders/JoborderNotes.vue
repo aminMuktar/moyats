@@ -49,29 +49,30 @@
           </div>
         </template>
         <template v-slot:body>
-          <div class="col-span-1 flex flex-col p-2 border-t-2 mr-10">
-            <div v-if="editMode">
-              <textarea
-                v-model="notes"
-                id="message"
-                rows="4"
-                class="
-                  block
-                  p-2.5
-                  w-full
-                  m-2
-                  bg-gray-100
-                  text-sm text-gray-900
-                  rounded-lg
-                  border border-gray-300
-                  focus:ring-blue-500 focus:border-blue-500
-                "
-                placeholder="Your message..."
-              ></textarea>
+          <div v-if="editMode">
+            <textarea
+              v-model="notes"
+              id="message"
+              rows="4"
+              class="
+                block
+                p-2.5
+                w-full
+                m-2
+                bg-gray-100
+                text-sm text-gray-900
+                rounded-lg
+                border border-gray-300
+                focus:ring-blue-500 focus:border-blue-500
+              "
+              placeholder="Your message..."
+            ></textarea>
+          </div>
+          <div v-else>
+            <div class="sm:col-span-1 md:flex lg:flex p-2" v-if="data.notes">
+              <p v-text="data.notes"></p>
             </div>
-            <div v-else class="sm:col-span-1 md:flex lg:flex p-2">
-              <div v-html="data.notes" class="prose"></div>
-            </div>
+            <p class="text-center py-5" v-else>No Notes Yet</p>
           </div>
         </template>
       </dashboard-card-widget>

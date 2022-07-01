@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dashboard-card-widget slot="body">
+    <dashboard-card-widget>
       <template v-slot:header>
         <p class="p-3 font-semibold text-lg">Activity Feed</p>
       </template>
@@ -8,7 +8,7 @@
         <div>
           <div class="sm:col-span-1 md:flex lg:flex p-2">
             <div class="w-1/4 ml-4 text-sm">
-              <p>asdf</p>
+              <p></p>
             </div>
           </div>
           <p class="text-center py-5">No Activities Yet</p>

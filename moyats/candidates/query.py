@@ -9,6 +9,21 @@ class CandidateQuery(graphene.ObjectType):
     candidtes = graphene.Field(
         types.CandidatesPaginatedType, page_size=graphene.Int(), page=graphene.Int())
     candidate_sources = graphene.List(types.CandidateSourceType)
+    candidate = graphene.Field(
+        types.CandidateType, candidate=graphene.UUID()
+    )
+
+    @login_required
+    def resolve_candidate(self, info, candidate, **kwargs):
+        org = info.context.user.organizations.first()
+        cands = Candidate.objects.filter(
+            candidate_id=candidate,
+            organization=org).order_by("-created_at")
+
+        if not cands.exists():
+            raise Exception("candidate not found")
+
+        return cands.first()
 
     @login_required
     def resolve_candidate_sources(self, info, **kwargs):

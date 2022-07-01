@@ -103,10 +103,9 @@ class AddCandidate(graphene.Mutation):
             CandidateProfile.objects.create(
                 first_name=input.firstName,
                 middle_name=input.middleName,
-                last_name=input.lastName,)
-
-        # if not social_media_exists(input.socialMediaType):
-        #     raise Exception("Socal does not exist")
+                last_name=input.lastName,
+                email=input.email
+            )
 
         address = Address.objects.filter(
             city=input.city,
@@ -128,6 +127,7 @@ class AddCandidate(graphene.Mutation):
         candidate = Candidate.objects.create(
             candidate_profile=candidteProfile.first(),
             organization=org,
+            notes=input.notes,
             phones=contact.first(),
             address=address.first(),
             source=source.first(),

@@ -103,6 +103,8 @@ class Candidate(models.Model):
     desired_pay = models.CharField(max_length=200, null=True, blank=True)
     best_contact_time = models.DateTimeField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     work_history = models.ManyToManyField(WorkHistory, null=True, blank=True)
     qualifications = models.ManyToManyField(CandidateQualification, null=True, blank=True)
     attachments = models.ManyToManyField(Attachment, null=True, blank=True)
