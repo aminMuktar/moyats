@@ -1,5 +1,6 @@
 <template>
   <div>
+    DAWG {{ $store.getters.getFormupdateStatus }}
     <data-table
       @prev="prev"
       @next="next"
@@ -12,6 +13,7 @@
       empty-message="you don't have any candidates yet"
       :items="candidates"
       :headers="headers"
+      :loadingState="loading"
       @checkedAll="allChecked"
       @selected="singleSelected"
     >
@@ -74,28 +76,29 @@ import DataTable from "../components/DataTable.vue";
 import Chip from "../components/widgets/Chip.vue";
 import { CANDIDATES } from "../queries/candidates";
 import { formAddress, parseDate, updateQparams } from "../utils/helpers";
+import { uuid } from "vue-uuid";
 
 export default defineComponent({
   async created() {
-    console.log(this.$store.getters.getFormupdateStatus, "dawg");
+    // this.$store.commit("updateFormupdateStatus", uuid.v4());
     this.page = this.$route.query.page ?? this.page;
     await this.getCandidates();
   },
-  components: { DataTable, Chip },
   computed: {
-    async getFormupdateStatus() {
-      await this.getCandidates();
+    getFormupdateStatus() {
+      this.getCandidates();
       return this.$store.getters.getFormupdateStatus;
     },
   },
   watch: {
-    async getFormupdateStatus(value) {
+    getFormupdateStatus(value) {
       if (value) {
-        alert("1w");
-        await this.getCandidates();
+        console.log(this.$store.getters.getFormupdateStatus, "dawgx");
+        this.getCandidates();
       }
     },
   },
+  components: { DataTable, Chip },
 
   methods: {
     parseDate,
@@ -108,14 +111,17 @@ export default defineComponent({
       console.log(`All Checked, ${e}`);
     },
     async getCandidates() {
+      this.loading = true;
       const { data } = await this.$apollo.query({
         query: CANDIDATES,
+        fetchPolicy: "network-only",
         variables: {
           page: this.page,
           pageSize: this.pageSize,
         },
       });
       if (data) {
+        this.loading = false;
         this.candidates = JSON.parse(JSON.stringify(data.candidtes.objects));
         this.total = data.candidtes.total;
         this.page = data.candidtes.page;
@@ -123,6 +129,8 @@ export default defineComponent({
         this.hasPrev = data.candidtes.hasPrev;
         this.hasNext = data.candidtes.hasNext;
         this.setDropt();
+      } else {
+        this.loading = false;
       }
     },
     setDropt() {
@@ -151,6 +159,7 @@ export default defineComponent({
     hasPrev: false,
     page: 1 as any,
     pageSize: 10,
+    loading: false,
     dropts: [] as any,
     headers: [
       { value: "name", label: "name" },

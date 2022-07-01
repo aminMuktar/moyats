@@ -17,5 +17,6 @@ class CandidateQuery(graphene.ObjectType):
     @login_required
     def resolve_candidtes(self, info, page_size, page, **kwargs):
         org = info.context.user.organizations.first()
-        cands = Candidate.objects.filter(organization=org)
+        cands = Candidate.objects.filter(
+            organization=org).order_by("-created_at")
         return core_paginator(cands, page_size, page, types.CandidatesPaginatedType)
