@@ -49,3 +49,21 @@ export const CANDIDATES = gql`query candidtes($page: Int!, $pageSize: Int!) {
   }
 }
 `
+
+export const ADD_CANDIDATE = gql`mutation addCandidate($input: CandidateInput, $attachments:Upload!) {
+  addCandidate(input: $input, attachments:$attachments) {
+    response {
+      id
+      candidateId
+    }
+  }
+}
+`
+
+export const CANDIDATE_SOURCES = gql`query {
+  candidateSources {
+    id
+    name
+  }
+}
+`

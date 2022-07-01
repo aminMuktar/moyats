@@ -1,7 +1,6 @@
-from xmlrpc.client import Boolean
 import graphene
 from .utils import get_type
-from organizations.models import Organization
+from graphene_file_upload.scalars import Upload
 from .models import Candidate, CandidateSource, SocialMedia
 from .inputs import CandidateInput, CandidatePrimaryInput
 from accounts.models import Address, BaseContact
@@ -85,14 +84,15 @@ class AddCandidate(graphene.Mutation):
 
     class Arguments:
         input = CandidateInput()
+        attachments = Upload(required=True)
 
-    def mutate(self, info, input: CandidateInput):
-
+    def mutate(self, info, input: CandidateInput, attachments: Upload, **kwargs):
+        org = info.context.user.organizations.first()
         contact = BaseContact.objects.filter(
-            cell_number=input.phone
+            cell_number=input.cell_phone
         )
         if not contact.exists():
-            contact.create()
+            contact.create(cell_number=input.cell_phone)
 
         candidteProfile = CandidateProfile.objects.filter(
             first_name=input.firstName,
@@ -108,43 +108,43 @@ class AddCandidate(graphene.Mutation):
         # if not social_media_exists(input.socialMediaType):
         #     raise Exception("Socal does not exist")
 
-        if not org_exists(input.organization):
-            raise Exception("Organization does not exist")
-
         address = Address.objects.filter(
             city=input.city,
-            zip_code=input.zipCode,
             country=input.country
         )
 
         if not address.exists():
             address.create(
                 city=input.city,
-                zip_code=input.zipCode,
                 country=input.country)
 
         source = CandidateSource.objects.filter(
-            name=input.source
+            id=input.source
         )
+
         if not source.exists():
             raise Exception("Source does not exist")
 
-        organization = Organization.objects.filter(
-            name=input.organization
-        )
-
-        add_candidate = Candidate.objects.create(
+        candidate = Candidate.objects.create(
             candidate_profile=candidteProfile.first(),
-            organization=organization.first(),
+            organization=org,
             phones=contact.first(),
             address=address.first(),
+            source=source.first(),
             key_skills=input.keySkills,
             current_employeer=input.currentEmployeer,
             current_pay=input.currentPay,
             desired_pay=input.desiredPay,
             website=input.website,
         )
+        for at in attachments:
+            candidate.attachments.create(
+                filename=at._name,
+                file=at,
+                is_resume=False
+            )
+
         for sm in input.socialMedias:
-            add_candidate.social_medias.create(
+            candidate.social_medias.create(
                 type=get_type(sm.link), link=sm.link)
-        return AddCandidate(response=add_candidate)
+        return AddCandidate(response=candidate)

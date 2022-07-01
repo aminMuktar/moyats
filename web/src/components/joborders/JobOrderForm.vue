@@ -302,33 +302,6 @@
               ></option>
             </select>
           </div>
-          <!-- <div class="flex col-span-2 w-full p-2" v-if="false">
-          <div class="w-52">
-            <span class="m-3">Pipeline Workflow* </span>
-          </div>
-          <select
-            required
-            class="
-              w-1/3
-              p-2
-              text-sm
-              border-gray-200 border-2
-              rounded-md
-              text-gray-600
-            "
-            placeholder="Title"
-            type="selector"
-            id="name"
-            v-model="f.pipeline_workflow"
-          >
-            <option
-              :value="st.v"
-              v-for="(st, ix) in pipeline_workflows"
-              :key="ix"
-              v-text="st.l"
-            ></option>
-          </select>
-        </div> -->
           <div class="flex col-span-2 w-full p-2">
             <div class="w-52">
               <span class="m-3">Category* </span>
@@ -362,37 +335,11 @@
             @itemClicked="companySelected"
           ></company-selector>
           <company-contact-selector
+            :show-header="true"
             @itemClicked="companyContactSelected"
             :cid="f.company"
             v-if="f.company"
           ></company-contact-selector>
-          <!-- <div class="flex col-span-2 w-full p-2" v-if="f.company">
-          <div class="w-52">
-            <span class="m-3">Contact* </span>
-          </div>
-          <select
-            required
-            class="
-              w-1/3
-              p-2
-              text-sm
-              border-gray-200 border-2
-              rounded-md
-              text-gray-600
-            "
-            placeholder="Title"
-            type="selector"
-            id="name"
-            v-model="f.contact"
-          >
-            <option
-              :value="st.v"
-              v-for="(st, ix) in statuses"
-              :key="ix"
-              v-text="st.l"
-            ></option>
-          </select>
-        </div> -->
         </div>
 
         <div class="col-span-1 flex flex-col p-2 border-t-2 mr-10">
@@ -498,7 +445,6 @@ export default defineComponent({
   },
   setup() {},
   async created() {
-    await this.$store.commit("updateFormupdateStatus", uuid.v4());
     await this.loadPositionTypes();
     await this.loadJoborderTypes();
     await this.loadJoborderStatus();

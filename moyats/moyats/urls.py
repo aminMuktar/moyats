@@ -10,6 +10,7 @@ from graphql_playground.views import GraphQLPlaygroundView
 from graphene_file_upload.django import FileUploadGraphQLView
 from graphql_jwt.decorators import jwt_cookie
 from django.views.generic import TemplateView
+from graphene_file_upload.django import FileUploadGraphQLView
 
 
 class HomePageView(TemplateView):
@@ -21,7 +22,8 @@ class GqlView(FileUploadGraphQLView, LoginRequiredMixin):
 
 
 urlpatterns = [
-    path('graphql/',  csrf_exempt(jwt_cookie(GqlView.as_view(graphiql=True)))),
+    path('graphql/',  csrf_exempt(
+        jwt_cookie(FileUploadGraphQLView.as_view(graphiql=True)))),
     path('playground/', GraphQLPlaygroundView.as_view(endpoint="/graphql/")),
     path('__debug__/', include('debug_toolbar.urls')),
     path('admin/', admin.site.urls),

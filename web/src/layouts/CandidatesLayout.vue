@@ -77,10 +77,26 @@ import { formAddress, parseDate, updateQparams } from "../utils/helpers";
 
 export default defineComponent({
   async created() {
+    console.log(this.$store.getters.getFormupdateStatus, "dawg");
     this.page = this.$route.query.page ?? this.page;
     await this.getCandidates();
   },
   components: { DataTable, Chip },
+  computed: {
+    async getFormupdateStatus() {
+      await this.getCandidates();
+      return this.$store.getters.getFormupdateStatus;
+    },
+  },
+  watch: {
+    async getFormupdateStatus(value) {
+      if (value) {
+        alert("1w");
+        await this.getCandidates();
+      }
+    },
+  },
+
   methods: {
     parseDate,
     formAddress,
@@ -110,7 +126,7 @@ export default defineComponent({
       }
     },
     setDropt() {
-      let fin = [];
+      let fin = [] as any;
       for (let i = 0; i < this.total; i++) {
         fin.push(`${i + 1}/${this.total}`);
       }

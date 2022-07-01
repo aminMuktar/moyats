@@ -13,6 +13,7 @@
     "@types/vue-tel-input": "^2.1.2",
     "@vue/apollo-option": "^4.0.0-alpha.17",
     "apexcharts": "^3.35.3",
+    "apollo-upload-client": "^17.0.0",
     "firebase": "^9.8.1",
     "vue": "^3.2.25",
     "vue-apexcharts": "^1.6.2",

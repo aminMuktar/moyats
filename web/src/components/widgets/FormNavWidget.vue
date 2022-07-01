@@ -74,12 +74,13 @@
         <div class="overflow-y-scroll" style="height: 100%">
           <job-order-form
             @close="closeSlider"
-            v-if="$route.name === 'JobOrders'"
+            v-if="$route.path.split('/')[1] === 'joborders'"
             @joborderadded="closeSlider"
           ></job-order-form>
           <candidates-form
+            @joborderadded="closeSlider"
             @close="closeSlider"
-            v-if="$route.name === 'Candidates'"
+            v-if="$route.path.split('/')[1] === 'candidates'"
           ></candidates-form>
         </div>
       </div>
