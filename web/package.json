@@ -22,6 +22,7 @@
     "vue-tel-input": "^6.0.0-beta.7",
     "vue-uuid": "^3.0.0",
     "vue3-apexcharts": "^1.4.1",
+    "vue3-persian-datetime-picker": "^1.2.2",
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.1.0"
   },

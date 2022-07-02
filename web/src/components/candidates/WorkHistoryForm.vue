@@ -83,36 +83,36 @@
                     />
                   </div>
                   <div class="grid grid-cols-2 gap-2 my-2">
-                    <input
-                      placeholder="Start Date"
-                      type="text"
-                      class=" mx-2
+                    <date-picker
+                      class="
+                        mx-2
                         bg-gray-50
                         border border-gray-300
                         text-gray-900 text-sm
                         rounded-lg
                         focus:ring-blue-500 focus:border-blue-500
-                        block
                         w-full
                         p-2.5
                       "
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="End Date"
-                      class=" mx-2
+                      locale="en,fa"
+                      format="YYYY-M-D"
+                      v-model="startDate" 
+                    ></date-picker>
+                    <date-picker
+                      class="
+                        mx-2
                         bg-gray-50
                         border border-gray-300
                         text-gray-900 text-sm
                         rounded-lg
                         focus:ring-blue-500 focus:border-blue-500
-                        block
                         w-full
                         p-2.5
                       "
-                      required
-                    />
+                      locale="en,fa"
+                      format="YYYY-M-D"
+                      v-model="endDate"
+                    ></date-picker>
                   </div>
                 </form>
               </div>
@@ -177,10 +177,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DialogModal from "../DialogModal.vue";
+import DatePicker from "vue3-persian-datetime-picker";
 
 export default defineComponent({
-  components: { DialogModal },
+  components: { DialogModal, DatePicker },
   props: ["show"],
-  data: () => ({}),
+  data: () => ({
+    startDate: "",
+    endDate:"",
+  }),
 });
 </script>

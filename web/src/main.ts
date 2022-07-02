@@ -14,6 +14,7 @@ import { apolloProvider } from "./v-apollo";
 const app = firebase.initializeApp(FIREBASE_CONFIG)
 
 const maap = createApp(App)
+
 maap.use(apolloProvider)
 maap.use(Router)
 maap.use(store, key)
