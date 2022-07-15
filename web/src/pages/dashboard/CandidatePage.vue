@@ -81,19 +81,19 @@
         <div>
           <candidate-primary-card
             :data="candidate"
-            @updated="parseCandidates()"
+            @updated="parseCandidate()"
           ></candidate-primary-card>
           <candidate-detail-card
             :data="candidate"
-            @updated="parseCandidates()"
+            @updated="parseCandidate()"
           ></candidate-detail-card>
           <candidate-notes
             :data="candidate"
-            @updated="parseCandidates()"
+            @updated="parseCandidate()"
           ></candidate-notes>
           <candidate-work-history
             :data="candidate"
-            @updated="parseCandidates()"
+            @updated="parseCandidate()"
           ></candidate-work-history>
         </div>
       </div>
@@ -138,7 +138,6 @@ export default defineComponent({
     candidate: null,
   }),
   methods: {
-    parseCandidates() {},
     async parseCandidate() {
       const { data, errors } = await fetchCandidate({
         candidate: this.$route.params.cid,

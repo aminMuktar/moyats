@@ -20,6 +20,7 @@ export const CANDIDATE = gql`query candidate($candidate: UUID!) {
       startDate
       endDate
       currentlyWorking
+      reasonForLeaving
       employeer
     }
     latestJoborder {
@@ -137,6 +138,63 @@ export const CANDIDATE_SOURCES = gql`query {
   candidateSources {
     id
     name
+  }
+}
+`
+export const ADD_CAND_WORK_HISTORY = gql`mutation addCandidateWorkhistory(
+  $candidate: UUID!
+  $input: CandidateWorkHistoryInput!
+) {
+  addCandidateWorkhistory(candidate: $candidate, input: $input) {
+    response
+  }
+}`
+
+export const UPDATE_CAND_WORK_HISTORY = gql`mutation updateCandidateWorkhistory(
+  $candidiate: UUID!
+  $input: CandidateWorkHistoryInput!
+  $whistory: Int!
+) {
+  updateCandidateWorkhistory(
+    candidate: $candidiate
+    input: $input
+    whistory: $whistory
+  ) {
+    response
+  }
+}
+`
+
+export const DELETE_CAND_WORK_HISTORY = gql`mutation removeCandidateWorkhistory($candidate: UUID!, $whid:Int!) {
+  removeCandidateWorkhistory(candidate: $candidate,whid:$whid) {
+    response
+  }
+}
+`
+
+export const UPDATE_CAND_PRIMARY = gql`mutation updateCandidatePrimary(
+  $candidate: UUID!
+  $input: CandidatePrimaryInput!
+) {
+  updateCandidatePrimary(candidate: $candidate, input: $input) {
+    response
+  }
+}
+`
+
+export const UPDATE_CAND_DETAIL = gql`mutation updateCandidateDetail(
+  $candidate: UUID!
+  $input: CandidateDetailInput!
+) {
+  updateCandidateDetail(candidate: $candidate, input: $input) {
+    response
+  }
+}
+`
+
+export const UPDATE_CAND_NOTES = gql`mutation updateCandidateNotes($candidate: UUID!, $notes: String!) {
+  updateCandidateNotes(candidate: $candidate, notes: $notes) {
+    response
   }
 }
 `

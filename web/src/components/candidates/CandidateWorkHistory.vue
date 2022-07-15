@@ -1,6 +1,23 @@
 <template>
   <div>
+    <work-history-update-dialog
+      v-if="wh"
+      @updated="updatedWorkHistory"
+      @close="showUpdateDialog = false"
+      :show="showUpdateDialog"
+      :wh="wh"
+    ></work-history-update-dialog>
+    <confirm-dialog
+      @decline="showConfigmDialog = false"
+      @confirm="deleteWorkHistory()"
+      @close="showConfigmDialog = false"
+      :cancelBtnText="'Cancel'"
+      :confirmBtnText="'Delete'"
+      :confirmMessage="'Are you sure you want to delete this work history ?'"
+      :show="showConfigmDialog"
+    ></confirm-dialog>
     <work-history-form
+      @updated="updatedWorkHistory"
       :show="showMainDialog"
       @close="showMainDialog = false"
     ></work-history-form>
@@ -59,12 +76,13 @@
                       {{ wh.title }}
                     </p>
                     <div class="flex flex-row">
-                      <p class="pt-2">2021</p>
+                      <p class="pt-2">{{ wh.startDate }}</p>
                       <span class="p-2"> - </span>
-                      <p class="pt-2">2022</p>
+                      <p class="pt-2">{{ wh.endDate }}</p>
                       <div class="flex flex-row px-10">
                         <button class="text-blue-600 border-2 rounded-full">
                           <svg
+                            @click="showUpdateModal(wh)"
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-4 w-4 m-2"
                             fill="none"
@@ -80,6 +98,7 @@
                           </svg>
                         </button>
                         <button
+                          @click="showDeleteConfirm(wh)"
                           class="text-blue-600 border-2 mx-2 rounded-full"
                         >
                           <svg
@@ -111,16 +130,54 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { removeCandidateWorkhistory } from "../../services/candidates";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
 import WorkHistoryForm from "./WorkHistoryForm.vue";
+import ConfirmDialog from "../ConfirmDialog.vue";
+import WorkHistoryUpdateDialog from "./WorkHistoryUpdateDialog.vue";
 
 export default defineComponent({
-  components: { DashboardCardWidget, WorkHistoryForm },
+  components: {
+    DashboardCardWidget,
+    WorkHistoryForm,
+    ConfirmDialog,
+    WorkHistoryUpdateDialog,
+  },
   props: ["data"],
   data: () => ({
     showMainDialog: false,
+    showConfigmDialog: false,
+    showUpdateDialog: false,
     editMode: false,
     loading: false,
+    wh: null as any,
   }),
+  methods: {
+    showDeleteConfirm(wh: any) {
+      this.wh = wh;
+      this.showConfigmDialog = true;
+    },
+    showUpdateModal(wh: any) {
+      this.wh = wh;
+      this.showUpdateDialog = true;
+    },
+    async deleteWorkHistory() {
+      const { data, errors } = await removeCandidateWorkhistory({
+        candidate: this.$route.params.cid,
+        whid: this.wh.id,
+      });
+      if (data) {
+        this.$emit("updated");
+        this.showConfigmDialog = false;
+      } else {
+        this.showConfigmDialog = false;
+      }
+    },
+    updatedWorkHistory() {
+      this.showMainDialog = false;
+      this.showUpdateDialog = false;
+      this.$emit("updated");
+    },
+  },
 });
 </script>

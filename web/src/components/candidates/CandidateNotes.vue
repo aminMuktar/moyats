@@ -80,6 +80,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { updateCandidateNotes } from "../../services/candidates";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
 import Spinner from "../Spinner.vue";
 
@@ -96,18 +97,18 @@ export default defineComponent({
   }),
   methods: {
     async saveChanges() {
-      // this.editMode = false;
-      // this.loading = true;
-      // const { data, errors } = await updateJoborderNotes({
-      //   notes: this.notes,
-      //   joborder: this.$route.params.jid,
-      // });
-      // if (data) {
-      //   this.loading = false;
-      //   this.$emit("updated");
-      // } else {
-      //   this.loading = false;
-      // }
+      this.editMode = false;
+      this.loading = true;
+      const { data, errors } = await updateCandidateNotes({
+        notes: this.notes,
+        candidate: this.$route.params.cid,
+      });
+      if (data) {
+        this.loading = false;
+        this.$emit("updated");
+      } else {
+        this.loading = false;
+      }
     },
   },
 });

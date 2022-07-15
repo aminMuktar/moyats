@@ -12,7 +12,11 @@ from application.query import ApplicationQuery
 from candidates.mutation import (
     AddCandidate,
     UpdateCandidatePrimary,
-    UpdateCandidateDetail
+    UpdateCandidateDetail,
+    AddCandidateWorkHistory,
+    RemoveCandidateWorkHistory,
+    UpdateCandidateWorkHistory,
+    UpdateCandidateNotes
 )
 from joborders.mutations import (
     AddJobOrder,
@@ -76,5 +80,9 @@ class Mutation(graphene.ObjectType):
     #  candidates mutations
     update_candidate_primary = UpdateCandidatePrimary.Field()
     update_candidate_detail = UpdateCandidateDetail.Field()
-
+    update_candidate_notes = UpdateCandidateNotes.Field()
+    add_candidate_workhistory = AddCandidateWorkHistory.Field()
+    remove_candidate_workhistory = RemoveCandidateWorkHistory.Field()
+    update_candidate_workhistory = UpdateCandidateWorkHistory.Field()
+    
 schema = graphene.Schema(query=Query, mutation=Mutation)

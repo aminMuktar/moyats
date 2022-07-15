@@ -25,3 +25,52 @@ export const fetchCandidate = async (variables: any) => {
     })
     return res
 }
+
+export const updateCandidateWorkhistory = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.UPDATE_CAND_WORK_HISTORY,
+        variables
+    })
+    return res
+}
+
+export const addCandidateWorkhistory = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.ADD_CAND_WORK_HISTORY,
+        variables
+    })
+    return res
+}
+
+export const removeCandidateWorkhistory = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.DELETE_CAND_WORK_HISTORY,
+        variables
+    })
+    return res
+}
+
+export const updateCandidatePrimary = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.UPDATE_CAND_PRIMARY,
+        variables
+    })
+    return res
+}
+
+
+export const updateCandidateDetail = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.UPDATE_CAND_DETAIL,
+        variables
+    })
+    return res
+}
+
+export const updateCandidateNotes = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.UPDATE_CAND_NOTES,
+        variables
+    })
+    return res
+}

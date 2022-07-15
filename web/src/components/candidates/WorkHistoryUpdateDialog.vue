@@ -10,7 +10,7 @@
               <div
                 class="flex justify-between items-center p-5 rounded-t border-b"
               >
-                <h3 class="text-xl font-medium">Add Work History</h3>
+                <h3 class="text-xl font-medium">Update Work History</h3>
                 <button
                   @click="$emit('close')"
                   type="button"
@@ -119,7 +119,7 @@
                     ></date-picker>
                   </div>
                   <textarea
-                    v-model="leavingreason"
+                    v-model="leavingReason"
                     id="message"
                     rows="4"
                     class="
@@ -164,7 +164,7 @@
                         text-center
                       "
                     >
-                      Add Work History
+                      Save Changes
                     </button>
                     <button
                       data-modal-toggle="medium-modal"
@@ -201,25 +201,32 @@
 import { defineComponent } from "vue";
 import DialogModal from "../DialogModal.vue";
 import DatePicker from "vue3-persian-datetime-picker";
-import { addCandidateWorkhistory } from "../../services/candidates";
+import { updateCandidateWorkhistory } from "../../services/candidates";
 
 export default defineComponent({
   components: { DialogModal, DatePicker },
-  props: ["show"],
+  props: ["show", "wh"],
   data: () => ({
     startDate: null,
     endDate: null,
     title: null,
     employeer: null,
-    leavingreason: "",
     currentlyWorking: false,
     leavingReason: "",
   }),
+  created() {
+    console.log(this.wh);
+    this.title = this.wh.title;
+    this.employeer = this.wh.employeer;
+    this.startDate = this.wh.startDate;
+    this.endDate = this.wh.endDate;
+    this.leavingReason = this.wh.reasonForLeaving;
+  },
   methods: {
     async submitWorkHistory(e) {
       e.preventDefault();
-      const { data, errors } = await addCandidateWorkhistory({
-        candidate: this.$route.params.cid,
+      const { data, errors } = await updateCandidateWorkhistory({
+        candidiate: this.$route.params.cid,
         input: {
           title: this.title,
           startDate: this.startDate,
@@ -228,6 +235,7 @@ export default defineComponent({
           currentlyWorking: this.currentlyWorking,
           leavingReason: this.leavingReason,
         },
+        whistory: this.wh.id,
       });
       if (data) {
         this.$emit("updated");

@@ -22,8 +22,18 @@ class PhonenumberInput(graphene.InputObjectType):
 class CandidatePrimaryInput(graphene.InputObjectType):
     candidate_profile = graphene.Field(CandidateProfileInput)
     phones = graphene.Field(PhonenumberInput)
-    social_medias = graphene.List(SocialMediaInput)
-    address = graphene.Int()
+    # social_medias = graphene.List(SocialMediaInput)
+    country = graphene.String()
+    city = graphene.String()
+
+
+class CandidateDetailInput(graphene.InputObjectType):
+    source = graphene.String()
+    key_skills = graphene.String()
+    current_employeer = graphene.String()
+    date_available = graphene.String()
+    current_pay = graphene.String()
+    desired_pay = graphene.String()
 
 
 class CandidateInput(graphene.InputObjectType):
@@ -47,3 +57,12 @@ class CandidateInput(graphene.InputObjectType):
     bestContactTime = graphene.String()
     website = graphene.String()
     qualifications = graphene.String()
+
+
+class CandidateWorkHistoryInput(graphene.InputObjectType):
+    title = graphene.String()
+    employeer = graphene.String()
+    currently_working = graphene.Boolean()
+    start_date = graphene.String()
+    end_date = graphene.String()
+    leaving_reason = graphene.String()
