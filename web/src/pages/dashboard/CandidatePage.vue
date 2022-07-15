@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2">
+    <div class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2" v-if="candidate">
       <div class="flex flex-row p-2 gap-4">
         <div>
           <p class="pb-2">Activity</p>
@@ -51,7 +51,7 @@
               d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
             />
           </svg>
-          <p>+251911359586</p>
+          <p>{{ candidate.phones.cellNumber }}</p>
         </div>
       </div>
       <div>
@@ -71,7 +71,7 @@
               d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
             />
           </svg>
-          <p>bdere12345@gmail.com</p>
+          <p>{{ candidate.candidateProfile.email }}</p>
         </div>
       </div>
     </div>
@@ -135,7 +135,7 @@ export default defineComponent({
   },
   data: () => ({
     loading: false,
-    candidate: null,
+    candidate: null as any,
   }),
   methods: {
     async parseCandidate() {
