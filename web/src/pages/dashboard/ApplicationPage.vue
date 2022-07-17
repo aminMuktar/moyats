@@ -88,6 +88,89 @@
           Add Question
         </button>
       </div>
+
+      <!-- draggable table -->
+      <div class="col-6">
+        <table
+          class="
+            border-collapse
+            table-auto
+            w-full
+            whitespace-no-wrap
+            bg-white
+            table-striped
+            relative
+          "
+        >
+          <ul
+            class="
+              w-full
+              text-sm
+              font-medium
+              text-gray-900
+              bg-white
+              border border-gray-200
+            "
+          >
+            <transition-group>
+              <draggable
+                v-model="questionsSet"
+                class="dragArea list-group w-full"
+                :list="questionsSet"
+                @change="log"
+              >
+                <li
+                  v-for="q in questionsSet"
+                  :key="q.id"
+                  class="
+                    py-4
+                    cursor-move
+                    px-4
+                    w-full
+                    hover:bg-gray-200
+                    border-b border-gray-200
+                  "
+                >
+                  <div class="flex flex-row">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+                      />
+                    </svg>
+                    <p>
+                      {{ q.fieldTitle }}
+                    </p>
+                  </div>
+                </li>
+              </draggable>
+            </transition-group>
+          </ul>
+        </table>
+
+        <!-- <draggable
+          :list="questions"
+          class="list-group"
+          ghost-class="ghost"
+          :move="checkMove"
+          @start="drag = true"
+          @end="drag = false"
+        >
+          <div class="list-group-item cursor-move" v-for="(q, ix) in questions" :key="ix">
+            {{ q.fieldTitle }}
+          </div>
+        </draggable> -->
+      </div>
+
+      <!-- end of table -->
       <data-table
         @prev="prev"
         @next="next"
@@ -97,6 +180,7 @@
         :total="total"
         :page="page"
         :pages="pages"
+        class="hidden"
         empty-message="you don't have any questions yet yet"
         :items="questions"
         :headers="headers"
@@ -155,6 +239,7 @@
 </template>
 
 <script lang="ts">
+import { VueDraggableNext } from "vue-draggable-next";
 import { defineComponent } from "vue";
 import DataTable from "../../components/DataTable.vue";
 import { fetchApplication, fetchApplicationQuestions } from "../../services";
@@ -162,7 +247,11 @@ import { parseDate, updateQparams } from "../../utils/helpers";
 import ApplicationQuestionDialog from "../../components/applications/ApplicationQuestionDialog.vue";
 
 export default defineComponent({
-  components: { DataTable, ApplicationQuestionDialog },
+  components: {
+    DataTable,
+    ApplicationQuestionDialog,
+    draggable: VueDraggableNext,
+  },
   async created() {
     await this.fetchApplciation();
     await this.fetchQuestions();
@@ -174,6 +263,7 @@ export default defineComponent({
       });
       if (data) {
         this.questions = data.applicationQuestions;
+        this.questionsSet = [...this.questions];
       }
     },
     async fetchApplciation() {
@@ -189,8 +279,8 @@ export default defineComponent({
     singleSelected(e: any) {
       console.log(e);
     },
-    addedApplicationQuestion(){
-      alert("Added Application")
+    addedApplicationQuestion() {
+      alert("Added Application");
     },
     allChecked(e: any) {
       console.log(`All Checked, ${e}`);
@@ -205,10 +295,15 @@ export default defineComponent({
       await this.fetchQuestions();
       this.updateQparams(this.$route.path, this.page, this.pages);
     },
+    log(event) {
+      console.log(event);
+    },
   },
   data: () => ({
     total: 0,
     pages: 1,
+    enabled: true,
+    drag: false,
     hasNext: false,
     showDialog: false,
     hasPrev: false,
@@ -216,7 +311,8 @@ export default defineComponent({
     pageSize: 10,
     loading: false,
     dropts: [] as any,
-    questions: [],
+    questionsSet: [] as any,
+    questions: [] as any,
     headers: [
       { value: "title", label: "Title" },
       { value: "saveTo", label: "Save To" },
