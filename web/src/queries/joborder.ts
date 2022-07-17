@@ -93,6 +93,11 @@ export const JOB_ORDER = gql`query jobOrder($id: String!){
       firstName
       lastName
     }
+    applications{
+      header
+      applicationId
+      description
+    }
     jobDetail {
       id
       title
@@ -204,10 +209,37 @@ export const JOBORDER_CATEGORIES = gql`query {
 export const APPLICATIONS = gql`query {
   joborderApplications{
     id
+    updatedAt
     applicationId
     description
   }
 }`
+
+export const APPLICATION = gql`query joborderApplication($app: String!) {
+  joborderApplication(application: $app) {
+    id
+    applicationId
+    description
+    header
+    updatedAt
+    createdAt
+  }
+}
+`
+
+export const APPLICATION_QUESTIONS = gql`query appQuestions($app: String!){
+  applicationQuestions(application: $app) {
+    id
+    questionId
+    fieldTitle
+    comment
+    saveTo
+    required
+    createdAt
+    updatedAt
+  }
+}
+`
 
 export const COMPANY_CONTACTS = gql`query searchCompanyContact($company: UUID!  $query: String!){
     searchCompanyContact(
@@ -261,8 +293,26 @@ export const UPDATE_JOBORDER_DESC = gql`mutation updateJoborderDescription($desc
 }
 `
 export const UPDATE_JOBORDER_NOTES = gql`
-mutation updateJoborderNotes($notes: String!, $joborder: String!) {
-  updateJoborderNotes(notes: $notes, joborder: $joborder) {
-    response
+  mutation updateJoborderNotes($notes: String!, $joborder: String!) {
+    updateJoborderNotes(notes: $notes, joborder: $joborder) {
+      response
+    }
+  }
+`
+
+export const SAVE_APP_DETAIL_TYPES = gql`query {
+  saveApplicationDetailTypes{
+    id
+    label
   }
 }`
+
+export const SAVE_APP_QUESTION = gql`mutation saveApplicationQuestion(
+  $app: String!
+  $input: ApplicationQuestionInput!
+) {
+  saveApplicationQuestion(application: $app, input: $input) {
+    response
+  }
+}
+`

@@ -150,8 +150,8 @@
           </a>
           <ul id="dropdown-example" v-show="showDrop" class="py-2 space-y-2">
             <li>
-              <a
-                href="#"
+              <router-link
+                to="/applications"
                 class="
                   flex
                   items-center
@@ -168,7 +168,7 @@
                   hover:bg-gray-100
                   dark:text-white dark:hover:bg-gray-700
                 "
-                >Email</a
+                >Applications</router-link
               >
             </li>
             <li>
@@ -228,9 +228,9 @@ import { defineComponent } from "vue";
 export default defineComponent({
   methods: {
     checkPath(path: string) {
-      console.log(this.$route.path)
-      const current = this.$route.path.split("/")
-      const valid = current[1] == path.substr(1)
+      console.log(this.$route.path);
+      const current = this.$route.path.split("/");
+      const valid = current[1] == path.substr(1);
       // const valid = path == this.$route.path;
       return valid;
     },

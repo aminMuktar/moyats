@@ -11,6 +11,7 @@ import Candidate from "../pages/dashboard/CandidatePage.vue";
 import Companies from "../pages/dashboard/Companies.vue";
 import Company from "../pages/dashboard/CompanyPage.vue";
 import Contacts from "../pages/dashboard/Contacts.vue";
+import Applications from "../pages/dashboard/Applications.vue"
 import Contact from "../pages/dashboard/ContactPage.vue";
 import Reports from "../pages/dashboard/Reports.vue";
 import CompanySetup from "../pages/CompanySetup.vue";
@@ -18,6 +19,7 @@ import AccountSettings from "../pages/dashboard/AccountSettings.vue";
 import CompanyManagement from "../pages/dashboard/CompanyManagement.vue";
 import NotFound from "../pages/errors/NotFound.vue";
 import Activity from "../pages/dashboard/ActivityDetail.vue";
+import ApplicationPage from "../pages/dashboard/ApplicationPage.vue"
 
 import {
   authguard,
@@ -78,6 +80,16 @@ export default createRouter({
           path: "/joborders/:jid",
           name: "JobOrder",
           component: JobOrder,
+        },
+        {
+          path: "/applications",
+          name: "Applications",
+          component: Applications
+        },
+        {
+          path: "/applications/:appid",
+          name: "ApplicationPage",
+          component: ApplicationPage
         },
         {
           path: "/candidates",

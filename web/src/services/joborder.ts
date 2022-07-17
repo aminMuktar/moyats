@@ -36,6 +36,22 @@ export const fetchApplications = async () => {
     return res
 }
 
+export const fetchApplication = async (variables: any) => {
+    const res = await apolloClient.query({
+        query: q.APPLICATION,
+        variables
+    })
+    return res
+}
+
+export const fetchApplicationQuestions = async (variables: any) => {
+    const res = await apolloClient.query({
+        query: q.APPLICATION_QUESTIONS,
+        variables
+    })
+    return res
+}
+
 export const searchCompanyContacts = async (variables: any) => {
     const res = await await apolloClient.query({
         query: q.COMPANY_CONTACTS,
@@ -93,3 +109,17 @@ export const updateJoborderNotes = async (variables: any) => {
     return res
 }
 
+export const saveApplicationDetails = async () => {
+    const res = await apolloClient.query({
+        query: q.SAVE_APP_DETAIL_TYPES
+    })
+    return res
+}
+
+export const saveApplicationQuestion = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.SAVE_APP_QUESTION,
+        variables
+    })
+    return res
+}

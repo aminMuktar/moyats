@@ -1,18 +1,15 @@
-import imp
 import graphene
+from . import types
+from . import models
 from django.db.models import Q
 from core.types import EnumType
 from application.types import ApplicationType
 from application.models import Application
-from accounts.types import BaseUserType
-from accounts.models import BaseUser
-from . import types
-from . import models
 from core.helpers import core_paginator
 from graphql_jwt.decorators import login_required
 from .enums import PositionTypes
 from organizations.types import OrganizationMemberType
-import time
+
 
 class JobOrderQuery(graphene.ObjectType):
     job_orders = graphene.Field(
@@ -26,8 +23,11 @@ class JobOrderQuery(graphene.ObjectType):
     joborder_types = graphene.List(types.JobOrderTypesType)
     joborder_status = graphene.List(types.JoborderStatusType)
     joborder_applications = graphene.List(ApplicationType)
+    joborder_application = graphene.Field(
+        ApplicationType, application=graphene.String())
     categories = graphene.List(types.JobOrderCategoryType)
-    search_recruiter = graphene.List(OrganizationMemberType, query=graphene.String())
+    search_recruiter = graphene.List(
+        OrganizationMemberType, query=graphene.String())
 
     @login_required
     def resolve_search_recruiter(self, info, query):
@@ -39,6 +39,15 @@ class JobOrderQuery(graphene.ObjectType):
     @login_required
     def resolve_categories(self, info, **kwargs):
         return models.JobOrderCategory.objects.all()
+
+    @login_required
+    def resolve_joborder_application(self, info, application, **kwargs):
+        org = info.context.user.organizations.first()
+        applications = Application.objects.filter(
+            organization=org, application_id=application)
+        if not applications.exists():
+            raise Exception("Application not found")
+        return applications.first()
 
     @login_required
     def resolve_joborder_applications(self, info, **kwargs):

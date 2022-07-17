@@ -2,6 +2,7 @@ from email.policy import default
 import uuid
 from django.db import models
 from accounts.models import BaseUser
+from .enums import SaveApplicationDetailTypes
 from organizations.models import Organization
 from django.utils.translation import gettext_lazy as _
 
@@ -13,7 +14,7 @@ class Application(models.Model):
         Organization, on_delete=models.CASCADE, null=True)
     description = models.CharField(max_length=300)
     header = models.TextField()
-    updated_At = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
@@ -21,28 +22,6 @@ class Application(models.Model):
 
 
 class ApplicationQuestion(models.Model):
-    class SaveApplicationDetailTypes(models.TextChoices):
-        APPLICATION_ONLY = 'ao', _('Application Only')
-        RESUME = 'rs', _('Resume')
-        FIRST_NAME = 'fn', _('First Name')
-        MIDDLE_NAME = 'mn', _('Middle Name')
-        LAST_NAME = 'ln', _('Last Name')
-        PHONE_HOME = 'ph', _('Home Phone')
-        PHONE_MOBILE = 'pm', _('Mobile Phone')
-        PHONE_WORK = 'pw', _('Work Phone')
-        ADDRESS = 'ad', _('Address')
-        CITY = 'ct', _('City')
-        STATE = 'st', _('State')
-        ZIP_CODE = 'zc', _('Zip Code')
-        SOURCE = 'sr', _('Source')
-        KEY_SKILLS = 'ks', _('Key Skills')
-        CURRENT_EMPLOYEER = 'ce', _('Current Employeer')
-        EMAIL = 'em', _('Email')
-        DESIRED_PAY = 'dp', _('Desired Pay')
-        CURRENT_PAY = 'cp', _('Current Pay')
-        COUNTRY = 'cn', _('Country')
-        WORK_HISTORY = 'wh', _('Work History')
-        SOCIAL_MEDIA = 'sm', _('Social Media')
     application = models.ForeignKey(
         Application, on_delete=models.CASCADE, null=True)
     question_id = models.UUIDField(
