@@ -10,6 +10,7 @@ from joborders.query import JobOrderQuery
 from candidates.query import CandidateQuery
 from application.query import ApplicationQuery
 from application.mutation import (
+    AddApplication,
     SaveApplicationQuestion
 )
 
@@ -90,6 +91,7 @@ class Mutation(graphene.ObjectType):
     update_candidate_workhistory = UpdateCandidateWorkHistory.Field()
     # application mutations
     save_application_question = SaveApplicationQuestion.Field()
+    add_application = AddApplication.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

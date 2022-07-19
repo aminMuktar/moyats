@@ -279,7 +279,9 @@ export default defineComponent({
     singleSelected(e: any) {
       console.log(e);
     },
-    addedApplicationQuestion() {
+    async addedApplicationQuestion() {
+      this.showDialog = false
+      await this.fetchQuestions()
       alert("Added Application");
     },
     allChecked(e: any) {

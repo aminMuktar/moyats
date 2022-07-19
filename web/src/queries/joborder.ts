@@ -316,3 +316,14 @@ export const SAVE_APP_QUESTION = gql`mutation saveApplicationQuestion(
   }
 }
 `
+export const ADD_APPLICATION = gql`mutation addApplication($desc: String!, $header: String!) {
+  addApplication(description: $desc, header: $header) {
+    response {
+      id
+      applicationId
+      description
+      header
+    }
+  }
+}
+`

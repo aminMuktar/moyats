@@ -31,7 +31,8 @@ export const fetchJoborderCategories = async () => {
 
 export const fetchApplications = async () => {
     const res = await apolloClient.query({
-        query: q.APPLICATIONS
+        query: q.APPLICATIONS,
+        fetchPolicy: "network-only"
     })
     return res
 }
@@ -47,6 +48,7 @@ export const fetchApplication = async (variables: any) => {
 export const fetchApplicationQuestions = async (variables: any) => {
     const res = await apolloClient.query({
         query: q.APPLICATION_QUESTIONS,
+        fetchPolicy: "network-only",
         variables
     })
     return res
@@ -119,6 +121,14 @@ export const saveApplicationDetails = async () => {
 export const saveApplicationQuestion = async (variables: any) => {
     const res = await apolloClient.mutate({
         mutation: q.SAVE_APP_QUESTION,
+        variables
+    })
+    return res
+}
+
+export const addApplication = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.ADD_APPLICATION,
         variables
     })
     return res

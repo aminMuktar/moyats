@@ -52,7 +52,8 @@ class JobOrderQuery(graphene.ObjectType):
     @login_required
     def resolve_joborder_applications(self, info, **kwargs):
         org = info.context.user.organizations.first()
-        applications = Application.objects.filter(organization=org)
+        applications = Application.objects.filter(
+            organization=org).order_by("-created_at")
         return applications
 
     @login_required

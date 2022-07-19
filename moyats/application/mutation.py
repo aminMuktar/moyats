@@ -2,6 +2,22 @@ import graphene
 from .inputs import ApplicationQuestionInput
 from graphql_jwt.decorators import login_required
 from .models import ApplicationQuestion, Application
+from .types import ApplicationType
+
+
+class AddApplication(graphene.Mutation):
+    response = graphene.Field(ApplicationType)
+
+    class Arguments:
+        header = graphene.String(required=True)
+        description = graphene.String(required=False)
+
+    @login_required
+    def mutate(self, info, header, description, **kwargs):
+        org = info.context.user.organizations.first()
+        app = Application.objects.create(
+            header=header, description=description, organization=org)
+        return AddApplication(response=app)
 
 
 class SaveApplicationQuestion(graphene.Mutation):

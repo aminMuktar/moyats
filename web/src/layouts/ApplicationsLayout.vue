@@ -1,5 +1,32 @@
 <template>
   <div>
+    <new-application-dialog
+      :show="showDialog"
+      @close="showDialog = false"
+      @updated="addedNewApplication"
+    ></new-application-dialog>
+    <div class="w-full bg-white">
+      <button
+        type="button"
+        class="
+          py-2.5
+          px-5
+          m-3
+          text-sm
+          font-medium
+          text-gray-900
+          focus:outline-none
+          bg-white
+          rounded-lg
+          border border-gray-400
+          hover:bg-gray-100
+          focus:z-10 focus:ring-4 focus:ring-gray-200
+        "
+        @click="showDialog = true"
+      >
+        Add Application
+      </button>
+    </div>
     <data-table
       @prev="prev"
       @next="next"
@@ -45,12 +72,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import NewApplicationDialog from "../components/applications/NewApplicationDialog.vue";
 import DataTable from "../components/DataTable.vue";
 import { fetchApplications } from "../services";
 import { formAddress, parseDate, updateQparams } from "../utils/helpers";
 
 export default defineComponent({
-  components: { DataTable },
+  components: { DataTable, NewApplicationDialog },
   setup() {},
   async created() {
     // this.$store.commit("updateFormupdateStatus", uuid.v4());
@@ -77,6 +105,10 @@ export default defineComponent({
         fin.push(`${i + 1}/${this.total}`);
       }
       this.dropts = fin;
+    },
+    async addedNewApplication() {
+      this.showDialog = false;
+      await this.loadApplications();
     },
     async loadApplications() {
       const { data, errors } = await fetchApplications();
@@ -107,6 +139,7 @@ export default defineComponent({
     hasPrev: false,
     page: 1 as any,
     pageSize: 10,
+    showDialog: false,
     loading: false,
     dropts: [] as any,
     headers: [
