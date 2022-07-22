@@ -198,3 +198,9 @@ export const UPDATE_CAND_NOTES = gql`mutation updateCandidateNotes($candidate: U
   }
 }
 `
+
+export const UPDATE_COMP_PRIMARY = gql`mutation updateCompanyPrimary($input: CompanyPrimaryInfoUpdateInput!) {
+  updateCompanyPrimary(input: $input) {
+    response
+  }
+}`

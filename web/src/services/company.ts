@@ -1,4 +1,4 @@
-import { SEARCH_COMPANY, SEARCH_RECRUITER } from "../queries/company"
+import { ADD_COMPANY, SEARCH_COMPANY, SEARCH_RECRUITER } from "../queries/company"
 import { APPLICATIONS, JOBORDER_CATEGORIES, JOB_ORDER_STATUS, JOB_ORDER_TYPES, POSITION_TYPES } from "../queries/joborder"
 import { apolloClient } from "../v-apollo"
 
@@ -20,6 +20,14 @@ export const searchRecruiter = async (query: string) => {
         variables: {
             query: query
         }
+    })
+    return res
+}
+
+export const addCompany = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: ADD_COMPANY,
+        variables
     })
     return res
 }

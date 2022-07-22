@@ -80,8 +80,13 @@
           <candidates-form
             @joborderadded="closeSlider"
             @close="closeSlider"
-            v-if="$route.path.split('/')[1] === 'candidates'"
+            v-else-if="$route.path.split('/')[1] === 'candidates'"
           ></candidates-form>
+          <companies-form
+            @companyAdded="closeSlider"
+            @close="closeSlider"
+            v-else-if="$route.path.split('/')[1] === 'companies'"
+          ></companies-form>
         </div>
       </div>
     </transition>
@@ -90,6 +95,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import JobOrderForm from "../joborders/JobOrderForm.vue";
+import CompaniesForm from "../companies/CompaniesForm.vue";
 import CandidatesForm from "../candidates/CandidatesForm.vue";
 
 export default defineComponent({
@@ -115,7 +121,7 @@ export default defineComponent({
       if (this.display) this.showBtn = false;
     },
   },
-  components: { JobOrderForm, CandidatesForm },
+  components: { JobOrderForm, CompaniesForm, CandidatesForm },
 });
 </script>
 

@@ -2,16 +2,14 @@
   <div>
     <dashboard-card-widget slot="body">
       <template v-slot:header>
-        <p class="p-3 font-semibold text-lg">Details</p>
+        <div class="flex justify-between">
+          <p class="p-3 font-semibold text-lg">Details</p>
+        </div>
       </template>
       <template v-slot:body>
         <div>
           <table class="table-auto">
             <tbody>
-              <tr>
-                <td class="p-2">Tags</td>
-                <td class="py-2 px-16"></td>
-              </tr>
               <tr>
                 <td class="p-2">Created</td>
                 <td class="py-2 px-16">{{ parseDate(data.createdAt) }}</td>
@@ -52,9 +50,13 @@ export default defineComponent({
   components: { DashboardCardWidget, Chip },
   props: ["data"],
   created() {},
+  data: () => ({
+    editMode: false,
+  }),
   methods: {
     parseDate,
     formAddress,
+    saveChanges() {},
   },
 });
 </script>

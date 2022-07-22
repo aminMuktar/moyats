@@ -1,12 +1,12 @@
-import string
 import graphene
-
 from core.models import BaseContact
 from accounts.models import BaseUser, Address
 from graphene_file_upload.scalars import Upload
 from .models import Company, CompanyContact, CompanyContactStatus, CompanyStatus
 from .inputs import CompanyPrimaryInfoUpdateInput, ContactPrimaryInfoUpdateInput
 from graphql_jwt.decorators import login_required
+from .types import CompanyType
+from .inputs import CompanyInput
 
 
 class ContactPrimaryInfoUpdateMutation(graphene.Mutation):
@@ -122,9 +122,19 @@ class UpdateCompanyPrimary(graphene.Mutation):
         contact = BaseContact.objects.create(
             cell_number=input.phones.cell_phone
         )
-        address = Address.objects.filter(id=input.address)
-        company.update(website=input.website, name=input.name,
-                       phones=contact, address=address.first())
+        addr = None
+        address = Address.objects.filter(
+            country=input.country, city=input.city)
+        if not address.exists():
+            addr = Address.objects.create(
+                country=input.country, city=input.city)
+        else:
+            addr = address.first()
+
+        company.update(
+            website=input.website,
+            name=input.name if input.name else company.first().name,
+            phones=contact, address=addr)
         return UpdateContactNote(response=True)
 
 
@@ -182,3 +192,35 @@ class AddCompanyAttachments(graphene.Mutation):
             raise Exception("company not found")
         comp.first().attachments.create(file=file, filename=filename, is_resume=is_resume)
         return AddCompanyAttachments(response=True)
+
+
+class AddCompany(graphene.Mutation):
+    response = graphene.Field(CompanyType)
+
+    class Arguments:
+        input = CompanyInput()
+
+    @login_required
+    def mutate(self, info, input: CompanyInput, **kwargs):
+        org = info.context.user.organizations.first()
+        contact = BaseContact.objects.create(
+            cell_number=input.phones.cell_phone
+        )
+        addr = None
+        address = Address.objects.filter(
+            country=input.country, city=input.city)
+        if not address.exists():
+            addr = Address.objects.create(
+                country=input.country, city=input.city)
+        else:
+            addr = address.first()
+        default_status = CompanyStatus.objects.filter(
+            initial=True
+        )
+        company = Company.objects.create(
+            website=input.website,
+            name=input.name,
+            company_status=default_status.first(),
+            organization=org,
+            phones=contact, address=addr)
+        return AddCompany(response=company)

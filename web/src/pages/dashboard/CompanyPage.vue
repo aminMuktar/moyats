@@ -39,7 +39,10 @@
     <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5">
       <div class="flex flex-col">
         <div>
-          <company-primary-card :data="company"></company-primary-card>
+          <company-primary-card
+            @updated="companyPrimaryUpdated"
+            :data="company"
+          ></company-primary-card>
           <company-details-card :data="company"></company-details-card>
         </div>
       </div>
@@ -90,6 +93,7 @@ export default defineComponent({
     async fetchCompany() {
       const { data } = await this.$apollo.query({
         query: COMPANY,
+        fetchPolicy: "network-only",
         variables: {
           cid: this.$route.params.cpid,
         },
@@ -97,6 +101,9 @@ export default defineComponent({
       if (data) {
         this.company = data.company;
       }
+    },
+    async companyPrimaryUpdated() {
+      await this.fetchCompany();
     },
   },
 });

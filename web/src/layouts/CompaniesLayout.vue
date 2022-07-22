@@ -51,7 +51,7 @@
         </div>
       </template>
       <template v-slot:[`status`]="{ item }">
-        <div>
+        <div v-if="item.companyStatus">
           <chip
             :text="item.companyStatus.name"
             :color="item.companyStatus.color.hex"
@@ -74,6 +74,19 @@ export default defineComponent({
     this.page = this.$route.query.page ?? this.page;
     await this.getCompanies();
   },
+  computed: {
+    getFormupdateStatus() {
+      this.getCompanies();
+      return this.$store.getters.getFormupdateStatus;
+    },
+  },
+  watch: {
+    getFormupdateStatus(value) {
+      if (value) {
+        this.getCompanies();
+      }
+    },
+  },
   methods: {
     parseDate,
     formAddress,
@@ -81,6 +94,7 @@ export default defineComponent({
     async getCompanies() {
       const { data } = await this.$apollo.query({
         query: COMPANIES,
+        fetchPolicy: "network-only",
         variables: {
           page: this.page,
           pageSize: this.pageSize,
@@ -103,7 +117,7 @@ export default defineComponent({
       console.log(`All Checked, ${e}`);
     },
     setDropt() {
-      let fin = [];
+      let fin: Array<any> = [];
       for (let i = 0; i < this.total; i++) {
         fin.push(`${i + 1}/${this.total}`);
       }

@@ -65,7 +65,7 @@ class CompanyQuery(graphene.ObjectType):
     @login_required
     def resolve_companies(self, info, page_size, page, **kwargs):
         org = info.context.user.organizations.first()
-        companies = models.Company.objects.filter(organization=org)
+        companies = models.Company.objects.filter(organization=org).order_by("-created_at")
         return core_paginator(companies, page_size, page, types.CompanyPaginatedType)
 
     @login_required

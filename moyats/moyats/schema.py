@@ -45,6 +45,7 @@ from companies.mutations import(
     UpdateCompanyStatus,
     UpdateCompanyNotes,
     AddCompanyAttachments,
+    AddCompany
 )
 from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration
 
@@ -73,6 +74,7 @@ class Mutation(graphene.ObjectType):
     update_company_status = UpdateCompanyStatus.Field()
     update_company_notes = UpdateCompanyNotes.Field()
     add_company_attachment = AddCompanyAttachments.Field()
+    add_company = AddCompany.Field()
     # joborder mutations
     update_joborder_primary = UpdateJobOrderPrimary.Field()
     update_joborder_status = UpdateJobOrderStatus.Field()

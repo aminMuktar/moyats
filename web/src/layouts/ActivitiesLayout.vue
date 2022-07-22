@@ -35,6 +35,11 @@
             v-if="item.activityType == 'OR'"
             v-text="item.contentObject.name"
           ></p>
+          <p
+            v-else-if="item.activityType == 'JO'"
+            v-text="item.contentObject"
+          ></p>
+
           <p v-else-if="item.activityType == 'AC'">
             {{ item.contentObject.first_name }}
             {{ item.contentObject.last_name }}

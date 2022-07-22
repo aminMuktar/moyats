@@ -74,3 +74,11 @@ export const updateCandidateNotes = async (variables: any) => {
     })
     return res
 }
+
+export const updateCompanyPrimary = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.UPDATE_COMP_PRIMARY,
+        variables
+    })
+    return res
+}

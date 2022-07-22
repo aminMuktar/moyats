@@ -84,3 +84,12 @@ export const SEARCH_RECRUITER = gql`query  searchRecruiter($query: String!){
     }
   }
 }`
+
+
+export const ADD_COMPANY = gql`mutation addCompany($input: CompanyInput!){
+  addCompany(input:$input) {
+    response {
+      id
+    }
+  }
+}`

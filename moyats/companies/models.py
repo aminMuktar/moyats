@@ -11,7 +11,8 @@ from core.models import Attachment
 class CompanyStatus(models.Model):
     name = models.CharField(max_length=300)
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
-    default = models.BooleanField()
+    default = models.BooleanField(default=False)
+    initial = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
@@ -34,7 +35,7 @@ class Company(models.Model):
         BaseContact, on_delete=models.CASCADE, null=True)
     company_status = models.ForeignKey(
         CompanyStatus, on_delete=models.CASCADE, blank=True, null=True)
-    verified = models.BooleanField()
+    verified = models.BooleanField(default=False)
     description = models.TextField(blank=True, null=True)
     notes = models.TextField(null=True, blank=True)
     attachments = models.ManyToManyField(Attachment, blank=True)
