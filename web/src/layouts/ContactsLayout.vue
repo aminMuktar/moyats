@@ -26,7 +26,7 @@
         </div>
       </template>
       <template v-slot:[`company`]="{ item }">
-        <div>
+        <div v-if="item.company">
           <router-link
             :to="`/companies/${item.company.companyId}`"
             class="text-sm text-blue-500 font-semibold"
@@ -43,9 +43,11 @@
       <template v-slot:[`companyStatus`]="{ item }">
         <div>
           <chip
+            v-if="item.company"
             :color="item.company.companyStatus.color.hex"
             :text="item.company.companyStatus.name"
           ></chip>
+          <p v-else>-</p>
         </div>
       </template>
 
@@ -73,12 +75,27 @@ export default defineComponent({
     this.page = this.$route.query.page ?? this.page;
     await this.fetchContacts();
   },
+  computed: {
+    getFormupdateStatus() {
+      this.fetchContacts();
+      return this.$store.getters.getFormupdateStatus;
+    },
+  },
+  watch: {
+    getFormupdateStatus(value) {
+      if (value) {
+        this.fetchContacts();
+      }
+    },
+  },
+
   methods: {
     parseDate,
     updateQparams,
     async fetchContacts() {
       const { data } = await this.$apollo.query({
         query: CONTACTS,
+        fetchPolicy: "network-only",
         variables: {
           page: this.page,
           pageSize: this.pageSize,
@@ -94,7 +111,7 @@ export default defineComponent({
       }
     },
     setDropt() {
-      let fin = [];
+      let fin: Array<any> = [];
       for (let i = 0; i < this.total; i++) {
         fin.push(`${i + 1}/${this.total}`);
       }

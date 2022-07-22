@@ -18,7 +18,7 @@
               </tr>
               <tr>
                 <td class="p-2">Owner</td>
-                <td class="py-2 px-16">
+                <td class="py-2 px-16" v-if="data.owner">
                   {{ data.owner.firstName }} {{ data.owner.lastName }}
                 </td>
               </tr>

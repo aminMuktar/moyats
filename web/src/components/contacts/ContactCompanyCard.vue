@@ -10,7 +10,7 @@
             <tbody>
               <tr>
                 <td class="p-2">Company</td>
-                <td class="py-2 px-16">{{ data.company.name }}</td>
+                <td class="py-2 px-16" v-if="data.company">{{ data.company.name }}</td>
               </tr>
               <tr>
                 <td class="p-2">Department</td>

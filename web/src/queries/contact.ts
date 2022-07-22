@@ -86,3 +86,15 @@ export const CONTACT = gql`query contact($cid: String!){
   }
 }
 `
+
+
+export const ADD_CONTACT = gql`mutation addContact($input: CompanyContactInput!) {
+  addContact(input: $input) {
+    ok
+    contact {
+      id
+      companyContactId
+      lastName
+    }
+  }
+}`

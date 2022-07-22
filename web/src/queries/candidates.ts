@@ -204,3 +204,9 @@ export const UPDATE_COMP_PRIMARY = gql`mutation updateCompanyPrimary($input: Com
     response
   }
 }`
+
+export const UPDATE_CONTACT_PRIMARY = gql`mutation updateContactPrimary($input: ContactPrimaryInfoUpdateInput!){
+  updateContactPrimary(input:$input){
+    response
+  }
+}`

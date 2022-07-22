@@ -72,6 +72,8 @@ class CompanyContact(models.Model):
         BaseContact, on_delete=models.CASCADE, null=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True)
     reachable = models.BooleanField(default=True)
+    organization = models.ForeignKey(
+        "organizations.Organization", on_delete=models.CASCADE, null=True)
     company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
     email = models.EmailField()
     notes = models.TextField(null=True, blank=True)

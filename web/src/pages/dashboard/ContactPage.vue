@@ -3,7 +3,7 @@
     <div class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2">
       <div>
         <p class="pb-2">Company</p>
-        <div class="flex flex-row gap-2 mt-2">
+        <div class="flex flex-row gap-2 mt-2" v-if="contact.company">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -18,6 +18,7 @@
           </svg>
           <p v-text="contact.company.name"></p>
         </div>
+        <p v-else>-</p>
       </div>
       <div>
         <p class="pb-2">Phones</p>
@@ -59,7 +60,10 @@
     <div class="grid gap-3 lg:grid-cols-2 xl:grid-cols-2 m-5">
       <div class="flex flex-col">
         <div>
-          <contacts-primary-card :data="contact"></contacts-primary-card>
+          <contacts-primary-card
+            @updated="updatedContacts"
+            :data="contact"
+          ></contacts-primary-card>
           <contact-detail-card :data="contact"></contact-detail-card>
           <contact-company-card :data="contact"></contact-company-card>
           <contacts-notes-card></contacts-notes-card>
@@ -103,9 +107,13 @@ export default defineComponent({
     await this.fetchContactData();
   },
   methods: {
+    async updatedContacts() {
+      await this.fetchContactData();
+    },
     async fetchContactData() {
       const { data } = await this.$apollo.query({
         query: CONTACT,
+        fetchPolicy: "network-only",
         variables: {
           cid: this.$route.params.cid,
         },

@@ -1,3 +1,4 @@
+from copyreg import constructor
 import graphene
 from . import types
 from . import models
@@ -58,8 +59,9 @@ class CompanyQuery(graphene.ObjectType):
     @login_required
     def resolve_contact(self, info, cid, **kwargs):
         org = info.context.user.organizations.first()
+        print(org,"organi")
         contacts = models.CompanyContact.objects.filter(
-            company__organization=org, company_contact_id=cid)
+            organization=org, company_contact_id=cid)
         return contacts.first()
 
     @login_required
@@ -72,5 +74,5 @@ class CompanyQuery(graphene.ObjectType):
     def resolve_contacts(self, info, page_size, page, **kwargs):
         org = info.context.user.organizations.first()
         contacts = models.CompanyContact.objects.filter(
-            company__organization=org)
+            organization=org).order_by("-created_at")
         return core_paginator(contacts, page_size, page, types.CompanyContactsPaginatedType)

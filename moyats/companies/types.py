@@ -14,9 +14,11 @@ class CompanyContactType(DjangoObjectType):
     owner = graphene.Field(BaseUserType)
 
     def resolve_owner(parent, info):
-        owner = BaseUser.objects.filter(
-            organizations__id=parent.company.organization.id)
-        return owner.first()
+        if parent.company:
+            owner = BaseUser.objects.filter(
+                organizations__id=parent.company.organization.id)
+            return owner.first()
+        return None
 
     class Meta:
         model = models.CompanyContact

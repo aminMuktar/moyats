@@ -18,7 +18,7 @@ class AddCompanyContact(graphene.Mutation):
 
     @login_required
     def mutate(self, info, input: CompanyContactInput, **kwargs):
-        company = Company.objects.get(pk=input.company)
+        org = info.context.user.organizations.first()
         addr = None
         address = Address.objects.filter(
             country=input.country, city=input.city)
@@ -27,18 +27,27 @@ class AddCompanyContact(graphene.Mutation):
                 country=input.country, city=input.city)
         else:
             addr = address.first()
+        company = Company.objects.filter(
+            company_id=input.company, organization=org)
+
+        if not company.exists():
+            raise Exception("invalid input")
 
         contact = BaseContact.objects.create(
             cell_number=input.phones.cell_phone
         )
-
+        default_status = CompanyContactStatus.objects.filter(
+            initial=True
+        )
         company_contact = CompanyContact.objects.create(
             first_name=input.first_name,
             last_name=input.last_name,
             email=input.email,
+            organization=org,
+            company=company.first(),
             address=addr,
             phones=contact,
-            status=CompanyContactStatus.objects.get(name='Active'),
+            status=default_status.first(),
         )
         return AddCompanyContact(ok=True, contact=company_contact)
 
@@ -54,8 +63,22 @@ class ContactPrimaryInfoUpdateMutation(graphene.Mutation):
             company_contact_id=input.contact)
         if not contacts.exists():
             raise Exception("contact not found")
+        addr = None
+        address = Address.objects.filter(
+            country=input.country, city=input.city)
+        contact = BaseContact.objects.create(
+            cell_number=input.phones.cell_phone
+        )
+
+        if not address.exists():
+            addr = Address.objects.create(
+                country=input.country, city=input.city)
+        else:
+            addr = address.first()
         contacts.update(first_name=input.name.first_name,
                         last_name=input.name.last_name,
+                        phones=contact,
+                        address=addr,
                         )
         return ContactPrimaryInfoUpdateMutation(response=True)
 

@@ -14,6 +14,7 @@ class CompanyContactInput(graphene.InputObjectType):
     last_name = graphene.String(required=True)
     phones = graphene.Field(ContactPhonesInput)
     email = graphene.String(required=True)
+    company = graphene.String(required=True)
     city = graphene.String()
     country = graphene.String()
     state = graphene.String()
@@ -28,7 +29,9 @@ class ContactPrimaryInfoUpdateInput(graphene.InputObjectType):
     name = graphene.Field(NameInput)
     contact = graphene.UUID()
     phones = graphene.Field(ContactPhonesInput)
-    address = graphene.String()
+    city = graphene.String()
+    country = graphene.String()
+    state = graphene.String()
 
 
 class CompanyPrimaryInfoUpdateInput(graphene.InputObjectType):
