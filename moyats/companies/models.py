@@ -53,6 +53,8 @@ class Company(models.Model):
 class CompanyContactStatus(models.Model):
     name = models.CharField(max_length=100)
     color = models.ForeignKey("core.Color", on_delete=models.CASCADE)
+    default = models.BooleanField(default=False)
+    initial = models.BooleanField(default=False)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

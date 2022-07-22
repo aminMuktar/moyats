@@ -8,15 +8,28 @@ class ContactPhonesInput(graphene.InputObjectType):
     home_phone = graphene.String(required=False)
     work_phone = graphene.String(required=False)
 
+
+class CompanyContactInput(graphene.InputObjectType):
+    first_name = graphene.String(required=True)
+    last_name = graphene.String(required=True)
+    phones = graphene.Field(ContactPhonesInput)
+    email = graphene.String(required=True)
+    city = graphene.String()
+    country = graphene.String()
+    state = graphene.String()
+
+
 class NameInput(graphene.InputObjectType):
     first_name = graphene.String()
     last_name = graphene.String()
+
 
 class ContactPrimaryInfoUpdateInput(graphene.InputObjectType):
     name = graphene.Field(NameInput)
     contact = graphene.UUID()
     phones = graphene.Field(ContactPhonesInput)
     address = graphene.String()
+
 
 class CompanyPrimaryInfoUpdateInput(graphene.InputObjectType):
     name = graphene.String()

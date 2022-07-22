@@ -3,10 +3,44 @@ from core.models import BaseContact
 from accounts.models import BaseUser, Address
 from graphene_file_upload.scalars import Upload
 from .models import Company, CompanyContact, CompanyContactStatus, CompanyStatus
-from .inputs import CompanyPrimaryInfoUpdateInput, ContactPrimaryInfoUpdateInput
+from .inputs import CompanyContactInput, CompanyPrimaryInfoUpdateInput, ContactPrimaryInfoUpdateInput
 from graphql_jwt.decorators import login_required
-from .types import CompanyType
+from .types import CompanyContactType, CompanyType
 from .inputs import CompanyInput
+
+
+class AddCompanyContact(graphene.Mutation):
+    class Arguments:
+        input = CompanyContactInput()
+
+    ok = graphene.Boolean()
+    contact = graphene.Field(CompanyContactType)
+
+    @login_required
+    def mutate(self, info, input: CompanyContactInput, **kwargs):
+        company = Company.objects.get(pk=input.company)
+        addr = None
+        address = Address.objects.filter(
+            country=input.country, city=input.city)
+        if not address.exists():
+            addr = Address.objects.create(
+                country=input.country, city=input.city)
+        else:
+            addr = address.first()
+
+        contact = BaseContact.objects.create(
+            cell_number=input.phones.cell_phone
+        )
+
+        company_contact = CompanyContact.objects.create(
+            first_name=input.first_name,
+            last_name=input.last_name,
+            email=input.email,
+            address=addr,
+            phones=contact,
+            status=CompanyContactStatus.objects.get(name='Active'),
+        )
+        return AddCompanyContact(ok=True, contact=company_contact)
 
 
 class ContactPrimaryInfoUpdateMutation(graphene.Mutation):

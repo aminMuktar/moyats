@@ -45,7 +45,8 @@ from companies.mutations import(
     UpdateCompanyStatus,
     UpdateCompanyNotes,
     AddCompanyAttachments,
-    AddCompany
+    AddCompany,
+    AddCompanyContact
 )
 from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration
 
@@ -69,6 +70,7 @@ class Mutation(graphene.ObjectType):
     update_contact_company = UpdateContactCompany.Field()
     update_contact_report = UpdateContactReport.Field()
     update_contact_note = UpdateContactNote.Field()
+    add_contact = AddCompanyContact.Field()
     # companies mutations
     update_company_primary = UpdateCompanyPrimary.Field()
     update_company_status = UpdateCompanyStatus.Field()
