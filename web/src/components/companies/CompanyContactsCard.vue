@@ -77,6 +77,7 @@
             <template v-slot:[`status`]="{ item }">
               <div>
                 <chip
+                  @click="toggleStatusSlider('contact')"
                   :color="item.status.color.hex"
                   :text="item.status.name"
                 ></chip>
@@ -99,7 +100,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { loadCompanyContacts } from "../../services";
-import { parseDate } from "../../utils/helpers";
+import { parseDate, toggleStatusSlider } from "../../utils/helpers";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
 import DataTable from "../DataTable.vue";
 import Chip from "../widgets/Chip.vue";
@@ -157,6 +158,7 @@ export default defineComponent({
     await this.fetchContacts();
   },
   methods: {
+    toggleStatusSlider,
     async fetchContacts() {
       const {
         data: {

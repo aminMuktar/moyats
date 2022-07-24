@@ -8,6 +8,7 @@
         <div>
           <p class="pb-2">status</p>
           <chip
+            @click="toggleStatusSlider('joborder')"
             :text="joborder.jobOrderStatus.statusName"
             :color="joborder.jobOrderStatus.color.hex"
           ></chip>
@@ -161,7 +162,7 @@ import JoborderActivityFeedCard from "../../components/joborders/JoborderActivit
 import JoborderAttachments from "../../components/joborders/JoborderAttachments.vue";
 import JoborderReviewProcessCard from "../../components/joborders/JoborderReviewProcessCard.vue";
 import { JOB_ORDER } from "../../queries/joborder";
-import { formAddress } from "../../utils/helpers";
+import { formAddress, toggleStatusSlider } from "../../utils/helpers";
 
 export default defineComponent({
   components: {
@@ -187,6 +188,7 @@ export default defineComponent({
   },
   methods: {
     formAddress,
+    toggleStatusSlider,
     async parseJobOrder() {
       this.loading = true;
       const { data } = await this.$apollo.query({

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dashboard-card-widget slot="body">
+    <dashboard-card-widget>
       <template v-slot:header>
         <div class="flex justify-between">
           <p class="p-3 font-semibold text-lg">Details</p>
@@ -28,6 +28,7 @@
                 <td class="p-2">Status</td>
                 <td class="py-2 px-16">
                   <Chip
+                    @click="toggleStatusSlider('company')"
                     :text="data.companyStatus.name"
                     :color="data.companyStatus.color.hex"
                   ></Chip>
@@ -43,7 +44,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
-import { formAddress, parseDate } from "../../utils/helpers";
+import {
+  formAddress,
+  parseDate,
+  toggleStatusSlider,
+} from "../../utils/helpers";
 import Chip from "../widgets/Chip.vue";
 
 export default defineComponent({
@@ -56,7 +61,7 @@ export default defineComponent({
   methods: {
     parseDate,
     formAddress,
-    saveChanges() {},
+    toggleStatusSlider,
   },
 });
 </script>

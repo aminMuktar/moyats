@@ -132,26 +132,35 @@
           </button>
         </div>
         <div class="overflow-y-scroll" style="height: 100%">
-          <job-order-form
-            @close="closeSlider"
-            v-if="$store.state.core.activeSlideWindow === 'joborders'"
-            @joborderadded="closeSlider"
-          ></job-order-form>
-          <candidates-form
-            @joborderadded="closeSlider"
-            @close="closeSlider"
-            v-else-if="$store.state.core.activeSlideWindow === 'candidates'"
-          ></candidates-form>
-          <companies-form
-            @companyAdded="closeSlider"
-            @close="closeSlider"
-            v-else-if="$store.state.core.activeSlideWindow === 'companies'"
-          ></companies-form>
-          <contacts-form
-            @contactAdded="closeSlider"
-            @close="closeSlider"
-            v-else-if="$store.state.core.activeSlideWindow === 'contacts'"
-          ></contacts-form>
+          <div
+            v-if="
+              $store.state.core.activeSlideWindow.split('-')[1] === 'status'
+            "
+          >
+            <status-change-form @close="closeSlider"></status-change-form>
+          </div>
+          <div>
+            <job-order-form
+              @close="closeSlider"
+              v-if="$store.state.core.activeSlideWindow === 'joborders'"
+              @joborderadded="closeSlider"
+            ></job-order-form>
+            <candidates-form
+              @joborderadded="closeSlider"
+              @close="closeSlider"
+              v-else-if="$store.state.core.activeSlideWindow === 'candidates'"
+            ></candidates-form>
+            <companies-form
+              @companyAdded="closeSlider"
+              @close="closeSlider"
+              v-else-if="$store.state.core.activeSlideWindow === 'companies'"
+            ></companies-form>
+            <contacts-form
+              @contactAdded="closeSlider"
+              @close="closeSlider"
+              v-else-if="$store.state.core.activeSlideWindow === 'contacts'"
+            ></contacts-form>
+          </div>
         </div>
       </div>
     </transition>
@@ -163,6 +172,7 @@ import JobOrderForm from "../joborders/JobOrderForm.vue";
 import CompaniesForm from "../companies/CompaniesForm.vue";
 import CandidatesForm from "../candidates/CandidatesForm.vue";
 import ContactsForm from "../contacts/ContactsForm.vue";
+import StatusChangeForm from "./StatusChangeForm.vue";
 
 export default defineComponent({
   data() {
@@ -191,7 +201,13 @@ export default defineComponent({
       if (sliderStat) this.showBtn = false;
     },
   },
-  components: { JobOrderForm, CompaniesForm, CandidatesForm, ContactsForm },
+  components: {
+    JobOrderForm,
+    CompaniesForm,
+    CandidatesForm,
+    ContactsForm,
+    StatusChangeForm,
+  },
 });
 </script>
 

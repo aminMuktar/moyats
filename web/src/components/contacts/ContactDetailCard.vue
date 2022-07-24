@@ -30,6 +30,7 @@
                 <td class="p-2">Status</td>
                 <td class="py-2 px-16">
                   <Chip
+                    @click="toggleStatusSlider('contact')"
                     :text="data.status.name"
                     :color="data.status.color.hex"
                   ></Chip>
@@ -45,7 +46,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
-import { formAddress, parseDate } from "../../utils/helpers";
+import {
+  formAddress,
+  parseDate,
+  toggleStatusSlider,
+} from "../../utils/helpers";
 import Chip from "../widgets/Chip.vue";
 
 export default defineComponent({
@@ -53,8 +58,9 @@ export default defineComponent({
   props: ["data"],
   created() {},
   methods: {
-    formAddress,
     parseDate,
+    formAddress,
+    toggleStatusSlider,
   },
 });
 </script>

@@ -53,6 +53,7 @@
       <template v-slot:[`status`]="{ item }">
         <div v-if="item.companyStatus">
           <chip
+            @click="toggleStatusSlider('company')"
             :text="item.companyStatus.name"
             :color="item.companyStatus.color.hex"
           ></chip>
@@ -66,7 +67,12 @@ import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import Chip from "../components/widgets/Chip.vue";
 import { COMPANIES } from "../queries/company";
-import { formAddress, parseDate, updateQparams } from "../utils/helpers";
+import {
+  formAddress,
+  parseDate,
+  toggleStatusSlider,
+  updateQparams,
+} from "../utils/helpers";
 
 export default defineComponent({
   components: { DataTable, Chip },
@@ -91,6 +97,7 @@ export default defineComponent({
     parseDate,
     formAddress,
     updateQparams,
+    toggleStatusSlider,
     async getCompanies() {
       const { data } = await this.$apollo.query({
         query: COMPANIES,

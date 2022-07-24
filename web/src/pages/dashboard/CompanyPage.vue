@@ -7,6 +7,7 @@
           <div class="flex flex-row gap-3">
             <div class="flex flex-row gap-1">
               <chip
+                @click="toggleStatusSlider('company')"
                 :text="company.companyStatus.name"
                 :color="company.companyStatus.color.hex"
               ></chip>
@@ -70,7 +71,7 @@ import CompanyPrimaryCard from "../../components/companies/CompanyPrimaryCard.vu
 import DashboardCardWidget from "../../components/DashboardCardWidget.vue";
 import Chip from "../../components/widgets/Chip.vue";
 import { COMPANY } from "../../queries/company";
-import { formAddress } from "../../utils/helpers";
+import { formAddress, toggleStatusSlider } from "../../utils/helpers";
 
 export default defineComponent({
   components: {
@@ -92,6 +93,7 @@ export default defineComponent({
   },
   methods: {
     formAddress,
+    toggleStatusSlider,
     async fetchCompany() {
       const { data } = await this.$apollo.query({
         query: COMPANY,

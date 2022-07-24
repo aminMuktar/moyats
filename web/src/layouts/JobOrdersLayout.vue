@@ -53,6 +53,7 @@
       <template v-slot:[`status`]="{ item }">
         <div>
           <chip
+            @click="toggleStatusSlider('joborder')"
             :color="item.jobOrderStatus.color.hex"
             :text="item.jobOrderStatus.statusName"
           ></chip>
@@ -65,7 +66,7 @@
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import { JOB_ORDERS } from "../queries/joborder";
-import { parseDate } from "../utils/helpers";
+import { parseDate, toggleStatusSlider } from "../utils/helpers";
 import Chip from "../components/widgets/Chip.vue";
 
 export default defineComponent({
@@ -90,6 +91,7 @@ export default defineComponent({
 
   methods: {
     parseDate,
+    toggleStatusSlider,
     async getJobOrders() {
       this.loading = true;
       const { data } = await this.$apollo.query({

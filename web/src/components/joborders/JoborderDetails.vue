@@ -297,6 +297,7 @@
                   <td class="p-2">Status</td>
                   <td class="p-2">
                     <chip
+                      @click="toggleStatusSlider('joborder')"
                       :text="data.jobOrderStatus.statusName"
                       :color="data.jobOrderStatus.color.hex"
                     ></chip>
@@ -318,7 +319,7 @@
 import { defineComponent } from "vue";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
 import Chip from "../widgets/Chip.vue";
-import { parseDate } from "../../utils/helpers";
+import { parseDate, toggleStatusSlider } from "../../utils/helpers";
 import Spinner from "../Spinner.vue";
 import {
   fetchJoborderCategories,
@@ -384,6 +385,7 @@ export default defineComponent({
         this.loading = false;
       }
     },
+    toggleStatusSlider,
     async loadPositionTypes() {
       const { data, errors } = await fetchPositionTypes();
       if (!errors) {
