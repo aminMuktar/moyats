@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex right-0 z-50 mr-0 mt-1 absolute w-1/2 h-full justify-end"
-    :class="{ 'z-0': !display }"
+    :class="{ 'z-0': !$store.state.core.activateSlider }"
   >
     <button
       v-if="showBtn"
@@ -19,6 +19,7 @@
       @click="sliderActivator()"
     >
       <svg
+        v-if="$store.state.core.activeSlideWindow === 'joborders'"
         xmlns="http://www.w3.org/2000/svg"
         class="h-5 w-5"
         viewBox="0 0 20 20"
@@ -31,6 +32,42 @@
         />
         <path
           d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"
+        />
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        v-else-if="$store.state.core.activeSlideWindow === 'candidates'"
+      >
+        <path
+          d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
+        />
+      </svg>
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        v-else-if="$store.state.core.activeSlideWindow === 'contacts'"
+      >
+        <path
+          d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+        />
+      </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        v-else-if="$store.state.core.activeSlideWindow === 'companies'"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z"
+          clip-rule="evenodd"
         />
       </svg>
     </button>
@@ -47,10 +84,33 @@
           shadow-lg shadow-black-500/50
           fixed
         "
-        v-show="display"
+        v-show="$store.state.core.activateSlider"
       >
         <div class="flex justify-between bg-gray-100">
-          <p class="pt-3 px-2 border-b">Create a JobOrder</p>
+          <p
+            class="pt-3 px-2 border-b"
+            v-if="$store.state.core.activeSlideWindow === 'joborders'"
+          >
+            Create a JobOrder
+          </p>
+          <p
+            class="pt-3 px-2 border-b"
+            v-if="$store.state.core.activeSlideWindow === 'candidates'"
+          >
+            Add a Candidate
+          </p>
+          <p
+            class="pt-3 px-2 border-b"
+            v-if="$store.state.core.activeSlideWindow === 'contacts'"
+          >
+            Add a new Contact
+          </p>
+          <p
+            class="pt-3 px-2 border-b"
+            v-if="$store.state.core.activeSlideWindow === 'companies'"
+          >
+            Add a new company
+          </p>
           <button @click="closeSlider" class="p-2 hover:bg-gray-100 m-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -74,23 +134,23 @@
         <div class="overflow-y-scroll" style="height: 100%">
           <job-order-form
             @close="closeSlider"
-            v-if="$route.path.split('/')[1] === 'joborders'"
+            v-if="$store.state.core.activeSlideWindow === 'joborders'"
             @joborderadded="closeSlider"
           ></job-order-form>
           <candidates-form
             @joborderadded="closeSlider"
             @close="closeSlider"
-            v-else-if="$route.path.split('/')[1] === 'candidates'"
+            v-else-if="$store.state.core.activeSlideWindow === 'candidates'"
           ></candidates-form>
           <companies-form
             @companyAdded="closeSlider"
             @close="closeSlider"
-            v-else-if="$route.path.split('/')[1] === 'companies'"
+            v-else-if="$store.state.core.activeSlideWindow === 'companies'"
           ></companies-form>
           <contacts-form
             @contactAdded="closeSlider"
             @close="closeSlider"
-            v-else-if="$route.path.split('/')[1] === 'contacts'"
+            v-else-if="$store.state.core.activeSlideWindow === 'contacts'"
           ></contacts-form>
         </div>
       </div>
@@ -107,7 +167,6 @@ import ContactsForm from "../contacts/ContactsForm.vue";
 export default defineComponent({
   data() {
     return {
-      display: false,
       showBtn: true,
       title: "",
     };
@@ -116,15 +175,20 @@ export default defineComponent({
     console.log(this.title);
   },
   methods: {
+    cleanUp() {
+      this.$store.commit("setScompany", null);
+    },
     closeSlider() {
-      this.display = false;
+      this.$store.commit("setActivateSlider", false);
+      this.cleanUp();
       setTimeout(() => {
         this.showBtn = true;
       }, 150);
     },
     sliderActivator() {
-      this.display = !this.display;
-      if (this.display) this.showBtn = false;
+      const sliderStat = this.$store.state.core.activateSlider;
+      this.$store.commit("setActivateSlider", !sliderStat);
+      if (sliderStat) this.showBtn = false;
     },
   },
   components: { JobOrderForm, CompaniesForm, CandidatesForm, ContactsForm },

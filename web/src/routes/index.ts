@@ -23,6 +23,10 @@ import ApplicationPage from "../pages/dashboard/ApplicationPage.vue"
 
 import {
   authguard,
+  candidatesRouteHandler,
+  companiesRouteHandler,
+  contactsRouteHandler,
+  jobOrderRouteHandler,
   loginPageGuard,
   profileStatusGuard,
 } from "../utils/authGuard";
@@ -75,11 +79,17 @@ export default createRouter({
           path: "/joborders",
           name: "JobOrders",
           component: JobOrders,
+          beforeEnter: (to, from, next) => {
+            jobOrderRouteHandler(to, from, next);
+          },
         },
         {
           path: "/joborders/:jid",
           name: "JobOrder",
           component: JobOrder,
+          beforeEnter: (to, from, next) => {
+            jobOrderRouteHandler(to, from, next);
+          },
         },
         {
           path: "/applications",
@@ -95,31 +105,49 @@ export default createRouter({
           path: "/candidates",
           name: "Candidates",
           component: Candidates,
+          beforeEnter: (to, from, next) => {
+            candidatesRouteHandler(to, from, next);
+          },
         },
         {
           path: "/candidates/:cid",
           name: "Candidate",
           component: Candidate,
+          beforeEnter: (to, from, next) => {
+            candidatesRouteHandler(to, from, next);
+          },
         },
         {
           path: "/companies",
           name: "Companies",
           component: Companies,
+          beforeEnter: (to, from, next) => {
+            companiesRouteHandler(to, from, next);
+          },
         },
         {
-          path: "/companies/:cpid",
           name: "Company",
           component: Company,
+          path: "/companies/:cpid",
+          beforeEnter: (to, from, next) => {
+            companiesRouteHandler(to, from, next);
+          },
         },
         {
           path: "/contacts/:cid",
           name: "Contact",
           component: Contact,
+          beforeEnter: (to, from, next) => {
+            contactsRouteHandler(to, from, next);
+          },
         },
         {
           path: "/contacts",
           name: "Contacts",
           component: Contacts,
+          beforeEnter: (to, from, next) => {
+            contactsRouteHandler(to, from, next);
+          },
         },
         {
           path: "/reports",

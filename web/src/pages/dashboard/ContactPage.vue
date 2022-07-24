@@ -65,8 +65,14 @@
             :data="contact"
           ></contacts-primary-card>
           <contact-detail-card :data="contact"></contact-detail-card>
-          <contact-company-card :data="contact"></contact-company-card>
-          <contacts-notes-card></contacts-notes-card>
+          <contact-company-card
+            @updated="updatedContacts"
+            :data="contact"
+          ></contact-company-card>
+          <contacts-notes-card
+            @updated="updatedContacts"
+            :data="contact"
+          ></contacts-notes-card>
         </div>
       </div>
       <div>

@@ -23,6 +23,23 @@ class CompanyQuery(graphene.ObjectType):
     search_company_contact = graphene.List(
         types.CompanyContactType, company=graphene.UUID(), query=graphene.String()
     )
+    company_contacts = graphene.Field(
+        types.CompanyContactsPaginatedType, company=graphene.UUID(),
+        page_size=graphene.Int(), page=graphene.Int())
+
+    @login_required
+    def resolve_company_contacts(self, info, company: graphene.UUID, page_size, page):
+        org = info.context.user.organizations.first()
+        companies = models.Company.objects.filter(
+            organization=org, company_id=company
+        )
+        if not companies.exists():
+            raise Exception("company not found")
+        contacts = models.CompanyContact.objects.filter(
+            company=companies.first(),
+            organization=org
+        ).order_by("-created_at")
+        return core_paginator(contacts, page_size, page, types.CompanyContactsPaginatedType)
 
     @login_required
     def resolve_search_company_contact(self, info, query, company, **kwargs):
@@ -59,7 +76,7 @@ class CompanyQuery(graphene.ObjectType):
     @login_required
     def resolve_contact(self, info, cid, **kwargs):
         org = info.context.user.organizations.first()
-        print(org,"organi")
+        print(org, "organi")
         contacts = models.CompanyContact.objects.filter(
             organization=org, company_contact_id=cid)
         return contacts.first()
@@ -67,7 +84,8 @@ class CompanyQuery(graphene.ObjectType):
     @login_required
     def resolve_companies(self, info, page_size, page, **kwargs):
         org = info.context.user.organizations.first()
-        companies = models.Company.objects.filter(organization=org).order_by("-created_at")
+        companies = models.Company.objects.filter(
+            organization=org).order_by("-created_at")
         return core_paginator(companies, page_size, page, types.CompanyPaginatedType)
 
     @login_required

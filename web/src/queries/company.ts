@@ -36,6 +36,7 @@ export const COMPANY = gql`
       id
       name
       website
+      companyId
       phones {
         cellNumber
       }
@@ -93,3 +94,41 @@ export const ADD_COMPANY = gql`mutation addCompany($input: CompanyInput!){
     }
   }
 }`
+
+export const COMPANY_CONTACTS = gql`query companyContacts($company: UUID!, $page: Int!, $size: Int!) {
+  companyContacts(company: $company, page: $page, pageSize: $size) {
+    page
+    pages
+    objects {
+      id
+        companyContactId
+        firstName
+        lastName
+        department
+        reachable
+        phones{
+          cellNumber
+        }
+        status{
+          name
+          color{
+            hex
+          }
+        }  
+        company{
+          id
+          companyId
+          name
+          companyStatus{
+            name
+            color{
+              hex
+            }
+          }
+        }
+        email
+        updatedAt
+    }
+  }
+}
+`

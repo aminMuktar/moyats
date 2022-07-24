@@ -52,6 +52,7 @@ export const CONTACT = gql`query contact($cid: String!){
       city
       country
     }
+    notes
     contactReportsTo{
       companyContactId
       firstName
@@ -74,6 +75,7 @@ export const CONTACT = gql`query contact($cid: String!){
     company {
       id
       name
+      companyId
       companyStatus {
         name
         color {
@@ -98,3 +100,22 @@ export const ADD_CONTACT = gql`mutation addContact($input: CompanyContactInput!)
     }
   }
 }`
+
+
+export const UPDATE_CONTACT_DETAIL = gql`mutation updateContactCompany(
+  $company: String
+  $contact: String
+  $dep: String
+) {
+  updateContactCompany(company: $company, contact: $contact, department: $dep) {
+    response
+  }
+}
+`
+
+export const UPDATE_CONTACT_NOTES = gql`mutation updateContactNote($contact: String!, $note: String!) {
+  updateContactNote(contact: $contact, note: $note) {
+    response
+  }
+}
+`

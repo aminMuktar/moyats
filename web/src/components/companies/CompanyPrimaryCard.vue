@@ -15,7 +15,7 @@
     >
       <spinner style="margin-top: 15%"></spinner>
     </div>
-    <dashboard-card-widget slot="body">
+    <dashboard-card-widget>
       <template v-slot:header>
         <div class="flex justify-between">
           <p class="p-3 font-semibold text-lg">Primary</p>

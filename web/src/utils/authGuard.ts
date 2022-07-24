@@ -34,3 +34,25 @@ export const profileStatusGuard = (to: any, from: any, next: any) => {
     router.push("/dashboard")
   }
 }
+
+
+export const jobOrderRouteHandler = (to: any, from: any, next: any) => {
+  store.commit("setActiveSlideWindow", "joborders")
+  next()
+}
+
+
+export const candidatesRouteHandler = (to: any, from: any, next: any) => {
+  store.commit("setActiveSlideWindow", "candidates")
+  next()
+}
+
+export const companiesRouteHandler = (to: any, from: any, next: any) => {
+  store.commit("setActiveSlideWindow", "companies")
+  next()
+}
+
+export const contactsRouteHandler = (to: any, from: any, next: any) => {
+  store.commit("setActiveSlideWindow", "contacts")
+  next()
+}

@@ -1,3 +1,4 @@
+from unicodedata import name
 import graphene
 from core.models import BaseContact
 from accounts.models import BaseUser, Address
@@ -75,8 +76,8 @@ class ContactPrimaryInfoUpdateMutation(graphene.Mutation):
                 country=input.country, city=input.city)
         else:
             addr = address.first()
-        contacts.update(first_name=input.name.first_name,
-                        last_name=input.name.last_name,
+        contacts.update(first_name=input.name.first_name if input.name.first_name else contacts.first().first_name,
+                        last_name=input.name.last_name if input.name.last_name else contacts.first().last_name,
                         phones=contact,
                         address=addr,
                         )
@@ -110,9 +111,10 @@ class UpdateContactCompany(graphene.Mutation):
     class Arguments:
         contact = graphene.String()
         company = graphene.String()
+        department = graphene.String()
 
     @login_required
-    def mutate(self, info, contact, company, **kwargs):
+    def mutate(self, info, contact, company, department, **kwargs):
         contacts = CompanyContact.objects.filter(
             company_contact_id=contact)
         if not contacts.exists():
@@ -121,7 +123,7 @@ class UpdateContactCompany(graphene.Mutation):
         if not comp.exists():
             raise Exception("company not found")
 
-        contacts.update(company=comp.first())
+        contacts.update(company=comp.first(), department=department)
         return UpdateContactCompany(response=True)
 
 

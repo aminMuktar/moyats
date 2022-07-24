@@ -18,7 +18,9 @@
         <p class="pb-2">Website</p>
         <div class="flex flex-row gap-2 mt-2">
           <p v-if="company.website">
-            <a target="_blank" class="text-blue-500" :href="company.website">{{ company.website }}</a>
+            <a target="_blank" class="text-blue-500" :href="company.website">{{
+              company.website
+            }}</a>
           </p>
         </div>
       </div>
@@ -53,7 +55,7 @@
       </div>
     </div>
     <div class="m-5 xl:w-3/4 lg:w-3/4">
-      <company-contacts-card></company-contacts-card>
+      <company-contacts-card :data="company"></company-contacts-card>
     </div>
   </div>
 </template>

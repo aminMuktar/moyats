@@ -175,11 +175,24 @@
               />
             </div>
           </div>
-          <company-selector
-            :showHeader="true"
-            @cleared="company = null"
-            @itemClicked="companySelected"
-          ></company-selector>
+          <div class="flex flex-row p-4">
+            <div class="w-48">
+              <label class="sr-only" for="name">Phones</label>
+              <span class="m-1">Company* </span>
+            </div>
+            <pill
+              :clearable="true"
+              v-if="!editCmp && $store.state.core.scompany"
+              :text="$store.state.core.scompany.name"
+              @clear="editCmp = true"
+            ></pill>
+            <company-selector
+              v-else
+              :showHeader="false"
+              @cleared="company = null"
+              @itemClicked="companySelected"
+            ></company-selector>
+          </div>
         </div>
 
         <div class="col-span-2 flex p-2 mb-52"></div>
@@ -191,15 +204,17 @@
 import { defineComponent } from "vue";
 import { uuid } from "vue-uuid";
 import { addContact } from "../../services";
+import Pill from "../pill.vue";
 import CompanySelector from "../selectors/CompanySelector.vue";
 
 export default defineComponent({
-  components: { CompanySelector },
+  components: { CompanySelector, Pill },
   data: () => ({
     firstName: "",
     lastName: "",
     email: "",
     title: "",
+    editCmp: false,
     loadingState: false,
     cellNumber: "",
     homeNumber: "",
@@ -229,13 +244,17 @@ export default defineComponent({
           city: this.city,
           country: this.country,
           state: this.state,
-          company: this.company.companyId,
+          company: this.$store.state.core.scompany
+            ? this.$store.state.core.scompany.companyId
+            : this.company.companyId,
         },
       });
       if (!errors) {
         this.loadingState = false;
         this.$emit("contactAdded");
-        this.$store.commit("updateFormupdateStatus", uuid.v4());
+        setTimeout(() => {          
+          this.$store.commit("updateFormupdateStatus", uuid.v4());
+        }, 100);
         this.$emit("close");
       }
     },

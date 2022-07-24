@@ -13,8 +13,17 @@ export const CoreModule = {
     u: null,
     activities: null,
     formupdateStatus: null,
+    activeSlideWindow: "",
+    activateSlider: false,
+    scompany: "null",
   },
   mutations: {
+    setScompany(state, payload) {
+      state.scompany = payload;
+    },
+    setActiveSlideWindow(state, payload) {
+      state.activeSlideWindow = payload;
+    },
     updateFormupdateStatus(state: any, data: any) {
       state.formupdateStatus = data
     },
@@ -30,10 +39,22 @@ export const CoreModule = {
     setActivities(state: any, activities: any) {
       state.activities = activities;
     },
+    setActivateSlider(state: any, payload: any) {
+      state.activateSlider = payload;
+    }
   },
   getters: {
     getFormupdateStatus(state) {
       return state.formupdateStatus
+    },
+    getActiveSlideWindow(state) {
+      return state.activeSlideWindow
+    },
+    getActivateSlider(state) {
+      return state.activateSlider
+    },
+    getscompany(state) {
+      return state.scompany
     }
   }
 };
@@ -45,7 +66,7 @@ export const store = createStore<State>({
   plugins: [
     createPersistedState({
       storage: window.localStorage,
-      paths: ["core.token", "core.u", "core.activities"],
+      paths: ["core.token", "core.u", "core.activities", "core.activeSlideWindow", "core.scompany"],
     }),
   ],
 });

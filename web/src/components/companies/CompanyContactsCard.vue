@@ -1,12 +1,43 @@
 <template>
   <div>
-    <dashboard-card-widget slot="body">
+    <dashboard-card-widget>
       <template v-slot:header>
         <div>
           <div class="flex flex-row justify-between">
             <p class="p-3 font-semibold text-lg">Contacts</p>
             <div class="flex flex-row">
-              <button class="p-1 m-2 border-2">Add Contact</button>
+              <button
+                class="
+                  py-2
+                  px-
+                  mx-2
+                  text-xs
+                  my-3
+                  font-medium
+                  text-center text-white
+                  bg-white-700
+                  rounded-lg
+                  focus:ring-4 focus:outline-none focus:ring-blue-300
+                "
+                @click="openContactWindow()"
+              >
+                <span
+                  class="
+                    relative
+                    px-5
+                    py-2.5
+                    transition-all
+                    ease-in
+                    duration-75
+                    bg-white
+                    dark:bg-gray-900
+                    rounded-md
+                    group-hover:bg-opacity-0
+                  "
+                >
+                  Add Contact
+                </span>
+              </button>
             </div>
           </div>
         </div>
@@ -23,10 +54,42 @@
             :page="page"
             :pages="pages"
             :emptyMessage="'No candidates added yet'"
-            :items="candidates"
+            :items="contacts"
             :headers="headers"
             @checkedAll="allChecked"
             @selected="singleSelected"
+          >
+            <template v-slot:[`name`]="{ item }">
+              <div>
+                <router-link
+                  :to="`/contacts/${item.companyContactId}`"
+                  class="text-sm text-blue-500 font-semibold"
+                >
+                  {{ item.firstName }} {{ item.lastName }}
+                </router-link>
+              </div>
+            </template>
+            <template v-slot:[`department`]="{ item }">
+              <div>
+                <p>{{ item.department }}</p>
+              </div>
+            </template>
+            <template v-slot:[`status`]="{ item }">
+              <div>
+                <chip
+                  :color="item.status.color.hex"
+                  :text="item.status.name"
+                ></chip>
+              </div>
+            </template>
+
+            <template v-slot:[`updated`]="{ item }">
+              <div>
+                <p
+                  class="text-sm text-gray-500"
+                  v-text="parseDate(item.updatedAt)"
+                ></p>
+              </div> </template
           ></data-table>
         </div>
       </template>
@@ -35,41 +98,54 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { loadCompanyContacts } from "../../services";
+import { parseDate } from "../../utils/helpers";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
 import DataTable from "../DataTable.vue";
+import Chip from "../widgets/Chip.vue";
 
 export default defineComponent({
-  components: { DashboardCardWidget, DataTable },
+  components: { DashboardCardWidget, DataTable, Chip },
   setup() {},
+  props: ["data"],
+  computed: {
+    getFormupdateStatus() {
+      this.fetchContacts();
+      return this.$store.getters.getFormupdateStatus;
+    },
+  },
+  watch: {
+    getFormupdateStatus(value) {
+      if (value) {
+        this.fetchContacts();
+      }
+    },
+  },
   data: () => ({
     total: 0,
     pages: 1,
     hasNext: false,
     hasPrev: false,
     page: 1,
-    pageSize: 2,
+    pageSize: 5,
     dropts: [] as any,
-    candidates: [],
+    contacts: [],
     headers: [
       {
         value: "name",
         label: "Name",
       },
       {
-        value: "location",
-        label: "Location",
+        value: "updated",
+        label: "Updated",
       },
       {
-        value: "source",
-        label: "Source",
+        value: "department",
+        label: "Department",
       },
       {
-        value: "added",
-        label: "Added Date",
-      },
-      {
-        value: "staus",
-        label: "Status Current",
+        value: "status",
+        label: "Status",
       },
       {
         value: "action",
@@ -77,9 +153,25 @@ export default defineComponent({
       },
     ],
   }),
+  async created() {
+    await this.fetchContacts();
+  },
   methods: {
+    async fetchContacts() {
+      const {
+        data: {
+          companyContacts: { objects },
+        },
+      } = await loadCompanyContacts({
+        company: this.$route.params.cpid,
+        page: this.page,
+        size: this.pageSize,
+      });
+      this.contacts = objects;
+    },
+    parseDate,
     setDropt() {
-      let fin = [];
+      let fin: Array<any> = [];
       for (let i = 0; i < this.total; i++) {
         fin.push(`${i + 1}/${this.total}`);
       }
@@ -92,6 +184,12 @@ export default defineComponent({
     },
     allChecked(e: any) {
       console.log(`All Checked, ${e}`);
+    },
+    openContactWindow() {
+      console.log(this.data, "dawg");
+      this.$store.commit("setScompany", this.data);
+      this.$store.commit("setActiveSlideWindow", "contacts");
+      this.$store.commit("setActivateSlider", true);
     },
     async prev() {
       this.page--;
