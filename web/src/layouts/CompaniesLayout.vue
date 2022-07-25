@@ -32,14 +32,16 @@
           ></p>
         </div>
       </template>
-      <template v-slot:[`c`]>
+      <template v-slot:[`c`]="{ item }">
+        <!-- contacts count -->
         <div>
-          <p class="text-sm text-gray-500" v-text="0"></p>
+          <p class="text-sm text-gray-500" v-text="item.contactsCount"></p>
         </div>
       </template>
-      <template v-slot:[`o`]>
+      <template v-slot:[`o`]="{ item }">
+        <!-- job orders count -->
         <div>
-          <p class="text-sm text-gray-500" v-text="0"></p>
+          <p class="text-sm text-gray-500" v-text="item.jobordersCount"></p>
         </div>
       </template>
       <template v-slot:[`updated`]="{ item }">

@@ -3,6 +3,8 @@ from accounts.models import BaseUser
 from . import models
 from accounts.types import BaseUserType
 from graphene_django import DjangoObjectType
+from joborders.models import JobOrder
+
 
 class CompanyContactStatusType(DjangoObjectType):
     class Meta:
@@ -31,6 +33,14 @@ class CompanyStatusType(DjangoObjectType):
 class CompanyType(DjangoObjectType):
     contacts = graphene.List(CompanyContactType)
     owner = graphene.Field(BaseUserType)
+    contacts_count = graphene.Int()
+    joborders_count = graphene.Int()
+
+    def resolve_joborders_count(parent, info):
+        return JobOrder.objects.filter(company__id=parent.id).count()
+
+    def resolve_contacts_count(parent, info):
+        return models.CompanyContact.objects.filter(company__id=parent.id).count()
 
     def resolve_owner(parent, info):
         owner = BaseUser.objects.filter(

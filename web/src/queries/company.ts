@@ -12,6 +12,8 @@ export const COMPANIES = gql`
         id
         companyId
         name
+        contactsCount
+        jobordersCount
         companyStatus {
           id
           name
