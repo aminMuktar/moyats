@@ -192,10 +192,15 @@ export const JOB_ORDER_TYPES = gql`query{
   }
 }`
 
-export const JOB_ORDER_STATUS = gql`query {
-  joborderStatus {
+export const JOB_ORDER_STATUS = gql`query{
+  joborderStatus{
     id
     statusName
+    description
+    color{
+      id
+      hex
+    }
   }
 }`
 
@@ -324,6 +329,12 @@ export const ADD_APPLICATION = gql`mutation addApplication($desc: String!, $head
       description
       header
     }
+  }
+}
+`
+export const UPDATE_JOB_ORDER_STATUS = gql`mutation updateJoborderStatus($joborder: String, $status: Int!) {
+  updateJoborderStatus(joborder: $joborder, status: $status) {
+    response
   }
 }
 `

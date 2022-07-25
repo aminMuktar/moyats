@@ -8,7 +8,7 @@
         <div>
           <p class="pb-2">status</p>
           <chip
-            @click="toggleStatusSlider('joborder')"
+            @click="toggleStatusSlider('joborder', joborder.joborderId)"
             :text="joborder.jobOrderStatus.statusName"
             :color="joborder.jobOrderStatus.color.hex"
           ></chip>
@@ -185,6 +185,19 @@ export default defineComponent({
   }),
   async created() {
     await this.parseJobOrder();
+  },
+  computed: {
+    getFormupdateStatus() {
+      this.parseJobOrder();
+      return this.$store.getters.getFormupdateStatus;
+    },
+  },
+  watch: {
+    getFormupdateStatus(value) {
+      if (value) {
+        this.parseJobOrder();
+      }
+    },
   },
   methods: {
     formAddress,

@@ -297,7 +297,7 @@
                   <td class="p-2">Status</td>
                   <td class="p-2">
                     <chip
-                      @click="toggleStatusSlider('joborder')"
+                      @click="toggleStatusSlider('joborder', data.joborderId)"
                       :text="data.jobOrderStatus.statusName"
                       :color="data.jobOrderStatus.color.hex"
                     ></chip>

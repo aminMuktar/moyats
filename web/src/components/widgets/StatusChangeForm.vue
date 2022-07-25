@@ -65,6 +65,13 @@
             getFirstWord($store.state.core.activeSlideWindow) == 'company'
           "
         ></company-status-change-form>
+        <job-order-status-change-form
+          ref="form"
+          @status-selected="statSelected"
+          v-else-if="
+            getFirstWord($store.state.core.activeSlideWindow) == 'joborder'
+          "
+        ></job-order-status-change-form>
         <div class="w-2 h-2" v-if="selected">
           <button
             @click="$refs.form.fetchStatuses()"
@@ -108,12 +115,18 @@
 import { defineComponent } from "vue";
 import Spinner from "../Spinner.vue";
 import ContactStatusChangeForm from "../contacts/ContactStatusChangeForm.vue";
-import { updateCompanyStatus, updateContactStatus } from "../../services";
+import { updateCompanyStatus, updateContactStatus, updateJobOrderStatus } from "../../services";
 import { uuid } from "vue-uuid";
 import CompanyStatusChangeForm from "../companies/CompanyStatusChangeForm.vue";
+import JobOrderStatusChangeForm from "../joborders/JobOrderStatusChangeForm.vue";
 
 export default defineComponent({
-  components: { Spinner, ContactStatusChangeForm, CompanyStatusChangeForm },
+  components: {
+    Spinner,
+    ContactStatusChangeForm,
+    CompanyStatusChangeForm,
+    JobOrderStatusChangeForm,
+  },
   methods: {
     // get first word in string separated by minus
     getFirstWord(str) {
@@ -142,7 +155,15 @@ export default defineComponent({
         this.$store.commit("updateFormupdateStatus", uuid.v4());
       });
     },
-
+    async updateJobOrder() {
+      await updateJobOrderStatus({
+        joborder: this.$store.state.core.statusItemId,
+        status: parseInt(this.st.id),
+      }).then(() => {
+        this.$emit("statChanged");
+        this.$store.commit("updateFormupdateStatus", uuid.v4());
+      });
+    },
     async changeStat() {
       const target = this.getFirstWord(
         this.$store.state.core.activeSlideWindow
@@ -153,6 +174,8 @@ export default defineComponent({
           break;
         case "company":
           await this.updateCompany();
+        case "joborder":
+          await this.updateJobOrder();
 
         default:
           break;

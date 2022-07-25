@@ -133,3 +133,13 @@ export const addApplication = async (variables: any) => {
     })
     return res
 }
+
+
+
+export const updateJobOrderStatus = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: q.UPDATE_JOB_ORDER_STATUS,
+        variables
+    })
+    return res
+}
