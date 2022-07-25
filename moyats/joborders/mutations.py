@@ -154,7 +154,7 @@ class UpdateJobOrderStatus(graphene.Mutation):
         )
         if not stat.exists():
             raise Exception("Status not found")
-        JobOrder.objects.update(job_order_status=stat.first())
+        jorder.update(job_order_status=stat.first())
         return UpdateJobOrderStatus(response=True)
 
 
@@ -203,6 +203,7 @@ class AddJobOrder(graphene.Mutation):
 
     @login_required
     def mutate(self, info, input: JobOrderInputs):
+        org = info.context.user.organizations.first()
 
         recruiter = OrganizationMember.objects.filter(
             org_member_id=input.recruiter
@@ -268,13 +269,12 @@ class AddJobOrder(graphene.Mutation):
             )
         else:
             pipeline_workflow = PipelineWorkflow.objects.filter(
-                default=True
+                organization=org
             )
 
         if not pipeline_workflow.exists():
             raise Exception("Pipeline Does not exist")
 
-        org = info.context.user.organizations.first()
 
         add_job_order = JobOrder.objects.create(
             notes=input.notes,

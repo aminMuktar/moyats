@@ -1,12 +1,42 @@
+import json
 import uuid
 import pytz
 import math
 from datetime import datetime
+from core.models import Color
 from datetime import timedelta
+from django.core import serializers
 from organizations.models import Organization
 from accounts.models import BaseUser, EmailVerificationCode, BaseContact, Address
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from candidates.models import SocialMedia, CandidateProfile
+from candidates.models import SocialMedia, CandidateProfile, Candidate
+from joborders.models import JobDetail, JoborderStatus
+
+
+def serialize_object(obj):
+    serialized_obj = serializers.serialize(
+        'json', [obj, ])
+    serialized_ = json.loads(serialized_obj)[0]["fields"]
+    return serialized_
+
+
+def get_job_details(id):
+    obj = JobDetail.objects.get(id=id)
+    return serialize_object(obj)
+
+
+def get_candidate_profile(id):
+    obj = CandidateProfile.objects.get(id=id)
+    return serialize_object(obj)
+
+
+def dig_deep(a_type, serialized):
+    if a_type == "jo":
+        serialized["job_detail"] = get_job_details(serialized["job_detail"])
+    if a_type == "ca":
+        serialized["candidate_profile"] = get_candidate_profile(
+            serialized["candidate_profile"])
+    return serialized
 
 
 def user_exists(email):

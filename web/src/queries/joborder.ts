@@ -338,3 +338,52 @@ export const UPDATE_JOB_ORDER_STATUS = gql`mutation updateJoborderStatus($jobord
   }
 }
 `
+
+export const JOBORDER_PIPELINES = gql`query joborderApplicantPipeline(
+  $joborder: String!
+  $page: Int!
+  $pageSize: Int!
+) {
+  joborderApplicantPipeline(
+    joborder: $joborder
+    page: $page
+    pageSize: $pageSize
+  ) {
+    page
+    pages
+    total
+    objects {
+      id
+      status{
+        id
+        statusName
+        color{
+          id
+          hex
+        }
+      }
+      createdAt
+      updatedAt
+      candidate {
+        id
+        candidateId
+        source{
+          id
+          name
+          description
+        }
+        candidateId
+        address{
+          country
+          city
+        }
+        candidateProfile {
+          firstName
+          lastName
+          email
+        }
+      }
+    }
+  }
+}
+`

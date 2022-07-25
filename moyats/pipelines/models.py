@@ -65,8 +65,8 @@ class PipelineWorkflow(models.Model):
     pipeline_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=100, null=True)
-    candidates = models.ManyToManyField("candidates.Candidate", blank=True)
-    organization = models.ForeignKey("organizations.Organization", on_delete=models.CASCADE, null=True)
+    candidates = models.ManyToManyField("joborders.JobOrderApplicant", blank=True)
+    organization = models.ForeignKey("organizations.Organization", on_delete=models.CASCADE, null=True, blank=True)
     pipeline_setups = models.ManyToManyField(PipelineSetup)
     default = models.BooleanField(default=False, unique=True)
     updated_at = models.DateTimeField(auto_now=True)

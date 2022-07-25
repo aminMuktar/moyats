@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dashboard-card-widget slot="body">
+    <dashboard-card-widget>
       <template v-slot:header>
         <div>
           <div class="flex flex-row justify-between">
@@ -38,7 +38,52 @@
             :headers="headers"
             @checkedAll="allChecked"
             @selected="singleSelected"
-          ></data-table>
+          >
+            <template v-slot:[`name`]="{ item }">
+              <div>
+                <router-link
+                  class="text-sm text-blue-500 font-semibold"
+                  :to="`/candidates/${item.candidate.candidateId}`"
+                >
+                  {{ item.candidate.candidateProfile.firstName }}
+                  {{ item.candidate.candidateProfile.lastName }}
+                </router-link>
+              </div>
+            </template>
+            <template v-slot:[`location`]="{ item }">
+              <div>
+                <p
+                  class="text-sm text-gray-500"
+                  v-text="formAddress(item.candidate.address)"
+                ></p>
+              </div>
+            </template>
+            <template v-slot:[`createdAt`]="{ item }">
+              <div>
+                <p
+                  class="text-sm text-gray-500"
+                  v-text="parseDate(item.createdAt)"
+                ></p>
+              </div>
+            </template>
+
+            <template v-slot:[`status`]="{ item }">
+              <div class="flex flex-row">
+                <chip
+                  :text="item.status.statusName"
+                  :color="item.status.color.hex"
+                ></chip>
+              </div>
+            </template>
+            <template v-slot:[`source`]="{ item }">
+              <div>
+                <p
+                  class="text-sm text-gray-500"
+                  v-text="item.candidate.source.name"
+                ></p>
+              </div>
+            </template>
+          </data-table>
         </div>
       </template>
     </dashboard-card-widget>
@@ -46,12 +91,17 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { loadJobOrderApplications } from "../../services";
+import { formAddress,parseDate } from "../../utils/helpers";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
 import DataTable from "../DataTable.vue";
+import Chip from "../widgets/Chip.vue";
 
 export default defineComponent({
-  components: { DashboardCardWidget, DataTable },
-  setup() {},
+  components: { DashboardCardWidget, DataTable, Chip },
+  async created() {
+    await this.fetchJoborderCandidates();
+  },
   data: () => ({
     total: 0,
     pages: 1,
@@ -60,7 +110,7 @@ export default defineComponent({
     page: 1,
     pageSize: 2,
     dropts: [] as any,
-    candidates: [],
+    candidates: [] as any,
     headers: [
       {
         value: "name",
@@ -75,22 +125,38 @@ export default defineComponent({
         label: "Source",
       },
       {
-        value: "added",
+        value: "createdAt",
         label: "Added Date",
       },
       {
-        value: "staus",
+        value: "status",
         label: "Status Current",
       },
-      {
-        value: "action",
-        label: "Action",
-      },
+      // {
+      //   value: "action",
+      //   label: "Action",
+      // },
     ],
   }),
   methods: {
+    parseDate,
+    formAddress,
+    async fetchJoborderCandidates() {
+      const {
+        data: {
+          joborderApplicantPipeline: { objects },
+        },
+      } = await loadJobOrderApplications({
+        joborder: this.$route.params.jid,
+        page: this.page,
+        pageSize: this.pageSize,
+      });
+      if (objects) {
+        this.candidates = objects;
+      }
+    },
     setDropt() {
-      let fin = [];
+      let fin: any = [];
       for (let i = 0; i < this.total; i++) {
         fin.push(`${i + 1}/${this.total}`);
       }

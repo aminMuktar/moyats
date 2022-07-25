@@ -47,3 +47,17 @@ class JobOrderPaginatedType(graphene.ObjectType):
     has_prev = graphene.Boolean()
     objects = graphene.List(JobOrderType)
     total = graphene.Int()
+
+
+class JobOrderApplicantType(DjangoObjectType):
+    class Meta:
+        model = models.JobOrderApplicant
+
+
+class JobOrderApplicantPaginatedType(graphene.ObjectType):
+    page = graphene.Int()
+    pages = graphene.Int()
+    has_next = graphene.Boolean()
+    has_prev = graphene.Boolean()
+    objects = graphene.List(JobOrderApplicantType)
+    total = graphene.Int()

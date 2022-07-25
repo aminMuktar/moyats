@@ -1,7 +1,9 @@
 import json
 from this import d
 import graphene
+
 from . import models
+from .helpers import dig_deep
 from django.core import serializers
 from graphene_django import DjangoObjectType
 from graphene.types.generic import GenericScalar
@@ -21,10 +23,15 @@ class ContentObjectType(DjangoObjectType):
 class ActivityType(DjangoObjectType):
     content_object = GenericScalar()
 
+    class Meta:
+        model = models.Activity
+
     def resolve_content_object(parent, info):
         serialized_obj = serializers.serialize(
             'json', [parent.content_object, ])
-        serialized = json.loads(serialized_obj)[0]["fields"]
+        serialized_ = json.loads(serialized_obj)[0]["fields"]
+        print(parent.activity_type, "Info")
+        serialized = dig_deep(parent.activity_type, serialized_)
         all_keys = serialized.keys()
         excluded = [
             "password", "email", "notification_setting", "setup_complete", "timezone",
@@ -37,9 +44,6 @@ class ActivityType(DjangoObjectType):
             if ky in all_keys:
                 del serialized[ky]
         return serialized
-
-    class Meta:
-        model = models.Activity
 
 
 class ActivityPaginatedType(graphene.ObjectType):

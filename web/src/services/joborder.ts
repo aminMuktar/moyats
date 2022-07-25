@@ -143,3 +143,12 @@ export const updateJobOrderStatus = async (variables: any) => {
     })
     return res
 }
+
+export const loadJobOrderApplications = async (variables: any) => {
+    const res = await apolloClient.query({
+        query: q.JOBORDER_PIPELINES,
+        fetchPolicy: "network-only",
+        variables
+    })
+    return res
+}

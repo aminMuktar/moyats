@@ -23,6 +23,9 @@
       </template>
       <template v-slot:[`name`]="{ item }">
         <div>
+          <!-- <pre>
+            {{ item.contentObject }}
+          </pre> -->
           <p>
             {{ item.user.firstName }}
             {{ item.user.firstName }}
@@ -31,14 +34,27 @@
       </template>
       <template v-slot:[`regarding`]="{ item }">
         <div>
+          <!-- <pre>
+            {{ item.contentObject }}
+          </pre> -->
           <p
             v-if="item.activityType == 'OR'"
             v-text="item.contentObject.name"
           ></p>
-          <p
+          <router-link
             v-else-if="item.activityType == 'JO'"
-            v-text="item.contentObject"
-          ></p>
+            class="font-semibold text-blue-500"
+            :to="`/joborders/${item.contentObject.joborder_id}`"
+            v-text="item.contentObject.job_detail.title"
+          ></router-link>
+          <router-link
+            v-else-if="item.activityType == 'CA'"
+            class="font-semibold text-blue-500"
+            :to="`/candidates/${item.contentObject.candidate_id}`"
+            v-text="
+              `${item.contentObject.candidate_profile.first_name} ${item.contentObject.candidate_profile.last_name}`
+            "
+          ></router-link>
 
           <p v-else-if="item.activityType == 'AC'">
             {{ item.contentObject.first_name }}
@@ -46,9 +62,9 @@
           </p>
         </div>
       </template>
-      <template v-slot:[`type`]="{ item }">
+      <template v-slot:[`annotation`]="{ item }">
         <div>
-          <p v-text="item.activityType"></p>
+          <p v-text="item.annotation"></p>
         </div>
       </template>
     </data-table>
@@ -66,7 +82,7 @@ export default defineComponent({
     this.page = this.$route.query.page ?? this.page;
     await this.fetchActivities();
     this.$store.commit("setActivities", this.activities);
-    console.log(this.$store.state.core.activities[0].activityId);
+    // console.log(this.$store.state.core.activities[0].activityId);
   },
   methods: {
     parseDate,
@@ -98,7 +114,7 @@ export default defineComponent({
       }
     },
     setDropt() {
-      let fin = [];
+      let fin = [] as any;
       for (let i = 0; i < this.total; i++) {
         fin.push(`${i + 1}/${this.total}`);
       }
@@ -125,10 +141,9 @@ export default defineComponent({
     dropts: [] as any,
     headers: [
       { value: "date", label: "Date" },
-      { value: "name", label: "Name" },
       { value: "regarding", label: "Regarding" },
-      { value: "type", label: "Type" },
-      { value: "by", lablel: "By" },
+      { value: "annotation", label: "Notes" },
+      { value: "name", label: "Entered By" },
     ],
     activities: [] as any,
   }),

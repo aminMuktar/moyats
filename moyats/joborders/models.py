@@ -1,9 +1,11 @@
+from statistics import mode
 import uuid
 from django.db import models
 from accounts.models import Address
 from companies.models import Company
 from core.models import Attachment
 from .enums import PositionTypes
+
 
 class JobOrderTypes(models.Model):
     type_name = models.CharField(max_length=200)
@@ -80,3 +82,19 @@ class JobOrder(models.Model):
 
     def __str__(self) -> str:
         return self.job_detail.title
+
+
+class JobOrderApplicant(models.Model):
+    joborder_applicant_id = models.UUIDField(
+        default=uuid.uuid4, editable=False, unique=True)
+    candidate = models.ForeignKey(
+        "candidates.Candidate", on_delete=models.CASCADE, null=True)
+    joborder = models.ForeignKey(
+        JobOrder, on_delete=models.CASCADE, null=True, blank=True)
+    status = models.ForeignKey(
+        "pipelines.PipelineStatus", on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.candidate.candidate_profile.first_name

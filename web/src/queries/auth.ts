@@ -93,6 +93,7 @@ export const ACTIVITIES = gql`
         contentObject
         activityType
         createdAt
+        annotation
         contentType {
           id
           appLabel

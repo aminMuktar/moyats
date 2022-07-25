@@ -1,3 +1,4 @@
+from copyreg import constructor
 import graphene
 from . import types
 from . import models
@@ -28,6 +29,21 @@ class JobOrderQuery(graphene.ObjectType):
     categories = graphene.List(types.JobOrderCategoryType)
     search_recruiter = graphene.List(
         OrganizationMemberType, query=graphene.String())
+    joborder_applicant_pipeline = graphene.Field(
+        types.JobOrderApplicantPaginatedType, joborder=graphene.String(),
+        page=graphene.Int(), page_size=graphene.Int())
+
+    @login_required
+    def resolve_joborder_applicant_pipeline(self, info, joborder, page, page_size, **kwargs):
+        org = info.context.user.organizations.first()
+        joborder_q = models.JobOrder.objects.filter(
+            organization=org, joborder_id=joborder
+        )
+        if not joborder_q.exists():
+            return core_paginator([], page_size, page, types.JobOrderApplicantPaginatedType)
+        pipeline_qset = joborder_q.first(
+        ).pipeline_workflow.candidates.filter(joborder=joborder_q.first())
+        return core_paginator(pipeline_qset, page_size, page, types.JobOrderApplicantPaginatedType)
 
     @login_required
     def resolve_search_recruiter(self, info, query):
