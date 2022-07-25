@@ -14,10 +14,14 @@ export const CoreModule = {
     activities: null,
     formupdateStatus: null,
     activeSlideWindow: "",
+    statusItemId: "",
     activateSlider: false,
     scompany: "null",
   },
   mutations: {
+    setStatusItemId(state, payload) {
+      state.statusItemId = payload;
+    },
     setScompany(state, payload) {
       state.scompany = payload;
     },
@@ -44,6 +48,9 @@ export const CoreModule = {
     }
   },
   getters: {
+    getStatusItemId(state) {
+      return state.statusItemId
+    },
     getFormupdateStatus(state) {
       return state.formupdateStatus
     },

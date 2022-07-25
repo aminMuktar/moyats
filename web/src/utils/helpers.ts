@@ -28,7 +28,8 @@ export const getFullName = (name) => {
   return `${name.firstName} ${name.lastName}`
 }
 
-export const toggleStatusSlider = (type: string) => {
+export const toggleStatusSlider = (type: string, id: string) => {
   store.commit("setActivateSlider", true);
   store.commit("setActiveSlideWindow", `${type}-status`)
+  store.commit("setStatusItemId", id)
 }

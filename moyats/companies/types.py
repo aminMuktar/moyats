@@ -4,7 +4,6 @@ from . import models
 from accounts.types import BaseUserType
 from graphene_django import DjangoObjectType
 
-
 class CompanyContactStatusType(DjangoObjectType):
     class Meta:
         model = models.CompanyContactStatus

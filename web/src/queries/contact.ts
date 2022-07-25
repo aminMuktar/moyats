@@ -119,3 +119,23 @@ export const UPDATE_CONTACT_NOTES = gql`mutation updateContactNote($contact: Str
   }
 }
 `
+
+export const CONTACT_STATUSES = gql`query {
+  contactStatuses {
+    id
+    name
+    color{
+      hex
+    }
+    default
+    initial
+  }
+}
+`
+
+export const UPDATE_CONTACT_STATUS = gql`mutation updateContactStatus($contact: String, $status: Int!) {
+  updateContactStatus(contact: $contact, status: $status) {
+    response
+  }
+}
+`

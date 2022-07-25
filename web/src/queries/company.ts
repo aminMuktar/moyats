@@ -132,3 +132,16 @@ export const COMPANY_CONTACTS = gql`query companyContacts($company: UUID!, $page
   }
 }
 `
+
+
+export const COMAPNY_STATUSES = gql`query {
+  companyStatuses{
+    id
+    name
+    color{
+      id
+      hex
+    }
+    default
+  }
+}`

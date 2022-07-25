@@ -1,4 +1,5 @@
 from copyreg import constructor
+from pyexpat import model
 import graphene
 from . import types
 from . import models
@@ -26,6 +27,16 @@ class CompanyQuery(graphene.ObjectType):
     company_contacts = graphene.Field(
         types.CompanyContactsPaginatedType, company=graphene.UUID(),
         page_size=graphene.Int(), page=graphene.Int())
+    contact_statuses = graphene.List(types.CompanyContactStatusType)
+    company_statuses = graphene.List(types.CompanyStatusType)
+
+    @login_required
+    def resolve_company_statuses(self, info, **kwargs):
+        return models.CompanyStatus.objects.all()
+
+    @login_required
+    def resolve_contact_statuses(self, info, **kwargs):
+        return models.CompanyContactStatus.objects.all()
 
     @login_required
     def resolve_company_contacts(self, info, company: graphene.UUID, page_size, page):

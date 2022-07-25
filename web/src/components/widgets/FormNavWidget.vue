@@ -87,30 +87,47 @@
         v-show="$store.state.core.activateSlider"
       >
         <div class="flex justify-between bg-gray-100">
-          <p
-            class="pt-3 px-2 border-b"
-            v-if="$store.state.core.activeSlideWindow === 'joborders'"
+          <div
+            v-if="
+              $store.state.core.activeSlideWindow.split('-')[1] === 'status'
+            "
           >
-            Create a JobOrder
-          </p>
-          <p
-            class="pt-3 px-2 border-b"
-            v-if="$store.state.core.activeSlideWindow === 'candidates'"
-          >
-            Add a Candidate
-          </p>
-          <p
-            class="pt-3 px-2 border-b"
-            v-if="$store.state.core.activeSlideWindow === 'contacts'"
-          >
-            Add a new Contact
-          </p>
-          <p
-            class="pt-3 px-2 border-b"
-            v-if="$store.state.core.activeSlideWindow === 'companies'"
-          >
-            Add a new company
-          </p>
+            <p class="pt-3 px-2">
+              Change Status of
+              {{
+                uppercaseFirstLetter(
+                  $store.state.core.activeSlideWindow.split("-")[0]
+                )
+              }}
+            </p>
+          </div>
+          <div v-else>
+            <p
+              class="pt-3 px-2 border-b"
+              v-if="$store.state.core.activeSlideWindow === 'joborders'"
+            >
+              Create a JobOrder
+            </p>
+            <p
+              class="pt-3 px-2 border-b"
+              v-if="$store.state.core.activeSlideWindow === 'candidates'"
+            >
+              Add a Candidate
+            </p>
+            <p
+              class="pt-3 px-2 border-b"
+              v-if="$store.state.core.activeSlideWindow === 'contacts'"
+            >
+              Add a new Contact
+            </p>
+            <p
+              class="pt-3 px-2 border-b"
+              v-if="$store.state.core.activeSlideWindow === 'companies'"
+            >
+              Add a new company
+            </p>
+          </div>
+
           <button @click="closeSlider" class="p-2 hover:bg-gray-100 m-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +154,10 @@
               $store.state.core.activeSlideWindow.split('-')[1] === 'status'
             "
           >
-            <status-change-form @close="closeSlider"></status-change-form>
+            <status-change-form
+              @close="closeSlider"
+              @statChanged="closeSlider"
+            ></status-change-form>
           </div>
           <div>
             <job-order-form
@@ -199,6 +219,9 @@ export default defineComponent({
       const sliderStat = this.$store.state.core.activateSlider;
       this.$store.commit("setActivateSlider", !sliderStat);
       if (sliderStat) this.showBtn = false;
+    },
+    uppercaseFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     },
   },
   components: {
