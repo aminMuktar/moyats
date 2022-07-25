@@ -7,7 +7,7 @@
           <div class="flex flex-row gap-3">
             <div class="flex flex-row gap-1">
               <chip
-                @click="toggleStatusSlider('company')"
+                @click="toggleStatusSlider('company', company.companyId)"
                 :text="company.companyStatus.name"
                 :color="company.companyStatus.color.hex"
               ></chip>
@@ -85,6 +85,19 @@ export default defineComponent({
     CompanyContactsCard,
   },
   setup() {},
+  computed: {
+    getFormupdateStatus() {
+      this.fetchCompany();
+      return this.$store.getters.getFormupdateStatus;
+    },
+  },
+  watch: {
+    getFormupdateStatus(value) {
+      if (value) {
+        this.fetchCompany();
+      }
+    },
+  },
   data: () => ({
     company: null as any,
   }),

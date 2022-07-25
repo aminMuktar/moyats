@@ -39,7 +39,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapState } from "vuex";
-import { loadCompanyContactStatuses } from "../../services";
+import { loadCompanyContactStatuses, loadCompanyStatuses } from "../../services";
 import { getOpacity, isDark } from "../../utils/helpers";
 
 export default defineComponent({
@@ -69,9 +69,9 @@ export default defineComponent({
     },
     async fetchStatuses() {
       const {
-        data: { contactStatuses },
-      } = await loadCompanyContactStatuses();
-      this.statuses = contactStatuses;
+        data: { companyStatuses },
+      } = await loadCompanyStatuses();
+      this.statuses = companyStatuses;
     },
   },
 });

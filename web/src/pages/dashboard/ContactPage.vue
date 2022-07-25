@@ -105,7 +105,19 @@ export default defineComponent({
     ContactsActivityFeedCard,
     ContactsJoborderCard,
   },
-  setup() {},
+  computed: {
+    getFormupdateStatus() {
+      this.fetchContactData();
+      return this.$store.getters.getFormupdateStatus;
+    },
+  },
+  watch: {
+    getFormupdateStatus(value) {
+      if (value) {
+        this.fetchContactData();
+      }
+    },
+  },
   data: () => ({
     contact: null as any,
   }),

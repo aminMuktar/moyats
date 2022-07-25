@@ -1,5 +1,5 @@
 import { apolloClient } from "../v-apollo"
-import { ADD_CONTACT, CONTACT_STATUSES, UPDATE_CONTACT_DETAIL, UPDATE_CONTACT_NOTES, UPDATE_CONTACT_STATUS } from "../queries/contact"
+import { ADD_CONTACT, CONTACT_STATUSES, UPDATE_COMPANY_STATUS, UPDATE_CONTACT_DETAIL, UPDATE_CONTACT_NOTES, UPDATE_CONTACT_STATUS } from "../queries/contact"
 import { ADD_COMPANY, COMAPNY_STATUSES, COMPANY_CONTACTS, SEARCH_COMPANY, SEARCH_RECRUITER } from "../queries/company"
 
 export const searchCompany = async (query: string) => {
@@ -85,6 +85,14 @@ export const loadCompanyStatuses = async () => {
 export const updateContactStatus = async (variables: any) => {
     const res = await apolloClient.mutate({
         mutation: UPDATE_CONTACT_STATUS,
+        variables
+    })
+    return res
+}
+
+export const updateCompanyStatus = async (variables: any) => {
+    const res = await apolloClient.mutate({
+        mutation: UPDATE_COMPANY_STATUS,
         variables
     })
     return res

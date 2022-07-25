@@ -71,7 +71,11 @@
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import { CONTACTS } from "../queries/contact";
-import { parseDate, toggleStatusSlider, updateQparams } from "../utils/helpers";
+import {
+  parseDate,
+  toggleStatusSlider,
+  updateQparams,
+} from "../utils/helpers";
 import Chip from "../components/widgets/Chip.vue";
 
 export default defineComponent({

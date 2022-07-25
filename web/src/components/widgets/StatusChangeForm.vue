@@ -58,6 +58,13 @@
           @status-selected="statSelected"
           v-if="getFirstWord($store.state.core.activeSlideWindow) == 'contact'"
         ></contact-status-change-form>
+        <company-status-change-form
+          ref="form"
+          @status-selected="statSelected"
+          v-else-if="
+            getFirstWord($store.state.core.activeSlideWindow) == 'company'
+          "
+        ></company-status-change-form>
         <div class="w-2 h-2" v-if="selected">
           <button
             @click="$refs.form.fetchStatuses()"
@@ -101,11 +108,12 @@
 import { defineComponent } from "vue";
 import Spinner from "../Spinner.vue";
 import ContactStatusChangeForm from "../contacts/ContactStatusChangeForm.vue";
-import { updateContactStatus } from "../../services";
+import { updateCompanyStatus, updateContactStatus } from "../../services";
 import { uuid } from "vue-uuid";
+import CompanyStatusChangeForm from "../companies/CompanyStatusChangeForm.vue";
 
 export default defineComponent({
-  components: { Spinner, ContactStatusChangeForm },
+  components: { Spinner, ContactStatusChangeForm, CompanyStatusChangeForm },
   methods: {
     // get first word in string separated by minus
     getFirstWord(str) {
@@ -115,14 +123,40 @@ export default defineComponent({
       this.st = st;
       this.selected = true;
     },
-    async changeStat() {
-      await updateContactStatus({
+    async updateContact() {
+      const { data } = await updateContactStatus({
         contact: this.$store.state.core.statusItemId,
+        status: parseInt(this.st.id),
+      });
+      if (data) {
+        this.$emit("statChanged");
+        this.$store.commit("updateFormupdateStatus", uuid.v4());
+      }
+    },
+    async updateCompany() {
+      await updateCompanyStatus({
+        company: this.$store.state.core.statusItemId,
         status: parseInt(this.st.id),
       }).then(() => {
         this.$emit("statChanged");
         this.$store.commit("updateFormupdateStatus", uuid.v4());
       });
+    },
+
+    async changeStat() {
+      const target = this.getFirstWord(
+        this.$store.state.core.activeSlideWindow
+      );
+      switch (target) {
+        case "contact":
+          await this.updateContact();
+          break;
+        case "company":
+          await this.updateCompany();
+
+        default:
+          break;
+      }
     },
   },
   data: () => ({

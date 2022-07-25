@@ -139,3 +139,9 @@ export const UPDATE_CONTACT_STATUS = gql`mutation updateContactStatus($contact: 
   }
 }
 `
+
+export const UPDATE_COMPANY_STATUS = gql`mutation updateCompanyStatus($company: String, $status: Int!) {  
+  updateCompanyStatus(company: $company, status: $status) {
+    response
+  }
+}`

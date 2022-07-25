@@ -53,7 +53,7 @@
       <template v-slot:[`status`]="{ item }">
         <div v-if="item.companyStatus">
           <chip
-            @click="toggleStatusSlider('company')"
+            @click="toggleStatusSlider('company', item.companyId)"
             :text="item.companyStatus.name"
             :color="item.companyStatus.color.hex"
           ></chip>

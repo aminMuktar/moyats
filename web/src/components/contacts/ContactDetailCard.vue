@@ -30,7 +30,9 @@
                 <td class="p-2">Status</td>
                 <td class="py-2 px-16">
                   <Chip
-                    @click="toggleStatusSlider('contact')"
+                    @click="
+                      toggleStatusSlider('contact', data.companyContactId)
+                    "
                     :text="data.status.name"
                     :color="data.status.color.hex"
                   ></Chip>
