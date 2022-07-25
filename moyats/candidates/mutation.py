@@ -1,12 +1,12 @@
-from random import random
 import graphene
 from .utils import get_type
+from core.views import create_candidate_activity
 from graphene_file_upload.scalars import Upload
-from .models import Candidate, CandidateSource, SocialMedia
-from .inputs import CandidateDetailInput, CandidateInput, CandidatePrimaryInput, CandidateWorkHistoryInput
+from .models import Candidate, CandidateSource
 from accounts.models import Address, BaseContact
 from .models import CandidateProfile
 from .types import CandidateType
+from .inputs import CandidateDetailInput, CandidateInput, CandidatePrimaryInput, CandidateWorkHistoryInput
 
 
 class RemoveCandidateWorkHistory(graphene.Mutation):
@@ -241,6 +241,9 @@ class AddCandidate(graphene.Mutation):
             desired_pay=input.desiredPay,
             website=input.website,
         )
+        annotation = f"Added candidiate {candidate.candidate_profile.first_name} {candidate.candidate_profile.last_name}"
+        create_candidate_activity(
+            candidate, "nw", annotation, info.context.user)
         for at in attachments:
             candidate.attachments.create(
                 filename=at._name,

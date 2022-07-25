@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
+
 class Attachment(models.Model):
     filename = models.CharField(max_length=200)
     file = models.FileField(upload_to="uploads/attachments")
@@ -12,7 +13,8 @@ class Attachment(models.Model):
 
     def __str__(self) -> str:
         return self.filename
-        
+
+
 class BaseContact(models.Model):
     phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
@@ -35,6 +37,7 @@ class Color(models.Model):
         return self.hex
 
 
+# log all activities from all ends
 class Activity(models.Model):
     class ActivityType(models.TextChoices):
         CANDIDATE = 'ca', _('Candidate')
@@ -43,12 +46,20 @@ class Activity(models.Model):
         ORGANIZATION = 'or', _('Organization')
         ACCOUNT = 'ac', _('Account')
 
+    class CandidateActivityType(models.TextChoices):
+        MEETING = 'me', _('Meeting')
+        EMAIL = 'em', _('Email')
+        CALL = 'ca', _('Call')
+        NEW = 'nw', _('new')
+
     activity_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
     annotation = models.TextField(null=True, blank=True)
     organization = models.ForeignKey(
         "organizations.Organization", on_delete=models.CASCADE)
     user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE)
+    cand_activity_type = models.CharField(
+        max_length=2, choices=CandidateActivityType.choices, null=True, blank=True)
     activity_type = models.CharField(
         max_length=2, choices=ActivityType.choices)
     # These are need for generic relations

@@ -21,6 +21,6 @@ class CoreQuery(graphene.ObjectType):
     @login_required
     def resolve_activities(self, info, page_size, page, **kwargs):
         all_activities = Activity.objects.filter(
-            user=info.context.user, activity_type='ca')
+            user=info.context.user, activity_type='ca').order_by("-created_at")
         print(all_activities, "all acts")
         return core_paginator(all_activities, page_size, page, ActivityPaginatedType)

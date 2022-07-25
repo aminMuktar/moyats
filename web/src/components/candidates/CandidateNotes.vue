@@ -100,7 +100,7 @@ export default defineComponent({
       this.editMode = false;
       this.loading = true;
       const { data, errors } = await updateCandidateNotes({
-        notes: this.notes,
+        notes: this.notes ?? "",
         candidate: this.$route.params.cid,
       });
       if (data) {
