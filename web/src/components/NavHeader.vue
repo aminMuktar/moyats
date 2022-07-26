@@ -3,14 +3,16 @@
     class="
       flex
       items-center
-      border-t-4 border-gray-600
+      border-gray-200
       justify-between
-      px-6
+      px-3
       py-4
       h-16
       bg-white
+      border-t-2
       border-b-1
       z-50
+      border-b-2
     "
   >
     <div class="flex items-center">
@@ -47,27 +49,8 @@
           />
         </svg>
       </button>
-      <div class="relative lg:mx-0 hidden">
-        <div class="flex flex-row gap-2">
-          <p
-            class="
-              font-bold
-              text-2xl
-              px-2
-              cursor-pointer
-              bg-red-600
-              rounded-full
-              border-4
-              text-red-300
-            "
-          >
-            A
-          </p>
-          <p class="font-bold text-2xl pt-1">Amen Abe</p>
-        </div>
-      </div>
+      <entity-title-widget></entity-title-widget>
     </div>
-
     <div class="flex items-center">
       <quick-action-button v-if="$route.path !== '/company-management'" />
       <notificaiton-dropdown />
@@ -81,9 +64,15 @@ import { defineComponent } from "vue";
 import AccountDropdown from "../components/AccountDropdown.vue";
 import NotificaitonDropdown from "../components/NotificationDropdown.vue";
 import QuickActionButton from "./QuickActionButton.vue";
+import EntityTitleWidget from "./widgets/EntityTitleWidget.vue";
 
 export default defineComponent({
-  components: { NotificaitonDropdown, AccountDropdown, QuickActionButton },
+  components: {
+    NotificaitonDropdown,
+    AccountDropdown,
+    QuickActionButton,
+    EntityTitleWidget,
+  },
   data: () => ({
     isOpen: false,
     dropdownOpen: false,

@@ -37,22 +37,34 @@ export const profileStatusGuard = (to: any, from: any, next: any) => {
 
 
 export const jobOrderRouteHandler = (to: any, from: any, next: any) => {
+  if (to.path === "/joborders") {
+    store.commit("setEntityTitle", null);
+  }
   store.commit("setActiveSlideWindow", "joborders")
   next()
 }
 
 
 export const candidatesRouteHandler = (to: any, from: any, next: any) => {
+  if (to.path === "/candidates") {
+    store.commit("setEntityTitle", null);
+  }
   store.commit("setActiveSlideWindow", "candidates")
   next()
 }
 
 export const companiesRouteHandler = (to: any, from: any, next: any) => {
+  if (to.path === "/companies") {
+    store.commit("setEntityTitle", null);
+  }
   store.commit("setActiveSlideWindow", "companies")
   next()
 }
 
 export const contactsRouteHandler = (to: any, from: any, next: any) => {
+  if (to.path === "/contacts") {
+    store.commit("setEntityTitle", null);
+  }
   store.commit("setActiveSlideWindow", "contacts")
   next()
 }

@@ -2,7 +2,7 @@ import graphene
 
 
 class JobOrderPrimaryInput(graphene.InputObjectType):
-    # title = graphene.String()
+    title = graphene.String()
     city = graphene.String()
     country = graphene.String()
     recruiter = graphene.UUID()

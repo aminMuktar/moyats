@@ -17,8 +17,15 @@ export const CoreModule = {
     statusItemId: "",
     activateSlider: false,
     scompany: "null",
+    entityTitle: null,
   },
   mutations: {
+    setEntityTitleName(state, name){
+      state.entityTitle.name = name
+    },
+    setEntityTitle(state, title) {
+      state.entityTitle = title;
+    },
     setStatusItemId(state, payload) {
       state.statusItemId = payload;
     },
@@ -62,6 +69,9 @@ export const CoreModule = {
     },
     getscompany(state) {
       return state.scompany
+    },
+    getEntityTitle(state) {
+      return state.entityTitle
     }
   }
 };

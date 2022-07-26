@@ -117,6 +117,7 @@ export default defineComponent({
       });
       if (data) {
         this.company = data.company;
+        this.$store.commit("setEntityTitle", { t: "co", d: data.company });
       }
     },
     async companyPrimaryUpdated() {

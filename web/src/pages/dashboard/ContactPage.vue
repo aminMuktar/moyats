@@ -138,6 +138,7 @@ export default defineComponent({
       });
       if (data) {
         this.contact = data.contact;
+        this.$store.commit("setEntityTitle", { t: "ct", d: data.contact });
       }
     },
   },

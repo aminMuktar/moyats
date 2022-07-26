@@ -1,10 +1,10 @@
 <template>
   <div class="">
     <div
-      class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2"
+      class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2 pt-2"
       v-if="joborder"
     >
-      <div class="flex flex-row p-2 gap-4">
+      <div class="flex flex-row gap-4">
         <div>
           <p class="pb-2">status</p>
           <chip
@@ -214,6 +214,7 @@ export default defineComponent({
       if (data) {
         this.loading = false;
         this.joborder = data.jobOrder;
+        this.$store.commit("setEntityTitle", { t: "jo", d: data.jobOrder });
       } else {
         this.loading = false;
       }

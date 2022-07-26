@@ -1,6 +1,9 @@
 <template>
   <div class="">
-    <div class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2" v-if="candidate">
+    <div
+      class="bg-white m-0 w-full h-20 flex flex-row gap-20 px-2"
+      v-if="candidate"
+    >
       <div class="flex flex-row p-2 gap-4">
         <div>
           <p class="pb-2">Activity</p>
@@ -145,6 +148,7 @@ export default defineComponent({
       if (data) {
         this.loading = false;
         this.candidate = data.candidate;
+        this.$store.commit("setEntityTitle", { t: "ca", d: data.candidate });
       } else {
         this.loading = false;
       }

@@ -1,3 +1,4 @@
+from turtle import title
 import graphene
 from .types import JobOrderType
 from accounts.models import Address
@@ -168,7 +169,7 @@ class UpdateJobOrderPrimary(graphene.Mutation):
     @login_required
     def mutate(self, info, input: JobOrderPrimaryInput, joborder, **kwargs):
         jborder = JobOrder.objects.filter(
-            joborder_id=joborder
+            joborder_id=joborder,
         )
         if not jborder.exists():
             raise Exception("Joborder not found")
@@ -187,10 +188,12 @@ class UpdateJobOrderPrimary(graphene.Mutation):
                 country=input.country, city=input.city)
         else:
             loc = location.first()
-        print(loc,"D"*30)
+        print(loc, "D"*30)
         jorder_details = jborder.first().job_detail
-        JobDetail.objects.filter(id=jorder_details.id).update(
+        detail = JobDetail.objects.filter(id=jorder_details.id)
+        detail.update(
             location=loc,
+            title=input.title if input.title else detail.first().title,
             recruiter=recruiter.first())
         return UpdateJobOrderPrimary(response=True)
 
@@ -274,7 +277,6 @@ class AddJobOrder(graphene.Mutation):
 
         if not pipeline_workflow.exists():
             raise Exception("Pipeline Does not exist")
-
 
         add_job_order = JobOrder.objects.create(
             notes=input.notes,

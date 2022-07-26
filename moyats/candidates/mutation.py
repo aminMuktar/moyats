@@ -148,7 +148,7 @@ class UpdateCandidatePrimary(graphene.Mutation):
         #         cand.first().social_medias.create(link=sm.link, type=sm.type)
 
         cand_profile = CandidateProfile.objects.filter(
-            id=cand.first().candidate_profile.id
+            id=cand.first().candidate_profile.id,
         )
         if cand_profile.exists():
             cand_profile.update(

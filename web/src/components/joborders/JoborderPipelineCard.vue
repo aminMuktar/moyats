@@ -12,12 +12,12 @@
           </div>
           <div class="grid grid-cols-5 mx-2">
             <div
-              class="my-2 border-2 py-1 text-center bg-gray-100"
-              v-for="x in 5"
-              :key="x"
+              class="my-2 border-2 py-1 text-center bg-gray-100 cursor-pointer"
+              v-for="(act, ix) in activityInfos"
+              :key="ix"
             >
-              <p>1</p>
-              <p>New Applicant</p>
+              <p class="text-sm">{{ act.count }}</p>
+              <p class="text-sm">{{ act.title }}</p>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { loadJobOrderApplications } from "../../services";
-import { formAddress,parseDate } from "../../utils/helpers";
+import { formAddress, parseDate } from "../../utils/helpers";
 import DashboardCardWidget from "../DashboardCardWidget.vue";
 import DataTable from "../DataTable.vue";
 import Chip from "../widgets/Chip.vue";
@@ -132,10 +132,28 @@ export default defineComponent({
         value: "status",
         label: "Status Current",
       },
-      // {
-      //   value: "action",
-      //   label: "Action",
-      // },
+    ],
+    activityInfos: [
+      {
+        title: "New Applicant",
+        count: "2",
+      },
+      {
+        title: "Contacted",
+        count: "10",
+      },
+      {
+        title: "Submitted",
+        count: "20",
+      },
+      {
+        title: "Interviewing",
+        count: "2",
+      },
+      {
+        title: "Placed",
+        count: "1",
+      },
     ],
   }),
   methods: {
