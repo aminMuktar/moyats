@@ -35,6 +35,10 @@ export const profileStatusGuard = (to: any, from: any, next: any) => {
   }
 }
 
+export const basicRouteHandler = (to: any, from: any, next: any) => {
+  store.commit("setEntityTitle", null);
+  next()
+}
 
 export const jobOrderRouteHandler = (to: any, from: any, next: any) => {
   if (to.path === "/joborders") {

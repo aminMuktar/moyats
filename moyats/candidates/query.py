@@ -1,8 +1,10 @@
 import graphene
 from . import types
 from core.helpers import core_paginator
+from joborders.models import JobOrderApplicant
 from .models import Candidate, CandidateSource
 from graphql_jwt.decorators import login_required
+from joborders.types import JobOrderApplicantPaginatedType
 
 
 class CandidateQuery(graphene.ObjectType):
@@ -12,6 +14,22 @@ class CandidateQuery(graphene.ObjectType):
     candidate = graphene.Field(
         types.CandidateType, candidate=graphene.UUID()
     )
+    candidate_applicant_joborders = graphene.Field(
+        JobOrderApplicantPaginatedType, candidate=graphene.UUID(),
+        page=graphene.Int(), page_size=graphene.Int())
+
+    @login_required
+    def resolve_candidate_applicant_joborders(self, info, candidate, page, page_size):
+        org = info.context.user.organizations.first()
+        cand = Candidate.objects.filter(
+            candidate_id=candidate, organization=org)
+        if not cand.exists():
+            raise Exception("Candidate not found")
+        apps = JobOrderApplicant.objects.filter(
+            candidate=cand.first()
+        )
+        print(apps, "apps")
+        return core_paginator(apps, page_size, page, JobOrderApplicantPaginatedType)
 
     @login_required
     def resolve_candidate(self, info, candidate, **kwargs):

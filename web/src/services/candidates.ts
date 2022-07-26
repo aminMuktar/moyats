@@ -90,3 +90,11 @@ export const updateContactPrimary = async (variables: any) => {
     })
     return res
 }
+
+export const candidateApplicationJoborders = async (variables: any) => {
+    const res = await apolloClient.query({
+        query: q.CANDIDATE_APP_JOBORDERS,
+        variables
+    })
+    return res
+}

@@ -26,6 +26,7 @@ import {
   candidatesRouteHandler,
   companiesRouteHandler,
   contactsRouteHandler,
+  basicRouteHandler,
   jobOrderRouteHandler,
   loginPageGuard,
   profileStatusGuard,
@@ -64,11 +65,17 @@ export default createRouter({
           path: "/dashboard",
           name: "DashHome",
           component: DashHome,
+          beforeEnter: (to, from, next) => {
+            basicRouteHandler(to, from, next);
+          },
         },
         {
           path: "/activities",
           name: "Activities",
           component: Activities,
+          beforeEnter: (to, from, next) => {
+            basicRouteHandler(to, from, next);
+          },
         },
         {
           path: "/activity/:aid",
@@ -94,12 +101,18 @@ export default createRouter({
         {
           path: "/applications",
           name: "Applications",
-          component: Applications
+          component: Applications,
+          beforeEnter: (to, from, next) => {
+            basicRouteHandler(to, from, next);
+          },
         },
         {
           path: "/applications/:appid",
           name: "ApplicationPage",
-          component: ApplicationPage
+          component: ApplicationPage,
+          beforeEnter: (to, from, next) => {
+            basicRouteHandler(to, from, next);
+          },
         },
         {
           path: "/candidates",

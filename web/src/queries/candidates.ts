@@ -210,3 +210,43 @@ export const UPDATE_CONTACT_PRIMARY = gql`mutation updateContactPrimary($input: 
     response
   }
 }`
+
+export const CANDIDATE_APP_JOBORDERS = gql`query candidateApplicantJoborders(
+  $candidate: UUID!
+  $page: Int!
+  $pageSize: Int!
+) {
+  candidateApplicantJoborders(
+    candidate: $candidate
+    page: $page
+    pageSize: $pageSize
+  ) {
+    page
+    pages
+    hasNext
+    objects {
+      id
+      joborder {
+        joborderId
+        jobDetail {
+          title
+        }
+        company{
+          companyId
+          name
+        }
+        joborderId
+      }
+      status {
+        id
+        statusName
+        description
+        color {
+          id
+          hex
+        }
+      }
+    }
+  }
+}
+`

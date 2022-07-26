@@ -1,7 +1,10 @@
 <template>
   <div
-    class="flex right-0 z-50 mr-0 mt-1 absolute w-1/2 h-full justify-end"
-    :class="{ 'z-0': !$store.state.core.activateSlider }"
+    class="flex right-0 z-50 mr-0 mt-1 absolute w-1/2 justify-end"
+    :class="{
+      'z-0': !$store.state.core.activateSlider,
+      'h-full': $store.state.core.activateSlider,
+    }"
   >
     <button
       v-if="showBtn"

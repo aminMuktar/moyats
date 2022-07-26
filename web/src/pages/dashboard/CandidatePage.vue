@@ -102,7 +102,7 @@
       </div>
       <div>
         <candidate-activity-feed></candidate-activity-feed>
-        <candidate-job-order-card></candidate-job-order-card>
+        <candidate-job-order-card :data="candidate"></candidate-job-order-card>
         <candidate-attachment></candidate-attachment>
       </div>
     </div>
