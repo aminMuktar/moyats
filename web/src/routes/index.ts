@@ -6,6 +6,8 @@ import DashHome from "../pages/dashboard/DashHome.vue";
 import Activities from "../pages/dashboard/Activities.vue";
 import JobOrders from "../pages/dashboard/JobOrders.vue";
 import JobOrder from "../pages/dashboard/JobOrdersPage.vue";
+import Workflows from "../pages/dashboard/Workflows.vue"
+import WorkflowPage from "../pages/dashboard/WorkflowPage.vue"
 import Candidates from "../pages/dashboard/Candidates.vue";
 import Candidate from "../pages/dashboard/CandidatePage.vue";
 import Companies from "../pages/dashboard/Companies.vue";
@@ -96,6 +98,22 @@ export default createRouter({
           component: JobOrder,
           beforeEnter: (to, from, next) => {
             jobOrderRouteHandler(to, from, next);
+          },
+        },
+        {
+          path: "/workflows",
+          name: "Workflows",
+          component: Workflows,
+          beforeEnter: (to, from, next) => {
+            basicRouteHandler(to, from, next);
+          },
+        },
+        {
+          path: "/workflows/:wid",
+          name: "Workflow",
+          component: WorkflowPage,
+          beforeEnter: (to, from, next) => {
+            basicRouteHandler(to, from, next);
           },
         },
         {

@@ -172,8 +172,8 @@
               >
             </li>
             <li>
-              <a
-                href="#"
+              <router-link
+                to="/workflows"
                 class="
                   flex
                   items-center
@@ -190,29 +190,7 @@
                   hover:bg-gray-100
                   dark:text-white dark:hover:bg-gray-700
                 "
-                >Tasks</a
-              >
-            </li>
-            <li>
-              <a
-                href="#"
-                class="
-                  flex
-                  mx-2
-                  items-center
-                  p-2
-                  pl-11
-                  text-base
-                  font-normal
-                  text-gray-900
-                  rounded-lg
-                  transition
-                  duration-75
-                  group
-                  hover:bg-gray-100
-                  dark:text-white dark:hover:bg-gray-700
-                "
-                >Workflows</a
+                >Workflow</router-link
               >
             </li>
           </ul>

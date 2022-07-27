@@ -387,3 +387,67 @@ export const JOBORDER_PIPELINES = gql`query joborderApplicantPipeline(
   }
 }
 `
+export const PIPELINE_WORKFLOWS = gql`query {
+  pipelineWorkflows {
+    pipelineId
+    title
+    default
+    pipelineSetups {
+      pipelineSetupId
+      step
+      status {
+        id
+        statusName
+        color {
+          hex
+        }
+      }
+    }
+  }
+}
+`
+
+export const PIPELINE_SETUP = gql`query pipelineWorkflowSetup($workflow: UUID!) {
+  pipelineWorkflowSetup(workflow: $workflow) {
+    pipelineSetupId
+    step
+    color {
+      id
+      hex
+    }
+    status {
+      id
+      statusName
+      color {
+        id
+        hex
+      }
+    }
+    mappingStatus {
+      id
+      statusName
+      color {
+        id
+        hex
+      }
+    }
+    prerequisiteStatus {
+      id
+      statusName
+      color {
+        id
+        hex
+      }
+    }
+    triggers {
+      id
+      triggerId
+      aciton
+      description
+      requiredType
+    }
+    updatedAt
+    createdAt
+  }
+}
+`

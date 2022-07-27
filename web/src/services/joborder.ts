@@ -152,3 +152,20 @@ export const loadJobOrderApplications = async (variables: any) => {
     })
     return res
 }
+
+export const loadPipelineWorkflows = async () => {
+    const res = await apolloClient.query({
+        query: q.PIPELINE_WORKFLOWS,
+        fetchPolicy: "network-only",
+    })
+    return res
+}
+
+export const loadPipelineSetup = async (variables: any) => {
+    const res = await apolloClient.query({
+        query: q.PIPELINE_SETUP,
+        fetchPolicy: "network-only",
+        variables
+    })
+    return res
+}
