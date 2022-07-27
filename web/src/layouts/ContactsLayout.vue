@@ -4,6 +4,7 @@
       @prev="prev"
       @next="next"
       :dropts="dropts"
+      @searched="searched"
       :hasNext="hasNext"
       :hasPrev="hasPrev"
       :total="total"
@@ -71,12 +72,9 @@
 import { defineComponent } from "vue";
 import DataTable from "../components/DataTable.vue";
 import { CONTACTS } from "../queries/contact";
-import {
-  parseDate,
-  toggleStatusSlider,
-  updateQparams,
-} from "../utils/helpers";
+import { parseDate, toggleStatusSlider, updateQparams } from "../utils/helpers";
 import Chip from "../components/widgets/Chip.vue";
+import { searchContacts } from "../services";
 
 export default defineComponent({
   components: { DataTable, Chip },
@@ -102,6 +100,25 @@ export default defineComponent({
     parseDate,
     updateQparams,
     toggleStatusSlider,
+    async searched(e) {
+      const {
+        data: {
+          searchContacts: { objects, total, page, pages, hasPrev, hasNext },
+        },
+      } = await searchContacts({
+        query: e,
+        page: this.page,
+        pageSize: this.pageSize,
+      });
+      if (objects) {
+        this.contacts = JSON.parse(JSON.stringify(objects));
+        this.total = total;
+        this.page = page;
+        this.pages = pages;
+        this.hasPrev = hasPrev;
+        this.hasNext = hasNext;
+      }
+    },
     async fetchContacts() {
       const { data } = await this.$apollo.query({
         query: CONTACTS,

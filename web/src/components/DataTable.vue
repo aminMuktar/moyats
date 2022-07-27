@@ -20,11 +20,10 @@
           justify-center
         "
       >
-      <spinner></spinner>
-
+        <spinner></spinner>
       </div>
       <!-- end of loader -->
-      <table-filter-section></table-filter-section>
+      <table-filter-section @searched="searched"></table-filter-section>
       <p
         class="text-center py-5 text-gray-500"
         v-if="items.length === 0 && !loadingState"
@@ -146,8 +145,8 @@ export default defineComponent({
   components: {
     PaginationRow,
     TableFilterSection,
-    Spinner
-},
+    Spinner,
+  },
   props: [
     "items",
     "total",
@@ -164,6 +163,9 @@ export default defineComponent({
   methods: {
     getkeys(item: any) {
       return Object.keys(item).filter((x: any) => x !== "checked");
+    },
+    searched(e) {
+      this.$emit("searched", e);
     },
     singleItemSelected() {
       this.$emit(

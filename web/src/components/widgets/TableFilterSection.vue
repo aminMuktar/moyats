@@ -12,11 +12,15 @@
           rounded-md
           border-2 border-gray-200
         "
-        id="email"
-        type="email"
+        v-model="query"
+        id="search"
+        type="search"
         placeholder="Search Items"
       />
-      <button class="border-2 my-2 px-2 bg-black text-white rounded-md">
+      <button
+        class="border-2 my-2 px-2 bg-black text-white rounded-md"
+        @click="searched"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-8 w-8 py-2"
@@ -111,7 +115,13 @@ import { defineComponent } from "vue";
 export default defineComponent({
   setup() {},
   data: () => ({
+    query: "",
     items: ["First Filter", "Second Filter", "Third Filter", "Fourth Filter"],
   }),
+  methods: {
+    searched() {
+      this.$emit("searched", this.query);
+    },
+  },
 });
 </script>

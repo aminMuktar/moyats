@@ -1,5 +1,5 @@
 import { apolloClient } from "../v-apollo"
-import { ADD_CONTACT, CONTACT_STATUSES, UPDATE_COMPANY_STATUS, UPDATE_CONTACT_DETAIL, UPDATE_CONTACT_NOTES, UPDATE_CONTACT_STATUS } from "../queries/contact"
+import { ADD_CONTACT, CONTACT_STATUSES, SEARCH_CONTACTS, UPDATE_COMPANY_STATUS, UPDATE_CONTACT_DETAIL, UPDATE_CONTACT_NOTES, UPDATE_CONTACT_STATUS } from "../queries/contact"
 import { ADD_COMPANY, COMAPNY_STATUSES, COMPANY_CONTACTS, SEARCH_COMPANY, SEARCH_RECRUITER } from "../queries/company"
 
 export const searchCompany = async (query: string) => {
@@ -93,6 +93,15 @@ export const updateContactStatus = async (variables: any) => {
 export const updateCompanyStatus = async (variables: any) => {
     const res = await apolloClient.mutate({
         mutation: UPDATE_COMPANY_STATUS,
+        variables
+    })
+    return res
+}
+
+export const searchContacts = async (variables: any) => {
+    const res = await apolloClient.query({
+        query: SEARCH_CONTACTS,
+        fetchPolicy: "network-only",
         variables
     })
     return res

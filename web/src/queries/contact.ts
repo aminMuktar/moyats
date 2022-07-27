@@ -145,3 +145,43 @@ export const UPDATE_COMPANY_STATUS = gql`mutation updateCompanyStatus($company: 
     response
   }
 }`
+
+export const SEARCH_CONTACTS = gql`query searchContacts($query: String!, $pageSize: Int!, $page: Int!) {
+  searchContacts(query: $query, pageSize: $pageSize, page: $page) {
+    page
+      pages
+      hasNext
+      hasPrev
+      total
+      objects {
+        id
+        companyContactId
+        firstName
+        lastName
+        reachable
+        phones{
+          cellNumber
+        }
+        status{
+          name
+          color{
+            hex
+          }
+        }  
+        company{
+          id
+          companyId
+          name
+          companyStatus{
+            name
+            color{
+              hex
+            }
+          }
+        }
+        email
+        updatedAt
+      }
+  }
+}
+`

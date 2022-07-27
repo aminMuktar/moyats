@@ -29,6 +29,9 @@ class CompanyQuery(graphene.ObjectType):
         page_size=graphene.Int(), page=graphene.Int())
     contact_statuses = graphene.List(types.CompanyContactStatusType)
     company_statuses = graphene.List(types.CompanyStatusType)
+    search_contacts = graphene.Field(
+        types.CompanyContactsPaginatedType, query=graphene.String(),
+        page_size=graphene.Int(), page=graphene.Int())
 
     @login_required
     def resolve_company_statuses(self, info, **kwargs):
@@ -73,6 +76,15 @@ class CompanyQuery(graphene.ObjectType):
             Q(organization=org), Q(name__icontains=query)
         )
         return companies
+
+    @login_required
+    def resolve_search_contacts(self, info, query, page, page_size, **kwargs):
+        org = info.context.user.organizations.first()
+        contacts = models.CompanyContact.objects.filter(
+            Q(organization=org),
+            Q(first_name__icontains=query) | Q(last_name__icontains=query) |
+            Q(email__icontains=query) | Q(department__icontains=query))
+        return core_paginator(contacts, page_size, page, types.CompanyContactsPaginatedType)
 
     @login_required
     def resolve_company(self, info, cid, **kwargs):
