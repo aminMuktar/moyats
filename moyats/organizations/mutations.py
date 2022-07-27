@@ -35,3 +35,5 @@ class CreateOrganization(graphene.Mutation):
         user.first().organizations.add(org)
         user.update(setup_complete=True)
         return CreateOrganization(response=org)
+
+

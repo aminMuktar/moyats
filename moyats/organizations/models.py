@@ -1,3 +1,4 @@
+from pyexpat import model
 import uuid
 from django.db import models
 from core.models import BaseContact, Color
@@ -35,7 +36,8 @@ class OrganizationMember(models.Model):
 
     org_member_id = models.UUIDField(
         default=uuid.uuid4, editable=False, unique=True)
-    user = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(
+        "accounts.BaseUser", on_delete=models.CASCADE, null=True)
     title = models.CharField(null=True, blank=True, max_length=100)
     permission_level = models.CharField(
         max_length=2, choices=OrganizationMemberPermission.choices)
@@ -70,6 +72,32 @@ class Organization(models.Model):
     employees_count = models.IntegerField(null=True, blank=True)
     subdomain = models.CharField(max_length=200, null=True, blank=True)
     activity = GenericRelation("core.Activity")
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Portal(models.Model):
+    portal_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=200)
+    website = models.URLField(blank=True, null=True)
+    logo = models.ImageField(
+        upload_to='uploads/% Y/% m/% d/', blank=True, null=True)
+    organization = models.ForeignKey(
+        Organization, on_delete=models.CASCADE, blank=True, null=True)
+    # banner image field
+    banner_image = models.ImageField(
+        upload_to='uploads/% Y/% m/% d/', blank=True, null=True)
+    facebook_logo = models.ImageField(
+        upload_to='uploads/% Y/% m/% d/', blank=True, null=True)
+    linkedin_logo = models.ImageField(
+        upload_to='uploads/% Y/% m/% d/', blank=True, null=True)
+    telegram_logo = models.ImageField(
+        upload_to='uploads/% Y/% m/% d/', blank=True, null=True)
+    twitter_logo = models.ImageField(
+        upload_to='uploads/% Y/% m/% d/', blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
