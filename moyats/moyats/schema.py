@@ -10,7 +10,7 @@ from joborders.query import JobOrderQuery
 from candidates.query import CandidateQuery
 from application.query import ApplicationQuery
 
-from core.mutations import (CreateNotification, UpdateNotification, UpdateNotifications)
+from core.mutation import (CreateNotification, UpdateNotification, UpdateNotifications)
 
 from application.mutation import (
     AddApplication,
