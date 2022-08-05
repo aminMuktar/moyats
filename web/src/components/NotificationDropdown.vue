@@ -18,17 +18,22 @@
       </button>
     </template>
     <template v-slot:list>
-      <div class="py-1">
-        <ul>
-          <li class="p-5 hover:bg-gray-100 cursor-pointer">
-            <div>
-              <p class="text-md font-bold">
-                Here is some long notification text long long
-              </p>
-              <p>some infor about this notification</p>
-            </div>
-          </li>
-        </ul>
+      <div class="float-right p-3">
+        <button @click="clearNotification">Clear</button>
+      </div>
+      <div class="py-9">
+        <div class="py-1" v-for="i, j in showNotifications" :key="j">
+          <ul>
+            <li class="p-5 hover:bg-gray-100 cursor-pointer">
+              <div>
+                <p class="text-md font-bold">
+                  {{ i.action }}
+                </p>
+                <p>{{ i.aFrom.email }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </template>
   </menu-drop-down>
@@ -36,6 +41,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import MenuDropDown from "./MenuDropDown.vue";
+import {NOTIFICATION, UPDATENOTIFICATION, UPDATENOTIFICATIONS} from "./../queries/Notifications"
 
 export default defineComponent({
   components: { MenuDropDown },
@@ -43,7 +49,46 @@ export default defineComponent({
   data: () => ({
     active: false,
     selected: false,
+    notifications: [] as any,
+    showNotifications: [] as any
   }),
+  created(){
+    this.getNotifications()
+    this.checkNotifications()
+    // setTimeout(a=>{
+    //   this.checkNotifications()
+    //   console.log(this.showNotifications)
+    //   }, 1000)
+  },
+  methods: {
+    async getNotifications(){
+      const {data, error} = await this.$apollo.query({
+        query: NOTIFICATION
+      })
+      if(data){
+        this.notifications = JSON.parse(JSON.stringify(data.notification))
+      }
+    },
+
+    async clearNotification(){
+      await this.$apollo.mutate({
+        mutation: UPDATENOTIFICATIONS,
+        variables: {
+          cleared: true
+        }
+      })
+      this.showNotifications = []
+    },
+
+    checkNotifications(){
+      this.notifications.forEach( e => {
+        if(!e.cleared && !e.seen){
+          this.showNotifications.push(e)
+        }
+      });
+    }
+
+  },
 });
 </script>
 

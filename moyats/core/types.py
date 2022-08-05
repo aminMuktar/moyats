@@ -72,3 +72,10 @@ class UniqueActivityType(graphene.ObjectType):
 class EnumType(graphene.ObjectType):
     id = graphene.String()
     label = graphene.String()
+
+
+class NotificationType(DjangoObjectType):
+    class Meta:
+        model = models.Notification
+
+

@@ -75,3 +75,11 @@ class Activity(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.__str__()} | {self.content_type} | {self.activity_type}"
+
+class Notification(models.Model):
+    notification_id = models.UUIDField(default=uuid.uuid4, unique=True)
+    action = models.TextField(null=True)
+    a_from = models.ForeignKey("accounts.BaseUser", on_delete=models.CASCADE, null=True)
+    seen = models.BooleanField(default=False)
+    cleared = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now=True)

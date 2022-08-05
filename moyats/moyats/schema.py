@@ -1,6 +1,6 @@
 import graphene
 import graphql_jwt
-from core.query import CoreQuery
+from core.query import (CoreQuery, NotificationQuery)
 from accounts.query import AccountsQuery
 from organizations.mutations import CreateOrganization
 from organizations.query import OrganizationQuery
@@ -9,6 +9,9 @@ from companies.query import CompanyQuery
 from joborders.query import JobOrderQuery
 from candidates.query import CandidateQuery
 from application.query import ApplicationQuery
+
+from core.mutations import (CreateNotification, UpdateNotification, UpdateNotifications)
+
 from application.mutation import (
     AddApplication,
     SaveApplicationQuestion
@@ -51,7 +54,7 @@ from companies.mutations import(
 from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration
 
 
-class Query(ApplicationQuery, AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, graphene.ObjectType):
+class Query(ApplicationQuery, AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, NotificationQuery, graphene.ObjectType):
     pass
 
 
@@ -96,6 +99,10 @@ class Mutation(graphene.ObjectType):
     # application mutations
     save_application_question = SaveApplicationQuestion.Field()
     add_application = AddApplication.Field()
+    # notification mutation
+    create_notification = CreateNotification.Field()
+    update_notification = UpdateNotification.Field()
+    update_notifications = UpdateNotifications.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

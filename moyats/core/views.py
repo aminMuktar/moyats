@@ -1,6 +1,7 @@
 from .models import Activity
 from .types import ActivityType
 from django.contrib.contenttypes.models import ContentType
+from core.models import Notification
 
 # create activity for candidate type
 
@@ -15,4 +16,6 @@ def create_candidate_activity(candidiate, activity_type, annotation, user):
         content_type=ContentType.objects.get_for_model(candidiate),
         object_id=candidiate.id
     )
+    Notification.objects.create(a_from=user, action="Candidate created")
+    
     return activity

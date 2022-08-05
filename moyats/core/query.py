@@ -3,6 +3,8 @@ from .models import Activity
 from .helpers import core_paginator
 from .types import ActivityPaginatedType, UniqueActivityType
 from graphql_jwt.decorators import login_required
+from .types import NotificationType
+from .models import Notification
 
 
 class CoreQuery(graphene.ObjectType):
@@ -24,3 +26,9 @@ class CoreQuery(graphene.ObjectType):
             user=info.context.user, activity_type='ca').order_by("-created_at")
         print(all_activities, "all acts")
         return core_paginator(all_activities, page_size, page, ActivityPaginatedType)
+
+class NotificationQuery(graphene.ObjectType):
+    notification = graphene.List(NotificationType)
+
+    def resolve_notification(self, info):
+        return Notification.objects.all()
