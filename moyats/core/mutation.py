@@ -1,4 +1,3 @@
-from urllib import response
 import graphene
 from .models import Notification
 from .types import NotificationType

@@ -10,7 +10,11 @@ from joborders.query import JobOrderQuery
 from candidates.query import CandidateQuery
 from application.query import ApplicationQuery
 
-from core.mutation import (CreateNotification, UpdateNotification, UpdateNotifications)
+from core.mutation import (
+    CreateNotification, 
+    UpdateNotification, 
+    UpdateNotifications
+)
 
 from application.mutation import (
     AddApplication,
@@ -51,7 +55,14 @@ from companies.mutations import(
     AddCompany,
     AddCompanyContact
 )
-from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration
+from accounts.mutation import (
+    AddNewUser,
+    ChangeUserPassword,
+    CheckUserPassword, 
+    VerifyEmail, 
+    SocialMediaRegistration,
+    UpdateUser
+)
 
 
 class Query(ApplicationQuery, AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, NotificationQuery, graphene.ObjectType):
@@ -67,6 +78,9 @@ class Mutation(graphene.ObjectType):
     setup_account = CreateOrganization.Field()
     add_candidate = AddCandidate.Field()
     add_joborder = AddJobOrder.Field()
+    update_user = UpdateUser.Field()
+    check_user_password = CheckUserPassword.Field()
+    change_user_password = ChangeUserPassword.Field()
     # contact mutations
     update_contact_primary = ContactPrimaryInfoUpdateMutation.Field()
     update_contact_status = CompanyContactStatusUpdate.Field()
