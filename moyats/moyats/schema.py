@@ -1,6 +1,6 @@
 import graphene
 import graphql_jwt
-from core.query import CoreQuery
+from core.query import (CoreQuery, NotificationQuery)
 from accounts.query import AccountsQuery
 from organizations.mutations import CreateOrganization
 from organizations.query import OrganizationQuery
@@ -9,6 +9,13 @@ from companies.query import CompanyQuery
 from joborders.query import JobOrderQuery
 from candidates.query import CandidateQuery
 from application.query import ApplicationQuery
+
+from core.mutation import (
+    CreateNotification, 
+    UpdateNotification, 
+    UpdateNotifications
+)
+
 from application.mutation import (
     AddApplication,
     SaveApplicationQuestion
@@ -48,10 +55,17 @@ from companies.mutations import(
     AddCompany,
     AddCompanyContact
 )
-from accounts.mutation import AddNewUser, VerifyEmail, SocialMediaRegistration
+from accounts.mutation import (
+    AddNewUser,
+    ChangeUserPassword,
+    CheckUserPassword, 
+    VerifyEmail, 
+    SocialMediaRegistration,
+    UpdateUser
+)
 
 
-class Query(ApplicationQuery, AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, graphene.ObjectType):
+class Query(ApplicationQuery, AccountsQuery, CoreQuery, OrganizationQuery, JobOrderQuery, PipelineQuery, CompanyQuery, CandidateQuery, NotificationQuery, graphene.ObjectType):
     pass
 
 
@@ -64,6 +78,9 @@ class Mutation(graphene.ObjectType):
     setup_account = CreateOrganization.Field()
     add_candidate = AddCandidate.Field()
     add_joborder = AddJobOrder.Field()
+    update_user = UpdateUser.Field()
+    check_user_password = CheckUserPassword.Field()
+    change_user_password = ChangeUserPassword.Field()
     # contact mutations
     update_contact_primary = ContactPrimaryInfoUpdateMutation.Field()
     update_contact_status = CompanyContactStatusUpdate.Field()
@@ -96,6 +113,10 @@ class Mutation(graphene.ObjectType):
     # application mutations
     save_application_question = SaveApplicationQuestion.Field()
     add_application = AddApplication.Field()
+    # notification mutation
+    create_notification = CreateNotification.Field()
+    update_notification = UpdateNotification.Field()
+    update_notifications = UpdateNotifications.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

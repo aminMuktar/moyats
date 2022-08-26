@@ -130,3 +130,58 @@ export const ACTIVITY_INFO = gql`
     }
   }
 `;
+
+
+export const UPDATE_USER = gql `
+  mutation updateUser($input: UpdateUserInput!){
+    updateUser(input: $input){
+      response {
+        email
+        username
+        baseContact {
+          cellNumber
+          workNumber
+          homeNumber
+        }
+        isActive
+        firstName
+        lastName
+        accountType
+        blocked
+        emailVerified
+        source
+        address {
+          country
+          city
+          zipCode
+        }
+        setupComplete
+        signiture
+        notificationSetting {
+          setting
+          value
+        }
+        timezone
+        dateFormat
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+
+export const CHECKUSER_PASSWORD = gql `
+  mutation checkUserPassword($password: String!) {
+    checkUserPassword(password: $password) {
+      response
+    }
+  }
+`
+
+export const CHANGEUSER_PASSWORD = gql `
+  mutation changeUserPassword($password: String!){
+    changeUserPassword(password: $password){
+      response
+    }
+  }
+`

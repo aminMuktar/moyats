@@ -1,3 +1,6 @@
+from email.policy import default
+from pydoc import ModuleScanner
+from urllib import response
 import graphene
 from .types import BaseUserType
 from core.models import BaseContact
@@ -5,12 +8,13 @@ from core.helpers import(
     user_exists, org_exists, create_email_verification_link,
     is_valid_uuid, link_expired)
 from django.contrib.auth import login
-from accounts.inputs import NewUserInput, SocialRegistrationInput
+from accounts.inputs import NewUserInput, SocialRegistrationInput, UpdateUserInput
 from accounts.models import BaseUser, EmailVerificationCode
 from graphql_jwt.decorators import setup_jwt_cookie
 from graphql_jwt import signals, mixins
 from .decorators import jwt_token_auth, social_jwt_token_auth
 from firebase_admin import auth
+from django.contrib.auth.hashers import check_password, make_password
 
 
 # firebase_admin.initialize_app()
@@ -118,3 +122,55 @@ class AddNewUser(graphene.Mutation):
 
         create_email_verification_link(user)
         return AddNewUser(response=user)
+
+class UpdateUser(graphene.Mutation):
+    response = graphene.List(BaseUserType)
+
+    class Arguments:
+        input = UpdateUserInput(required=True)
+
+
+    def mutate(self, info, input: UpdateUserInput, **kwargs):
+        change_user = BaseUser.objects.filter(user_id=info.context.user.user_id)
+        contact_info = BaseContact.objects.filter(id=info.context.user.base_contact.id)
+        
+
+        change_user.update(
+            first_name = input.first_name,
+            last_name = input.last_name,
+            username = input.username,
+            email = input.email,
+            # password = input.password,
+            base_contact = contact_info.update(
+                cell_number = input.cell_number,
+                home_number = input.home_number,
+                work_number = input.work_number
+            )
+        )
+
+        return UpdateUser(response=change_user)
+
+class CheckUserPassword(graphene.Mutation):
+    response = graphene.Boolean()
+
+    class Arguments:
+        password = graphene.String()
+
+    def mutate(self, info, password, **kwargs):
+        check = check_password(password=password, encoded=info.context.user.password)
+
+        return CheckUserPassword(response=check)
+
+class ChangeUserPassword(graphene.Mutation):
+    response = graphene.Boolean()
+
+    class Arguments:
+        password = graphene.String()
+
+    def mutate(self, info, password, **kwargs):
+        hash_password = make_password(password=password, salt=None, hasher="default")
+        BaseUser.objects.update(
+            password = hash_password
+        )
+        
+        return ChangeUserPassword(response=True)

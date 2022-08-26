@@ -21,7 +21,9 @@ import AccountSettings from "../pages/dashboard/AccountSettings.vue";
 import CompanyManagement from "../pages/dashboard/CompanyManagement.vue";
 import NotFound from "../pages/errors/NotFound.vue";
 import Activity from "../pages/dashboard/ActivityDetail.vue";
-import ApplicationPage from "../pages/dashboard/ApplicationPage.vue"
+import ApplicationPage from "../pages/dashboard/ApplicationPage.vue";
+import ChangeUserData from "../pages/dashboard/accountSettingPages/ChangeUserData.vue";
+import ChangePassword from "../pages/dashboard/accountSettingPages/ChangePassword.vue";
 
 import {
   authguard,
@@ -190,6 +192,16 @@ export default createRouter({
           name: "AccountSttings",
           component: AccountSettings,
         },
+        {
+          path: "/change-user-data",
+          name: "ChangeUserData",
+          component: ChangeUserData
+        },
+        {
+          path: "/change-social",
+          name: "ChangePassword",
+          component: ChangePassword
+        }
       ],
     },
     {

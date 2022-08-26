@@ -12,3 +12,4 @@ class ActivityAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Activity, ActivityAdmin)
+admin.site.register(models.Notification)

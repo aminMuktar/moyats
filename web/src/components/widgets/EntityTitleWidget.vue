@@ -284,7 +284,7 @@ export default defineComponent({
   },
   methods: {
     // get first letter of string
-    firsLetter(str) {
+    firsLetter(str: string) {
       return str.charAt(0);
     },
     updateCompanyTitle() {},
