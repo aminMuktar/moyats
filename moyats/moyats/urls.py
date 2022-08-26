@@ -5,11 +5,10 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from graphene_django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.mixins import LoginRequiredMixin
 from graphql_playground.views import GraphQLPlaygroundView
-from graphene_file_upload.django import FileUploadGraphQLView
 from graphql_jwt.decorators import jwt_cookie
 from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from graphene_file_upload.django import FileUploadGraphQLView
 
 
@@ -17,8 +16,6 @@ class HomePageView(TemplateView):
     template_name: str = "home.html"
 
 
-class GqlView(FileUploadGraphQLView, LoginRequiredMixin):
-    pass
 
 
 urlpatterns = [
